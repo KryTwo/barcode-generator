@@ -6,6 +6,7 @@ import (
 	"main/barcode"
 	"main/csvreader"
 	"main/label"
+	"main/layout"
 	"main/structs"
 )
 
@@ -77,7 +78,12 @@ func main() {
 		fmt.Printf("can't generate code 128 with error: %v\n", err)
 	}
 	fmt.Println(records[0][0])
-	label.DrawText(records[0][0], cfg, img)
+
+	//накладывание текста на баркод
+	rgba := label.DrawText(records[0][0], cfg, img)
+	layout.MakePDF(&rgba)
+
 	//}
 
+	//создаем PDF
 }

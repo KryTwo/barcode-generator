@@ -16,7 +16,7 @@ import (
 	"golang.org/x/image/math/fixed"
 )
 
-func DrawText(s string, cfg structs.Config, img image.Image) {
+func DrawText(s string, cfg structs.Config, img image.Image) image.RGBA {
 	//загружаем пользовательский шрифт
 	f := LoadFontFromFile(cfg.FontFile)
 
@@ -61,8 +61,8 @@ func DrawText(s string, cfg structs.Config, img image.Image) {
 			Y: fixed.Int26_6(lenHeight << 6),
 		},
 	}
-	fmt.Println("d.Dot.Y", d.Dot.Y)
-	fmt.Printf("dot: %v %v", d.Dot.X, d.Dot.Y)
+	// fmt.Println("d.Dot.Y", d.Dot.Y)
+	// fmt.Println("d.Dot.X", d.Dot.X)
 	d.DrawString(s)
 
 	//выравнивание по y
@@ -95,5 +95,5 @@ func DrawText(s string, cfg structs.Config, img image.Image) {
 		fmt.Printf("cant flush file: %v\n", err)
 		os.Exit(1)
 	}
-
+	return *rgba
 }

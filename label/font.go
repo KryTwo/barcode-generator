@@ -62,8 +62,8 @@ func getTextMeasuresInPixels(f *truetype.Font, text string, cfg structs.Config) 
 
 	widthPixels := float64(x) / 64.0
 	heightPixels := h
-	fmt.Printf("ширина текста в пикселях: %v\n", widthPixels)
-	fmt.Printf(" текста в пикселях: %v\n", heightPixels)
+	// fmt.Printf("ширина текста в пикселях: %v\n", widthPixels)
+	// fmt.Printf(" текста в пикселях: %v\n", heightPixels)
 
 	return widthPixels, heightPixels
 }
