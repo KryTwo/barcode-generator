@@ -13,7 +13,7 @@ func ParseConfig() structs.Config {
 	dpi := flag.Float64("dpi", 72, "screen resolution in Dots Per Inch")
 	fontfile := flag.String("fontfile", "./fonts/RobotoforLearning-Black_0.ttf", "filename of the ttf font")
 	hinting := flag.String("hinting", "none", "none | full")
-	size := flag.Float64("size", 12, "font size in points")
+	size := flag.Float64("size", 32, "font size in points")
 	spacing := flag.Float64("spacing", 1.5, "line spacing (e.g. 2 means double spaced)")
 	wonb := flag.Bool("whiteonblack", false, "white text on a black background")
 
@@ -70,14 +70,14 @@ func main() {
 	}
 
 	//генерация баркода
-	for _, v := range records {
-		img, err := barcode.GenerateCode128(v[0], 100, 300)
-		if err != nil {
-			fmt.Printf("can't generate code 128 with error: %v\n", err)
-		}
-		fmt.Println(img)
-	}
+	//for _, v := range records {
 
-	label.DrawText("123", cfg)
+	img, err := barcode.GenerateCode128(records[0][0], 100, 300)
+	if err != nil {
+		fmt.Printf("can't generate code 128 with error: %v\n", err)
+	}
+	fmt.Println(records[0][0])
+	label.DrawText(records[0][0], cfg, img)
+	//}
 
 }
