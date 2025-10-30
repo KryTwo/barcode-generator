@@ -35,7 +35,7 @@ func Read(filename string) ([][]string, []string, error) {
 	if err != nil {
 		panic(e)
 	}
-	fmt.Println(firstLine)
+	// fmt.Println(firstLine)
 	var commaSymbol string
 	for _, v := range commaList {
 		out := 0
@@ -77,9 +77,13 @@ func Read(filename string) ([][]string, []string, error) {
 			break
 		}
 	}
-	fmt.Println(newHeader)
+
+	// for _, v := range newHeader {
+	// 	fmt.Printf("newHeader v: %v\n", v)
+	// }
 
 	var records [][]string
+
 	for {
 		record, e := reader.Read()
 		if e != nil && strings.Contains(e.Error(), "wrong number of fields") {
@@ -90,6 +94,7 @@ func Read(filename string) ([][]string, []string, error) {
 			fmt.Println(e)
 			break
 		}
+		// fmt.Printf("record: %v\n", record)
 		records = append(records, record)
 
 	}

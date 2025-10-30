@@ -1,9 +1,32 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	"main/barcode"
 	"main/csvreader"
+	"main/label"
+	"main/structs"
 )
+
+func ParseConfig() structs.Config {
+	dpi := flag.Float64("dpi", 72, "screen resolution in Dots Per Inch")
+	fontfile := flag.String("fontfile", "./fonts/RobotoforLearning-Black_0.ttf", "filename of the ttf font")
+	hinting := flag.String("hinting", "none", "none | full")
+	size := flag.Float64("size", 12, "font size in points")
+	spacing := flag.Float64("spacing", 1.5, "line spacing (e.g. 2 means double spaced)")
+	wonb := flag.Bool("whiteonblack", false, "white text on a black background")
+
+	flag.Parse()
+	return structs.Config{
+		DPI:      *dpi,
+		FontFile: *fontfile,
+		Hinting:  *hinting,
+		Size:     *size,
+		Spacing:  *spacing,
+		WONB:     *wonb,
+	}
+}
 
 /*
 
@@ -38,20 +61,23 @@ import (
 */
 
 func main() {
+	cfg := ParseConfig()
 
+	//построчное получение данных
 	records, _, err := csvreader.Read("source/code.csv")
 	if err != nil {
 		fmt.Println("ошибка чтения факла: ", err)
 	}
 
-	for v := range records {
-		fmt.Println(v)
+	//генерация баркода
+	for _, v := range records {
+		img, err := barcode.GenerateCode128(v[0], 100, 300)
+		if err != nil {
+			fmt.Printf("can't generate code 128 with error: %v\n", err)
+		}
+		fmt.Println(img)
 	}
 
-	// bc := "CEL 3747872"
-	// bCode, _ := code128.Encode(bc)
-	// scaledBC, _ := barcode.Scale(bCode, 300, 100)
-	// BCfile, _ := os.Create("BCode.png")
-	// defer BCfile.Close()
-	// png.Encode(BCfile, scaledBC)
+	label.DrawText("123", cfg)
+
 }
