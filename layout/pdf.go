@@ -5,26 +5,43 @@ import (
 	"fmt"
 	"image"
 	"image/png"
+	"strconv"
 	"strings"
 
 	"github.com/jung-kurt/gofpdf"
 )
 
-func MakePDF(img image.Image) {
-	pdf := gofpdf.New("p", "mm", "A4", "")
+const mmInch = 25.4
+
+func mmToPt(mm int, dpi int) float64 {
+	var pt float64
+	pt = float64(mm) / mmInch * 72.0
+	return pt
+}
+
+func MakePDF(img []image.Image, maxX []int) {
+	pdf := gofpdf.New("p", "pt", "A4", "")
 	pdf.AddPage()
-	pdf.SetFont("Arial", "B", 16)
-	//pdf.Cell(40, 10, "hello world")
-	imgBuf, _ := imageToPNG(img)
-	// pdf.Image("out.png", 15, 0, 74, 30, true, "", 0, "")
 
-	opt := gofpdf.ImageOptions{
-		ImageType: "PNG",
-		ReadDpi:   true,
+	xPos := 50
+	yPos := 0
+	dpi := 72
+	bcWidth := mmToPt(70, dpi)
+
+	for i := 0; i < len(img); i++ {
+		fileName := "barcode" + strconv.Itoa(i)
+		imgBuf, _ := imageToPNG(img[i])
+
+		opt := gofpdf.ImageOptions{
+			ImageType:             "PNG",
+			ReadDpi:               true,
+			AllowNegativePosition: false,
+		}
+
+		pdf.RegisterImageOptionsReader(fileName, opt, strings.NewReader(imgBuf.String()))
+		pdf.ImageOptions(fileName, float64(xPos), float64(yPos), bcWidth, -1, false, opt, 0, "")
+		yPos += 100
 	}
-	pdf.RegisterImageOptionsReader("barcode", opt, strings.NewReader(imgBuf.String()))
-	pdf.ImageOptions("barcode", 10, 20, 50, 0, false, opt, 0, "")
-
 	err := pdf.OutputFileAndClose("hello.pdf")
 	if err != nil {
 		fmt.Printf("outpuFileAndClose error: %v\n", err)

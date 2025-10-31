@@ -1,22 +1,18 @@
 package label
 
 import (
-	"bufio"
-	"fmt"
 	"image"
 	"image/color"
 	"image/draw"
-	"image/png"
 	"main/structs"
 	"math"
-	"os"
 
 	"github.com/golang/freetype/truetype"
 	"golang.org/x/image/font"
 	"golang.org/x/image/math/fixed"
 )
 
-func DrawText(s string, cfg structs.Config, img image.Image) image.RGBA {
+func DrawText(s string, cfg structs.Config, img image.Image, maxX int) *image.RGBA {
 	//загружаем пользовательский шрифт
 	f := LoadFontFromFile(cfg.FontFile)
 
@@ -26,17 +22,15 @@ func DrawText(s string, cfg structs.Config, img image.Image) image.RGBA {
 	//Создаем холст
 	const imgW, imgH = 300, 100
 	fg, _ := image.Black, image.White
-	rgba := image.NewRGBA(image.Rect(0, 0, imgW, imgH))
+	rgba := image.NewRGBA(image.Rect(0, 0, maxX, imgH))
 	draw.Draw(rgba, rgba.Bounds(), img, image.Point{0, 0}, draw.Src)
 
 	//заливаем фон под текст
-	xLeft := (imgW - lenWidth) / 2
+	xLeft := (float64(maxX) - lenWidth) / 2
 	xRight := (xLeft + lenWidth)
 
 	for y := range lenHeight + lenHeight/4 {
 		for x := int(xLeft) - (int(lenWidth) / 20); x < int(xRight+(lenWidth/20)); x++ {
-			// fmt.Printf("x: %v, y: %v\n", x, y)
-			// rgba.Set(x, y, color.CMYK{20, 0, 100, 41})
 			rgba.Set(x, y, color.CMYK{0, 0, 0, 0})
 		}
 	}
@@ -61,39 +55,17 @@ func DrawText(s string, cfg structs.Config, img image.Image) image.RGBA {
 			Y: fixed.Int26_6(lenHeight << 6),
 		},
 	}
-	// fmt.Println("d.Dot.Y", d.Dot.Y)
-	// fmt.Println("d.Dot.X", d.Dot.X)
 	d.DrawString(s)
 
 	//выравнивание по y
-	//y := 10 + int(math.Ceil(cfg.Size*cfg.DPI/72))
-	// dy := int(math.Ceil(cfg.Size * cfg.Spacing * cfg.DPI / 72))
-	// d.Dot = fixed.Point26_6{
-	// 	X: (fixed.I(imgW) / 2),
-	// 	Y: fixed.I(y),
-	// }
-	// d.DrawString("some text")
-	// y += dy
+	/* 	y := 10 + int(math.Ceil(cfg.Size*cfg.DPI/72))
+	   	dy := int(math.Ceil(cfg.Size * cfg.Spacing * cfg.DPI / 72))
+	   	d.Dot = fixed.Point26_6{
+	   		X: (fixed.I(imgW) / 2),
+	   		Y: fixed.I(y),
+	   	}
+	   	d.DrawString("some text")
+	   	y += dy */
 
-	//создаем файл и записываем в него из буфера
-	outFile, err := os.Create("out.png")
-	if err != nil {
-		fmt.Printf("cant create file: %v\n", err)
-		os.Exit(1)
-	}
-	defer outFile.Close()
-
-	b := bufio.NewWriter(outFile)
-	err = png.Encode(b, rgba)
-	if err != nil {
-		fmt.Printf("cant encode file: %v\n", err)
-		os.Exit(1)
-	}
-
-	err = b.Flush()
-	if err != nil {
-		fmt.Printf("cant flush file: %v\n", err)
-		os.Exit(1)
-	}
-	return *rgba
+	return rgba
 }

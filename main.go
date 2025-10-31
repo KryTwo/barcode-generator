@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"image"
 	"main/barcode"
 	"main/csvreader"
 	"main/label"
@@ -11,7 +12,7 @@ import (
 )
 
 func ParseConfig() structs.Config {
-	dpi := flag.Float64("dpi", 72, "screen resolution in Dots Per Inch")
+	dpi := flag.Float64("dpi", 48, "screen resolution in Dots Per Inch")
 	fontfile := flag.String("fontfile", "./fonts/RobotoforLearning-Black_0.ttf", "filename of the ttf font")
 	hinting := flag.String("hinting", "none", "none | full")
 	size := flag.Float64("size", 32, "font size in points")
@@ -65,25 +66,30 @@ func main() {
 	cfg := ParseConfig()
 
 	//построчное получение данных
+
 	records, _, err := csvreader.Read("source/code.csv")
 	if err != nil {
-		fmt.Println("ошибка чтения факла: ", err)
+		fmt.Println("ошибка чтения файла: ", err)
 	}
-
+	var rgba *image.RGBA
+	var arrRgba []image.Image
 	//генерация баркода
-	//for _, v := range records {
+	//срез максимальных ширин штрихкодов
+	var maximumX []int
+	for i := 0; i < 2; i++ {
 
-	img, err := barcode.GenerateCode128(records[0][0], 100, 300)
-	if err != nil {
-		fmt.Printf("can't generate code 128 with error: %v\n", err)
+		img, err, maxX := barcode.GenerateCode128(records[i][0], 300, 100)
+		// label.MakeFile(img)
+		maximumX = append(maximumX, maxX)
+		if err != nil {
+			fmt.Printf("can't generate code 128 with error: %v\n", err)
+		}
+		fmt.Println(records[i][0])
+		rgba = label.DrawText(records[i][0], cfg, img, maxX)
+		arrRgba = append(arrRgba, rgba)
 	}
-	fmt.Println(records[0][0])
 
-	//накладывание текста на баркод
-	rgba := label.DrawText(records[0][0], cfg, img)
-	layout.MakePDF(&rgba)
+	//создаем файл PDF
+	layout.MakePDF(arrRgba, maximumX)
 
-	//}
-
-	//создаем PDF
 }
