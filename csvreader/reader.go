@@ -21,8 +21,8 @@ var headerSynonyms = map[string][]string{
 var commaList = []string{",", ";", " ", ".", ":"}
 
 // читаем файл и возвращаем список пар (шк, название)
-func Read(filename string) ([][]string, []string, error) {
-	file, err := os.Open("source/code.csv")
+func Read(filePath string) ([][]string, []string, error) {
+	file, err := os.Open(filePath)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

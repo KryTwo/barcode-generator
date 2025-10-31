@@ -64,10 +64,11 @@ func ParseConfig() structs.Config {
 
 func main() {
 	cfg := ParseConfig()
+	filePath := "source/codeFullList.csv"
 
 	//построчное получение данных
 
-	records, _, err := csvreader.Read("source/code.csv")
+	records, _, err := csvreader.Read(filePath)
 	if err != nil {
 		fmt.Println("ошибка чтения файла: ", err)
 	}
@@ -76,7 +77,7 @@ func main() {
 	//генерация баркода
 	//срез максимальных ширин штрихкодов
 	var maximumX []int
-	for i := 0; i < 2; i++ {
+	for i := 0; i < len(records); i++ {
 
 		img, err, maxX := barcode.GenerateCode128(records[i][0], 300, 100)
 		// label.MakeFile(img)
@@ -84,7 +85,7 @@ func main() {
 		if err != nil {
 			fmt.Printf("can't generate code 128 with error: %v\n", err)
 		}
-		fmt.Println(records[i][0])
+		fmt.Println(records[i])
 		rgba = label.DrawText(records[i][0], cfg, img, maxX)
 		arrRgba = append(arrRgba, rgba)
 	}

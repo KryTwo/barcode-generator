@@ -1,9 +1,7 @@
 package barcode
 
 import (
-	"fmt"
 	"image"
-	"main/label"
 
 	"github.com/boombuler/barcode"
 	"github.com/boombuler/barcode/code128"
@@ -16,15 +14,13 @@ func GenerateCode128(data string, width int, hight int) (image.Image, error, int
 	if err != nil {
 		return nil, err, 0
 	}
-	fmt.Printf("bCode.Bounds(): %v\n", bCode.Bounds().Max)
-	label.MakeFile(bCode, ("before scaling" + data))
+
 	maxX := bCode.Bounds().Max.X
+
 	scaledBC, err := barcode.Scale(bCode, maxX, hight)
 	if err != nil {
 		return nil, err, 0
 	}
-	fmt.Printf("scaledBC.Bounds(): %v\n", scaledBC.Bounds().Max)
-	label.MakeFile(scaledBC, data)
 
 	return scaledBC, nil, maxX
 }
