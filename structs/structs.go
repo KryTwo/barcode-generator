@@ -7,4 +7,6 @@ type Config struct {
 	Size     float64
 	Spacing  float64
 	WONB     bool
+	Height   int
+	Width    int
 }

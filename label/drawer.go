@@ -1,10 +1,11 @@
 package label
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/draw"
-	"main/structs"
+	"main/config"
 	"math"
 
 	"github.com/golang/freetype/truetype"
@@ -12,21 +13,24 @@ import (
 	"golang.org/x/image/math/fixed"
 )
 
-func DrawText(s string, cfg structs.Config, img image.Image, maxX int) *image.RGBA {
+func DrawText(s string, img image.Image, bcLenX int) *image.RGBA {
+	cfg := config.Get()
 	//загружаем пользовательский шрифт
 	f := LoadFontFromFile(cfg.FontFile)
 
 	//получаем ширину строки в пикселях
-	lenWidth, lenHeight := getTextMeasuresInPixels(f, s, cfg)
+	lenWidth, lenHeight := getTextMeasuresInPixels(f, s)
+	fmt.Printf("ширина ШК: %v Px\n", img.Bounds().Max.X)
+	fmt.Printf("ширина текста: %v Px, Высота: %v Px\n", math.Round(lenWidth), lenHeight)
+	fmt.Println()
 
 	//Создаем холст
-	const imgW, imgH = 300, 100
 	fg, _ := image.Black, image.White
-	rgba := image.NewRGBA(image.Rect(0, 0, maxX, imgH))
+	rgba := image.NewRGBA(image.Rect(0, 0, bcLenX, cfg.Height))
 	draw.Draw(rgba, rgba.Bounds(), img, image.Point{0, 0}, draw.Src)
 
 	//заливаем фон под текст
-	xLeft := (float64(maxX) - lenWidth) / 2
+	xLeft := (float64(bcLenX) - lenWidth) / 2
 	xRight := (xLeft + lenWidth)
 
 	for y := range lenHeight + lenHeight/4 {
@@ -56,6 +60,7 @@ func DrawText(s string, cfg structs.Config, img image.Image, maxX int) *image.RG
 		},
 	}
 	d.DrawString(s)
+	MakeFile(rgba, s)
 
 	//выравнивание по y
 	/* 	y := 10 + int(math.Ceil(cfg.Size*cfg.DPI/72))

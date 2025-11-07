@@ -2,7 +2,7 @@ package label
 
 import (
 	"fmt"
-	"main/structs"
+	"main/config"
 	"os"
 
 	"github.com/golang/freetype/truetype"
@@ -24,7 +24,8 @@ func LoadFontFromFile(font string) *truetype.Font {
 	return f
 }
 
-func getTextMeasuresInPixels(f *truetype.Font, text string, cfg structs.Config) (float64, int) {
+func getTextMeasuresInPixels(f *truetype.Font, text string) (float64, int) {
+	cfg := config.Get()
 	//определение ширины текста в пикселях
 	face := truetype.NewFace(f, &truetype.Options{
 		Size: cfg.Size,

@@ -5,15 +5,16 @@ import (
 	"fmt"
 	"image"
 	"image/png"
+	"main/convert"
 	"strconv"
 	"strings"
 
 	"github.com/jung-kurt/gofpdf"
 )
 
-const mmInch = 25.4
+// const mmInch = 25.4
 
-var dpi = 72
+// var dpi = 72
 
 // преобразует миллиметры в пиксели, для размещения на листе.
 // размер листа а4:
@@ -21,31 +22,28 @@ var dpi = 72
 // при dpi:96  | (794 / 1123)
 // при dpi:300 | (2450 / 3508)
 // при dpi:600 | (4960 / 7016)
-func mmToPt(mm int) float64 {
-	var pt float64
-	pt = float64(mm) / mmInch * float64(dpi)
-	return pt
-}
 
-func MakePDF(img []image.Image, maxX []int) {
+func MakePDF(img []image.Image, data []string, maxX []int) {
 	pdf := gofpdf.New("p", "pt", "A4", "")
 	pdf.AddPage()
 
 	//отступ от границ листа
-	xBound := mmToPt(15)
-	yBound := mmToPt(15)
+	xBound := convert.MMToPT(15)
+	yBound := convert.MMToPT(15)
 
 	//стартовая точка
 	xPos := xBound
 	yPos := yBound
 
 	//размеры баркода в мм
-	bcHight := mmToPt(30)
-	bcWidth := mmToPt(70)
+	bcHight := convert.MMToPT(30)
+	bcWidth := convert.MMToPT(70)
 
 	//отступ между штрихкодами
-	bcYSpace := mmToPt(5)
-	bcXSpace := mmToPt(15)
+	bcYSpace := convert.MMToPT(5)
+	bcXSpace := convert.MMToPT(15)
+
+	//TODO: акинуть текст с фоновой заливкой в ШК
 
 	//закидываем баркоды на лист
 	for i := 0; i < len(img); i++ {

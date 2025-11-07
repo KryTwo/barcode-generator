@@ -1,34 +1,13 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"image"
 	"main/barcode"
+	"main/config"
 	"main/csvreader"
-	"main/label"
 	"main/layout"
-	"main/structs"
 )
-
-func ParseConfig() structs.Config {
-	dpi := flag.Float64("dpi", 48, "screen resolution in Dots Per Inch")
-	fontfile := flag.String("fontfile", "./fonts/RobotoforLearning-Black_0.ttf", "filename of the ttf font")
-	hinting := flag.String("hinting", "none", "none | full")
-	size := flag.Float64("size", 32, "font size in points")
-	spacing := flag.Float64("spacing", 1.5, "line spacing (e.g. 2 means double spaced)")
-	wonb := flag.Bool("whiteonblack", false, "white text on a black background")
-
-	flag.Parse()
-	return structs.Config{
-		DPI:      *dpi,
-		FontFile: *fontfile,
-		Hinting:  *hinting,
-		Size:     *size,
-		Spacing:  *spacing,
-		WONB:     *wonb,
-	}
-}
 
 /*
 
@@ -63,8 +42,9 @@ func ParseConfig() structs.Config {
 */
 
 func main() {
-	cfg := ParseConfig()
-	filePath := "source/codeFullList.csv"
+	config.Init()
+	//cfg := config.Get()
+	filePath := "source/code.csv"
 
 	//построчное получение данных
 
@@ -72,25 +52,30 @@ func main() {
 	if err != nil {
 		fmt.Println("ошибка чтения файла: ", err)
 	}
-	var rgba *image.RGBA
+	// var rgba *image.RGBA
 	var arrRgba []image.Image
 	//генерация баркода
 	//срез максимальных ширин штрихкодов
 	var maximumX []int
+	var data []string
 	for i := 0; i < len(records); i++ {
 
-		img, err, maxX := barcode.GenerateCode128(records[i][0], 300, 100)
+		img, err := barcode.GenerateCode128(records[i][0])
 		// label.MakeFile(img)
-		maximumX = append(maximumX, maxX)
+		bcLenX := img.Bounds().Max.X
+
+		maximumX = append(maximumX, bcLenX)
 		if err != nil {
 			fmt.Printf("can't generate code 128 with error: %v\n", err)
 		}
+
 		fmt.Println(records[i])
-		rgba = label.DrawText(records[i][0], cfg, img, maxX)
-		arrRgba = append(arrRgba, rgba)
+		// rgba = label.DrawText(records[i][0], img, bcLenX)
+		arrRgba = append(arrRgba, img)
+		data = append(data, records[i][0])
 	}
 
 	//создаем файл PDF
-	layout.MakePDF(arrRgba, maximumX)
+	layout.MakePDF(arrRgba, data, maximumX)
 
 }

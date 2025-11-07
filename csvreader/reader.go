@@ -91,7 +91,7 @@ func Read(filePath string) ([][]string, []string, error) {
 			continue
 		}
 		if e != nil {
-			fmt.Println(e)
+			// fmt.Println(e)
 			break
 		}
 		// fmt.Printf("record: %v\n", record)
