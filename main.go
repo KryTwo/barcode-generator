@@ -6,6 +6,7 @@ import (
 	"main/barcode"
 	"main/config"
 	"main/csvreader"
+	"main/label"
 	"main/layout"
 )
 
@@ -61,7 +62,8 @@ func main() {
 	for i := 0; i < len(records); i++ {
 
 		img, err := barcode.GenerateCode128(records[i][0])
-		// label.MakeFile(img)
+		label.MakeFile(img, records[i][0])
+
 		bcLenX := img.Bounds().Max.X
 
 		maximumX = append(maximumX, bcLenX)

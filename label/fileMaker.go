@@ -8,6 +8,7 @@ import (
 	"os"
 )
 
+// data - название файла
 func MakeFile(rgba image.Image, data string) {
 	// создаем файл и записываем в него из буфера
 	outFile, err := os.Create(data)

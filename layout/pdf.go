@@ -24,62 +24,64 @@ import (
 // при dpi:600 | (4960 / 7016)
 
 func MakePDF(img []image.Image, data []string, maxX []int) {
+	//размеры баркода в мм
+	bcHight := convert.MMToPointPDF(30)
+	bcWidth := convert.MMToPointPDF(70)
+
+	//cfg := config.Get()
 	pdf := gofpdf.New("p", "pt", "A4", "")
+	type countryType struct {
+		nameStr, capitalStr, areaStr, popStr string
+	}
 	pdf.AddPage()
 
-	//отступ от границ листа
-	xBound := convert.MMToPT(15)
-	yBound := convert.MMToPT(15)
-
 	//стартовая точка
-	xPos := xBound
-	yPos := yBound
+	pdf.SetXY(25, 25)
 
-	//размеры баркода в мм
-	bcHight := convert.MMToPT(30)
-	bcWidth := convert.MMToPT(70)
+	//размеры ячейки
+	xCell := float64(convert.MMToPointPDF(70))
+	yCell := float64(convert.MMToPointPDF(30))
 
-	//отступ между штрихкодами
-	bcYSpace := convert.MMToPT(5)
-	bcXSpace := convert.MMToPT(15)
+	fmt.Println("pagesize w & h")
+	fmt.Println(pdf.PageSize(1))
 
-	//TODO: акинуть текст с фоновой заливкой в ШК
+	xPos, yPos := pdf.GetXY()
 
-	//закидываем баркоды на лист
-	for i := 0; i < len(img); i++ {
-		fileName := "barcode" + strconv.Itoa(i)
-		imgBuf, err := imageToPNG(img[i])
-		if err != nil {
-			fmt.Printf("err: %v\n", err)
-		}
+	pdf.SetMargins(25, 25, 25)
+	pdf.SetAutoPageBreak(false, 25)
 
-		opt := gofpdf.ImageOptions{
-			ImageType: "PNG",
-			ReadDpi:   true,
-		}
+	fmt.Println(pdf.GetMargins())
 
-		pdf.RegisterImageOptionsReader(fileName, opt, strings.NewReader(imgBuf.String()))
-		pdf.ImageOptions(fileName, float64(xPos), float64(yPos), bcWidth, bcHight, false, opt, 0, "")
-		yPos = yPos + bcYSpace + bcHight
+	improvedTable := func() {
+		for i := 0; i < len(img); i++ {
 
-		//переренос на следующую колонку
-		if yPos+yBound+bcHight > 842 {
-			yPos = yBound
-			xPos = xPos + bcWidth + bcXSpace
-		}
-		//перенос на следующий лист
-		if xPos+bcWidth+bcXSpace > 595 {
-			fmt.Printf("граница достигнута на элементе i: %v\n", i+1)
-			pdf.AddPage()
-			xPos = xBound
-			yPos = yBound
+			fileName := "barcode" + strconv.Itoa(i)
+			imgBuf, err := imageToPNG(img[i])
+			if err != nil {
+				fmt.Printf("err: %v\n", err)
+			}
+
+			opt := gofpdf.ImageOptions{
+				ImageType: "PNG",
+				ReadDpi:   true,
+			}
+
+			pdf.CellFormat(xCell, yCell, "", "1", 0, "L", false, 0, "")
+			pdf.Ln(yCell + 10)
+
+			pdf.RegisterImageOptionsReader(fileName, opt, strings.NewReader(imgBuf.String()))
+			pdf.Image(fileName, xPos, yPos, bcWidth, bcHight, false, "", 0, "")
+			yPos = pdf.GetY()
 		}
 	}
+	pdf.SetFont("Arial", "", 18)
+	improvedTable()
 
 	err := pdf.OutputFileAndClose("hello.pdf")
 	if err != nil {
 		fmt.Printf("outpuFileAndClose error: %v\n", err)
 	}
+
 }
 
 // прогоняем image в буфер
@@ -90,4 +92,51 @@ func imageToPNG(img image.Image) (*bytes.Buffer, error) {
 		return nil, err
 	}
 	return &buf, nil
+	// 	//отступ от границ листа
+	// 	xBound := convert.MMToPT(15)
+	// 	yBound := convert.MMToPT(15)
+
+	// 	//стартовая точка
+	// 	xPos := xBound
+	// 	yPos := yBound
+
+	// 	//отступ между штрихкодами
+	// 	bcYSpace := convert.MMToPT(5)
+	// 	bcXSpace := convert.MMToPT(15)
+
+	// 	//TODO: акинуть текст с фоновой заливкой в ШК
+
+	//закидываем баркоды на лист
+	// for i := 0; i < len(img); i++ {
+	// 	fileName := "barcode" + strconv.Itoa(i)
+	// 	imgBuf, err := imageToPNG(img[i])
+	// 	if err != nil {
+	// 		fmt.Printf("err: %v\n", err)
+	// 	}
+
+	// 	opt := gofpdf.ImageOptions{
+	// 		ImageType: "PNG",
+	// 		ReadDpi:   true,
+	// 	}
+
+	// 	pdf.RegisterImageOptionsReader(fileName, opt, strings.NewReader(imgBuf.String()))
+	// 	pdf.ImageOptions(fileName, float64(xPos), float64(yPos), bcWidth, bcHight, false, opt, 0, "")
+	// 	yPos = yPos + bcYSpace + bcHight
+
+	// 	//переренос на следующую колонку
+	// 	if yPos+yBound+bcHight > 842 {
+	// 		yPos = yBound
+	// 		xPos = xPos + bcWidth + bcXSpace
+	// 	}
+	// 	//перенос на следующий лист
+	// 	if xPos+bcWidth+bcXSpace > 595 {
+	// 		fmt.Printf("граница достигнута на элементе i: %v\n", i+1)
+	// 		pdf.AddPage()
+	// 		xPos = xBound
+	// 		yPos = yBound
+	// 	}
+	// 	}
+
+	// }
+
 }
