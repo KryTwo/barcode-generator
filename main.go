@@ -48,12 +48,10 @@ func main() {
 	filePath := "source/code.csv"
 
 	//построчное получение данных
-
 	records, _, err := csvreader.Read(filePath)
 	if err != nil {
 		fmt.Println("ошибка чтения файла: ", err)
 	}
-	// var rgba *image.RGBA
 	var arrRgba []image.Image
 	//генерация баркода
 	//срез максимальных ширин штрихкодов
@@ -74,10 +72,9 @@ func main() {
 		fmt.Println(records[i])
 		// rgba = label.DrawText(records[i][0], img, bcLenX)
 		arrRgba = append(arrRgba, img)
-		data = append(data, records[i][0])
+		data = append(data, records[i][1])
 	}
 
 	//создаем файл PDF
 	layout.MakePDF(arrRgba, data, maximumX)
-
 }

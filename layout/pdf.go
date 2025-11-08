@@ -6,6 +6,7 @@ import (
 	"image"
 	"image/png"
 	"main/convert"
+	"os"
 	"strconv"
 	"strings"
 
@@ -24,33 +25,41 @@ import (
 // при dpi:600 | (4960 / 7016)
 
 func MakePDF(img []image.Image, data []string, maxX []int) {
+	//требуемые параметры баркода и ячейки
+	higth := 20               //мм
+	width := 50               //мм
+	ySpacing := 30.0          //pt
+	xSpacing := 30.0          //pt
+	margin := 50.0            //pt
+	fontSize := 16.0          //
+	cellSizeMultiplier := 1.1 //множитель размера белого фона
+
 	//размеры баркода в мм
-	bcHight := convert.MMToPointPDF(30)
-	bcWidth := convert.MMToPointPDF(70)
+	bcHight := convert.MMToPointPDF(higth)
+	bcWidth := convert.MMToPointPDF(width)
 
 	//cfg := config.Get()
 	pdf := gofpdf.New("p", "pt", "A4", "")
-	type countryType struct {
-		nameStr, capitalStr, areaStr, popStr string
-	}
+
 	pdf.AddPage()
 
+	//загружаем шрифт из .json и .z
+	loadFont(pdf)
+	pdf.SetFont("DejaVuSans", "", fontSize)
+
 	//стартовая точка
-	pdf.SetXY(25, 25)
+	pdf.SetXY(margin, margin)
+	tr := pdf.UnicodeTranslatorFromDescriptor("./fonts/cp1251")
 
-	//размеры ячейки
-	xCell := float64(convert.MMToPointPDF(70))
-	yCell := float64(convert.MMToPointPDF(30))
-
-	fmt.Println("pagesize w & h")
-	fmt.Println(pdf.PageSize(1))
+	// 	pagesize w & h
+	// 595.28 841.89 pt
+	xPageSize, yPageSize := pdf.GetPageSize()
 
 	xPos, yPos := pdf.GetXY()
 
-	pdf.SetMargins(25, 25, 25)
-	pdf.SetAutoPageBreak(false, 25)
-
-	fmt.Println(pdf.GetMargins())
+	//отступ от границ листа
+	pdf.SetMargins(margin, margin, margin)
+	pdf.SetAutoPageBreak(false, margin)
 
 	improvedTable := func() {
 		for i := 0; i < len(img); i++ {
@@ -66,15 +75,52 @@ func MakePDF(img []image.Image, data []string, maxX []int) {
 				ReadDpi:   true,
 			}
 
-			pdf.CellFormat(xCell, yCell, "", "1", 0, "L", false, 0, "")
-			pdf.Ln(yCell + 10)
-
 			pdf.RegisterImageOptionsReader(fileName, opt, strings.NewReader(imgBuf.String()))
 			pdf.Image(fileName, xPos, yPos, bcWidth, bcHight, false, "", 0, "")
+
+			xPosTemp, yPosTemp := pdf.GetXY()
+			pdf.SetFillColor(255, 255, 255)
+
+			textWidht := pdf.GetStringWidth(data[i])
+			textHight, _ := pdf.GetFontSize()
+			textHight = textHight * cellSizeMultiplier
+			textWidht = textWidht * cellSizeMultiplier
+
+			// pdf.SetX(margin + bcWidth/2 - textWidht/2)
+			pdf.SetX(xPos + bcWidth/2 - textWidht/2)
+			pdf.CellFormat(textWidht, textHight, tr(data[i]), "", 0, "C", true, 0, "")
+
+			//возвращаем координаты исходной точки
+			pdf.SetY(yPosTemp)
+			pdf.SetX(xPosTemp)
+
+			pdf.Ln(bcHight + ySpacing)
+
 			yPos = pdf.GetY()
+
+			//смещение на второй столбец
+			if yPos >= yPageSize-ySpacing-bcHight {
+				fmt.Printf("выход за пределы по высоте, итерация: %v\n\n", i)
+				pdf.SetY(margin)
+				yPos = pdf.GetY()
+
+				pdf.SetX(xPos + xSpacing + bcWidth)
+				xPos = pdf.GetX()
+			}
+
+			//смещение в начало нового листа
+			if xPos >= xPageSize-xSpacing-bcWidth {
+				fmt.Printf("выход за пределы по ширине, итерация: %v\n\n", i)
+				pdf.AddPage()
+				pdf.SetXY(margin, margin)
+				xPos = pdf.GetX()
+				yPos = pdf.GetY()
+			}
+			// fmt.Printf("xPos: %v ", math.Round(pdf.GetX()))
+			// fmt.Printf("yPos: %v\n", math.Round(yPos))
 		}
 	}
-	pdf.SetFont("Arial", "", 18)
+
 	improvedTable()
 
 	err := pdf.OutputFileAndClose("hello.pdf")
@@ -92,51 +138,17 @@ func imageToPNG(img image.Image) (*bytes.Buffer, error) {
 		return nil, err
 	}
 	return &buf, nil
-	// 	//отступ от границ листа
-	// 	xBound := convert.MMToPT(15)
-	// 	yBound := convert.MMToPT(15)
+}
 
-	// 	//стартовая точка
-	// 	xPos := xBound
-	// 	yPos := yBound
+func loadFont(pdf *gofpdf.Fpdf) {
+	jsonBytes, err := os.ReadFile("./fonts/DejaVuSans.json")
+	if err != nil {
+		fmt.Printf("jsonBytes err: %v\n", err)
+	}
+	zBytes, err := os.ReadFile("./fonts/DejaVuSans.z")
+	if err != nil {
+		fmt.Printf("zBytes err: %v\n", err)
+	}
 
-	// 	//отступ между штрихкодами
-	// 	bcYSpace := convert.MMToPT(5)
-	// 	bcXSpace := convert.MMToPT(15)
-
-	// 	//TODO: акинуть текст с фоновой заливкой в ШК
-
-	//закидываем баркоды на лист
-	// for i := 0; i < len(img); i++ {
-	// 	fileName := "barcode" + strconv.Itoa(i)
-	// 	imgBuf, err := imageToPNG(img[i])
-	// 	if err != nil {
-	// 		fmt.Printf("err: %v\n", err)
-	// 	}
-
-	// 	opt := gofpdf.ImageOptions{
-	// 		ImageType: "PNG",
-	// 		ReadDpi:   true,
-	// 	}
-
-	// 	pdf.RegisterImageOptionsReader(fileName, opt, strings.NewReader(imgBuf.String()))
-	// 	pdf.ImageOptions(fileName, float64(xPos), float64(yPos), bcWidth, bcHight, false, opt, 0, "")
-	// 	yPos = yPos + bcYSpace + bcHight
-
-	// 	//переренос на следующую колонку
-	// 	if yPos+yBound+bcHight > 842 {
-	// 		yPos = yBound
-	// 		xPos = xPos + bcWidth + bcXSpace
-	// 	}
-	// 	//перенос на следующий лист
-	// 	if xPos+bcWidth+bcXSpace > 595 {
-	// 		fmt.Printf("граница достигнута на элементе i: %v\n", i+1)
-	// 		pdf.AddPage()
-	// 		xPos = xBound
-	// 		yPos = yBound
-	// 	}
-	// 	}
-
-	// }
-
+	pdf.AddFontFromBytes("DejaVuSans", "", jsonBytes, zBytes)
 }
