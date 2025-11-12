@@ -7,6 +7,7 @@ import (
 	"main/app"
 
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/storage"
@@ -14,6 +15,12 @@ import (
 )
 
 func MakeUI(w fyne.Window, controller *app.Controller) {
+	previewImage := canvas.NewImageFromImage(nil)
+	previewImage.SetMinSize(fyne.NewSize(600, 600))
+	previewImage.FillMode = canvas.ImageFillContain
+	previewImage.ScaleMode = canvas.ImageScaleSmooth
+	previewContainer := container.NewStack(previewImage)
+
 	barcodePreview := widget.NewLabel("Превью баркода")
 	barcodeSettings := widget.NewLabel("Настройки баркода")
 	printSettings := widget.NewLabel("Настройки печати")
@@ -38,7 +45,13 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 					return
 				}
 
-				controller.ProcessFile(data)
+				result := controller.ProcessFile(data)
+				if result.PreviewPNG == nil {
+					log.Fatalln("result.PreviewPNG == nil")
+				}
+
+				previewImage.Image = result.PreviewPNG
+				previewImage.Refresh()
 
 				if err != nil {
 					dialog.ShowError(err, w)
@@ -49,9 +62,10 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 			dlg.Show()
 		}),
 	)
+
 	printPreview := container.NewVSplit(
 		widget.NewLabel("print preview"),
-		widget.NewLabel("preview here"),
+		previewContainer,
 	)
 
 	leftTopPanel := container.NewVSplit(
