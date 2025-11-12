@@ -9,4 +9,5 @@ type Config struct {
 	WONB     bool
 	Height   int
 	Width    int
+	Margin   float64
 }

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"image"
 	"image/png"
+	"main/config"
 	"main/convert"
 	"os"
 	"strconv"
@@ -24,13 +25,14 @@ import (
 // при dpi:300 | (2450 / 3508)
 // при dpi:600 | (4960 / 7016)
 
-func MakePDF(img []image.Image, data [][]string) {
+func MakePDF(img []image.Image, data [][]string) []byte {
+	cfg := config.Get()
 	//требуемые параметры баркода и ячейки
-	higth := 20               //мм
-	width := 50               //мм
+	higth := cfg.Height       //мм
+	width := cfg.Width        //мм
 	ySpacing := 30.0          //pt
 	xSpacing := 30.0          //pt
-	margin := 50.0            //pt
+	margin := cfg.Margin      //pt
 	fontSize := 16.0          //
 	cellSizeMultiplier := 1.1 //множитель размера белого фона
 
@@ -120,11 +122,16 @@ func MakePDF(img []image.Image, data [][]string) {
 	}
 
 	improvedTable()
+	var buf bytes.Buffer
+	pdf.Output(&buf)
+	pdfBytes := buf.Bytes()
 
-	err := pdf.OutputFileAndClose("hello.pdf")
-	if err != nil {
-		fmt.Printf("outpuFileAndClose error: %v\n", err)
-	}
+	// err := pdf.OutputFileAndClose("hello.pdf")
+	// if err != nil {
+	// 	fmt.Printf("outpuFileAndClose error: %v\n", err)
+	// }
+
+	return pdfBytes
 
 }
 

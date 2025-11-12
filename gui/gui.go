@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"main/app"
+	"main/config"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -15,16 +16,33 @@ import (
 )
 
 func MakeUI(w fyne.Window, controller *app.Controller) {
+	BCImage := canvas.NewImageFromImage(nil)
+	BCSize := fyne.Size{
+		Width:  float32(config.Get().Width) / 72 * 300,
+		Height: float32(config.Get().Height) / 72 * 300,
+	}
+	BCImage.SetMinSize(BCSize)
+	BCImage.FillMode = canvas.ImageFillContain
+	BCImage.ScaleMode = canvas.ImageScaleSmooth
+	BCContainer := container.NewStack(BCImage)
+	BCContainer.Resize(BCSize)
+
 	previewImage := canvas.NewImageFromImage(nil)
 	previewImage.SetMinSize(fyne.NewSize(600, 600))
 	previewImage.FillMode = canvas.ImageFillContain
 	previewImage.ScaleMode = canvas.ImageScaleSmooth
 	previewContainer := container.NewStack(previewImage)
 
-	barcodePreview := widget.NewLabel("Превью баркода")
-	barcodeSettings := widget.NewLabel("Настройки баркода")
 	printSettings := widget.NewLabel("Настройки печати")
-
+	// boolData := binding.NewBool()
+	setsize := widget.NewEntry()
+	setsize.SetPlaceHolder("type here...")
+	BCSettings := container.NewStack(
+		setsize,
+	)
+	setsize.OnSubmitted = func(text string) {
+		fmt.Println(text)
+	}
 	fileOpen := container.NewVBox(
 		widget.NewLabel("выберите файл"),
 		widget.NewButton("file", func() {
@@ -53,6 +71,9 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 				previewImage.Image = result.PreviewPNG
 				previewImage.Refresh()
 
+				BCImage.Image = *controller.CropBC(result.PreviewBC)
+				BCImage.Refresh()
+
 				if err != nil {
 					dialog.ShowError(err, w)
 					return
@@ -69,8 +90,8 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 	)
 
 	leftTopPanel := container.NewVSplit(
-		barcodePreview,
-		barcodeSettings,
+		BCContainer,
+		BCSettings,
 	)
 	leftBottomPanel := container.NewVSplit(
 		printSettings,
@@ -89,24 +110,6 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 		leftPanel,
 		rightPanel,
 	)
-
-	/*
-		fileOpenButton := widget.NewButton("Выбрать файл", func() {
-			fd := dialog.NewFileOpen(func(reader fyne.URIReadCloser, err error) {
-				if err != nil {
-					dialog.ShowError(err, w)
-					return
-				}
-				if reader == nil {
-					log.Println("cancelled")
-					return
-				}
-				defer reader.Close()
-				fmt.Println(reader)
-			}, w)
-			fd.Show()
-		})
-	*/
 
 	w.SetContent(mainHBox)
 }

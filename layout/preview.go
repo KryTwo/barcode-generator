@@ -21,3 +21,19 @@ func PdfToPNGConvert() *image.RGBA {
 
 	return img
 }
+
+func BytesPdfToPNGConvert(b []byte) *image.RGBA {
+	doc, err := fitz.NewFromMemory(b)
+	if err != nil {
+		panic(err)
+	}
+
+	defer doc.Close()
+
+	img, err := doc.Image(0)
+	if err != nil {
+		panic(err)
+	}
+
+	return img
+}
