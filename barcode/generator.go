@@ -8,11 +8,14 @@ import (
 )
 
 // генерирует barcode из data string
-func GenerateCode128(data string) (image.Image, error) {
-	bCode, err := code128.EncodeWithColor(data, barcode.ColorScheme8)
-	if err != nil {
-		return nil, err
+func GenerateCode128(data [][]string) ([]image.Image, error) {
+	var bCodeList []image.Image
+	for _, s := range data {
+		bCode, err := code128.EncodeWithColor(s[0], barcode.ColorScheme8)
+		if err != nil {
+			return nil, err
+		}
+		bCodeList = append(bCodeList, bCode)
 	}
-
-	return bCode, nil
+	return bCodeList, nil
 }

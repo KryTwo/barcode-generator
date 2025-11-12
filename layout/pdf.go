@@ -24,7 +24,7 @@ import (
 // при dpi:300 | (2450 / 3508)
 // при dpi:600 | (4960 / 7016)
 
-func MakePDF(img []image.Image, data []string, maxX []int) {
+func MakePDF(img []image.Image, data [][]string) {
 	//требуемые параметры баркода и ячейки
 	higth := 20               //мм
 	width := 50               //мм
@@ -60,10 +60,9 @@ func MakePDF(img []image.Image, data []string, maxX []int) {
 	//отступ от границ листа
 	pdf.SetMargins(margin, margin, margin)
 	pdf.SetAutoPageBreak(false, margin)
-
 	improvedTable := func() {
 		for i := 0; i < len(img); i++ {
-
+			// fmt.Printf("data: %v\n", data)
 			fileName := "barcode" + strconv.Itoa(i)
 			imgBuf, err := imageToPNG(img[i])
 			if err != nil {
@@ -80,15 +79,14 @@ func MakePDF(img []image.Image, data []string, maxX []int) {
 
 			xPosTemp, yPosTemp := pdf.GetXY()
 			pdf.SetFillColor(255, 255, 255)
-
-			textWidht := pdf.GetStringWidth(data[i])
+			textWidht := pdf.GetStringWidth(data[i][1])
 			textHight, _ := pdf.GetFontSize()
 			textHight = textHight * cellSizeMultiplier
 			textWidht = textWidht * cellSizeMultiplier
 
 			// pdf.SetX(margin + bcWidth/2 - textWidht/2)
 			pdf.SetX(xPos + bcWidth/2 - textWidht/2)
-			pdf.CellFormat(textWidht, textHight, tr(data[i]), "", 0, "C", true, 0, "")
+			pdf.CellFormat(textWidht, textHight, tr(data[i][1]), "", 0, "C", true, 0, "")
 
 			//возвращаем координаты исходной точки
 			pdf.SetY(yPosTemp)

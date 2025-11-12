@@ -2,11 +2,9 @@ package csvreader
 
 import (
 	"bufio"
+	"bytes"
 	"encoding/csv"
 	"fmt"
-	"io"
-	"log"
-	"os"
 	"slices"
 	"strings"
 )
@@ -21,19 +19,21 @@ var headerSynonyms = map[string][]string{
 var commaList = []string{",", ";", " ", ".", ":"}
 
 // читаем файл и возвращаем список пар (шк, название)
-func Read(filePath string) ([][]string, []string, error) {
-	file, err := os.Open(filePath)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	defer file.Close()
+func Read(data []byte) ([][]string, []string, error) {
+	// file, err := os.Open(filePath)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	os.Exit(1)
+	// }
+	// defer file.Close()
+
+	reader := bytes.NewReader(data)
 
 	//находим первую строку и ищем наиболее часто встречаемый разделитель
-	scanner := bufio.NewReader(file)
-	firstLine, e := scanner.ReadString('\n')
+	scanner := bufio.NewReader(reader)
+	firstLine, err := scanner.ReadString('\n')
 	if err != nil {
-		panic(e)
+		panic(err)
 	}
 	// fmt.Println(firstLine)
 	var commaSymbol string
@@ -48,19 +48,19 @@ func Read(filePath string) ([][]string, []string, error) {
 
 	}
 
-	//возвращаемся в начало
-	_, err = file.Seek(0, io.SeekStart)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	reader := csv.NewReader(file)
-	reader.Comma = rune(commaSymbol[0])
+	// //возвращаемся в начало
+	// _, err = file.Seek(0, io.SeekStart)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	allData := bytes.NewReader(data)
+	csvReader := csv.NewReader(allData)
+	csvReader.Comma = rune(commaSymbol[0])
 
 	//читаем заголовок
-	header, e := reader.Read()
+	header, err := csvReader.Read()
 	if err != nil {
-		fmt.Println(e)
+		fmt.Println(err)
 	}
 
 	//выявляем соответствия по карте
@@ -85,7 +85,7 @@ func Read(filePath string) ([][]string, []string, error) {
 	var records [][]string
 
 	for {
-		record, e := reader.Read()
+		record, e := csvReader.Read()
 		if e != nil && strings.Contains(e.Error(), "wrong number of fields") {
 			fmt.Println(e)
 			continue
@@ -98,5 +98,6 @@ func Read(filePath string) ([][]string, []string, error) {
 		records = append(records, record)
 
 	}
+	//fmt.Println(records)
 	return records, newHeader, nil
 }
