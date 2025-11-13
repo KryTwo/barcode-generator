@@ -43,3 +43,13 @@ func Get() *structs.Config {
 	}
 	return instance
 }
+
+func SetWidth(mm int) {
+	cfg := Get()
+	cfg.Width = mm
+}
+
+// func SetHeight()
+// func SetMargin()
+// func SetSize()
+// func SetDPI()

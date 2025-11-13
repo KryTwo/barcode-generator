@@ -2,6 +2,7 @@ package gui
 
 import (
 	"fmt"
+	"image"
 	"io"
 	"log"
 	"main/app"
@@ -10,6 +11,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/storage"
 	"fyne.io/fyne/v2/widget"
@@ -34,15 +36,20 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 	previewContainer := container.NewStack(previewImage)
 
 	printSettings := widget.NewLabel("Настройки печати")
-	// boolData := binding.NewBool()
-	setsize := widget.NewEntry()
-	setsize.SetPlaceHolder("type here...")
-	BCSettings := container.NewStack(
-		setsize,
-	)
-	setsize.OnSubmitted = func(text string) {
+
+	i := 1
+	data := binding.BindInt(&i)
+	setWidth := widget.NewEntryWithData(binding.IntToString(data))
+	setWidth.SetPlaceHolder("type here...")
+	BCSettings := container.NewGridWithColumns(2, setWidth)
+
+	setWidth.OnSubmitted = func(text string) {
 		fmt.Println(text)
+		controller.SetBCWidth(text)
+		previewImage.Refresh()
+		BCImage.Refresh()
 	}
+
 	fileOpen := container.NewVBox(
 		widget.NewLabel("выберите файл"),
 		widget.NewButton("file", func() {
@@ -64,15 +71,18 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 				}
 
 				result := controller.ProcessFile(data)
-				if result.PreviewPNG == nil {
-					log.Fatalln("result.PreviewPNG == nil")
+				if result.Success == false {
+					log.Fatalln("result.ProcessFile error")
 				}
 
-				previewImage.Image = result.PreviewPNG
-				previewImage.Refresh()
+				controller.OnPreviewUpdated = func(r *image.RGBA) {
+					previewImage.Image = r
+					BCImage.Image = *controller.CropBC(r)
+					previewImage.Refresh()
+					BCImage.Refresh()
+				}
 
-				BCImage.Image = *controller.CropBC(result.PreviewBC)
-				BCImage.Refresh()
+				controller.RegeneratePreview()
 
 				if err != nil {
 					dialog.ShowError(err, w)
@@ -112,4 +122,5 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 	)
 
 	w.SetContent(mainHBox)
+
 }

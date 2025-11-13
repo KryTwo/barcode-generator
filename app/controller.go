@@ -3,20 +3,26 @@ package app
 import (
 	"fmt"
 	"image"
+	"log"
 	"main/barcode"
+	"main/config"
 	"main/convert"
 	"main/csvreader"
 	"main/layout"
 	"main/structs"
+	"strconv"
 )
 
 type Controller struct {
-	config *structs.Config
+	config           *structs.Config
+	CurrentRecords   [][]string
+	OnPreviewUpdated func(*image.RGBA)
 }
 
 type ProcessResult struct {
 	PreviewPNG *image.RGBA
 	PreviewBC  *image.RGBA
+	Success    bool
 	Error      error
 }
 
@@ -29,13 +35,12 @@ func (c *Controller) ProcessFile(data []byte) ProcessResult {
 	if err != nil {
 		return ProcessResult{Error: err}
 	}
-	imgs, _ := barcode.GenerateCode128(records)
 
-	PDFBytes := layout.MakePDF(imgs, records)
-	previewBC := layout.BytesPdfToPNGConvert(PDFBytes)
-	previewIMG := layout.BytesPdfToPNGConvert(PDFBytes)
+	c.CurrentRecords = records
 
-	return ProcessResult{PreviewBC: previewBC, PreviewPNG: previewIMG}
+	c.RegeneratePreview()
+
+	return ProcessResult{Success: true}
 }
 
 func (c *Controller) CropBC(img *image.RGBA) *image.Image {
@@ -50,4 +55,33 @@ func (c *Controller) CropBC(img *image.RGBA) *image.Image {
 	croppImg := img.SubImage(croppRect)
 
 	return &croppImg
+}
+
+func (c *Controller) SetBCWidth(data string) {
+	d, err := strconv.Atoi(data)
+	if err != nil {
+		log.Fatalf("Failed convert ATOI in SetBCWidth: %v\n", err)
+	}
+	config.SetWidth(d)
+	c.RegeneratePreview()
+}
+
+func (c *Controller) RegeneratePreview() {
+	if len(c.CurrentRecords) == 0 {
+		return
+	}
+
+	imgs, err := barcode.GenerateCode128(c.CurrentRecords)
+	if err != nil {
+		log.Fatalf("err: %v\n", err)
+		return
+	}
+
+	PDFBytes := layout.MakePDF(imgs, c.CurrentRecords)
+
+	img := layout.BytesPdfToPNGConvert(PDFBytes)
+
+	if c.OnPreviewUpdated != nil {
+		c.OnPreviewUpdated(img)
+	}
 }
