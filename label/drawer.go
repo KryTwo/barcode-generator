@@ -26,7 +26,7 @@ func DrawText(s string, img image.Image, bcLenX int) *image.RGBA {
 
 	//Создаем холст
 	fg, _ := image.Black, image.White
-	rgba := image.NewRGBA(image.Rect(0, 0, bcLenX, cfg.Height))
+	rgba := image.NewRGBA(image.Rect(0, 0, bcLenX, cfg.Hight))
 	draw.Draw(rgba, rgba.Bounds(), img, image.Point{0, 0}, draw.Src)
 
 	//заливаем фон под текст
@@ -50,7 +50,7 @@ func DrawText(s string, img image.Image, bcLenX int) *image.RGBA {
 		Dst: rgba,
 		Src: fg,
 		Face: truetype.NewFace(f, &truetype.Options{
-			Size:    cfg.Size,
+			Size:    float64(cfg.FontSize),
 			DPI:     cfg.DPI,
 			Hinting: h,
 		}),

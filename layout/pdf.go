@@ -28,12 +28,11 @@ import (
 func MakePDF(img []image.Image, data [][]string) []byte {
 	cfg := config.Get()
 	//требуемые параметры баркода и ячейки
-	higth := cfg.Height       //мм
+	higth := cfg.Hight        //мм
 	width := cfg.Width        //мм
 	ySpacing := 30.0          //pt
 	xSpacing := 30.0          //pt
-	margin := cfg.Margin      //pt
-	fontSize := 16.0          //
+	margin := cfg.Margin      //pt       //
 	cellSizeMultiplier := 1.1 //множитель размера белого фона
 
 	//размеры баркода в мм
@@ -47,7 +46,7 @@ func MakePDF(img []image.Image, data [][]string) []byte {
 
 	//загружаем шрифт из .json и .z
 	loadFont(pdf)
-	pdf.SetFont("DejaVuSans", "", fontSize)
+	pdf.SetFont("DejaVuSans", "", float64(cfg.FontSize))
 
 	//стартовая точка
 	pdf.SetXY(margin, margin)

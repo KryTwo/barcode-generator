@@ -4,10 +4,10 @@ type Config struct {
 	DPI      float64
 	FontFile string
 	Hinting  string
-	Size     float64
+	FontSize int
 	Spacing  float64
 	WONB     bool
-	Height   int
+	Hight    int
 	Width    int
 	Margin   float64
 }

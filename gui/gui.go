@@ -18,10 +18,11 @@ import (
 )
 
 func MakeUI(w fyne.Window, controller *app.Controller) {
+	//параметры контейнера с изображением баркода
 	BCImage := canvas.NewImageFromImage(nil)
 	BCSize := fyne.Size{
 		Width:  float32(config.Get().Width) / 72 * 300,
-		Height: float32(config.Get().Height) / 72 * 300,
+		Height: float32(config.Get().Hight) / 72 * 300,
 	}
 	BCImage.SetMinSize(BCSize)
 	BCImage.FillMode = canvas.ImageFillContain
@@ -29,6 +30,7 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 	BCContainer := container.NewStack(BCImage)
 	BCContainer.Resize(BCSize)
 
+	//параметры контейнера с превью печати
 	previewImage := canvas.NewImageFromImage(nil)
 	previewImage.SetMinSize(fyne.NewSize(600, 600))
 	previewImage.FillMode = canvas.ImageFillContain
@@ -37,11 +39,26 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 
 	printSettings := widget.NewLabel("Настройки печати")
 
-	i := 1
-	data := binding.BindInt(&i)
-	setWidth := widget.NewEntryWithData(binding.IntToString(data))
-	setWidth.SetPlaceHolder("type here...")
-	BCSettings := container.NewGridWithColumns(2, setWidth)
+	//настройки ширины ШК
+	labelWidth := widget.NewLabel("Ширина штрихкода")
+	width := binding.BindInt(&config.Get().Width)
+	setWidth := widget.NewEntryWithData(binding.IntToString(width))
+	setWidth.SetPlaceHolder("set width...")
+
+	//настройки высоты ШК
+	labelHight := widget.NewLabel("Высота штрихкода")
+	hight := binding.BindInt(&config.Get().Hight)
+	setHight := widget.NewEntryWithData(binding.IntToString(hight))
+	setHight.SetPlaceHolder("set hight...")
+
+	//настройки размера текста
+	labelFontSize := widget.NewLabel("Размер текста")
+	fontSize := binding.BindInt(&config.Get().FontSize)
+	setFontSize := widget.NewEntryWithData(binding.IntToString(fontSize))
+	setFontSize.SetPlaceHolder("set font size...")
+
+	//настройки штрихкода
+	BCSettings := container.NewGridWithRows(6, labelWidth, setWidth, labelHight, setHight, labelFontSize, setFontSize)
 
 	setWidth.OnSubmitted = func(text string) {
 		fmt.Println(text)
@@ -50,6 +67,26 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 		BCImage.Refresh()
 	}
 
+	setHight.OnSubmitted = func(text string) {
+		fmt.Println(text)
+		controller.SetBCHight(text)
+		previewImage.Refresh()
+		BCImage.Refresh()
+	}
+
+	setFontSize.OnSubmitted = func(text string) {
+		fmt.Println(text)
+		controller.SetFontSize(text)
+		previewImage.Refresh()
+		BCImage.Refresh()
+	}
+
+	controller.OnPreviewUpdated = func(r *image.RGBA) {
+		previewImage.Image = r
+		BCImage.Image = *controller.CropBC(r)
+		previewImage.Refresh()
+		BCImage.Refresh()
+	}
 	fileOpen := container.NewVBox(
 		widget.NewLabel("выберите файл"),
 		widget.NewButton("file", func() {
@@ -75,13 +112,6 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 					log.Fatalln("result.ProcessFile error")
 				}
 
-				controller.OnPreviewUpdated = func(r *image.RGBA) {
-					previewImage.Image = r
-					BCImage.Image = *controller.CropBC(r)
-					previewImage.Refresh()
-					BCImage.Refresh()
-				}
-
 				controller.RegeneratePreview()
 
 				if err != nil {
@@ -94,22 +124,19 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 		}),
 	)
 
-	printPreview := container.NewVSplit(
+	printPreview := container.NewVBox(
 		widget.NewLabel("print preview"),
 		previewContainer,
 	)
 
-	leftTopPanel := container.NewVSplit(
+	leftPanel := container.NewVBox(
 		BCContainer,
+		widget.NewSeparator(),
 		BCSettings,
-	)
-	leftBottomPanel := container.NewVSplit(
+		widget.NewSeparator(),
 		printSettings,
+		widget.NewSeparator(),
 		fileOpen,
-	)
-	leftPanel := container.NewVSplit(
-		leftTopPanel,
-		leftBottomPanel,
 	)
 
 	rightPanel := container.NewVBox(

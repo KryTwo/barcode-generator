@@ -50,7 +50,7 @@ func (c *Controller) CropBC(img *image.RGBA) *image.Image {
 	x1 = c.config.Margin/72*c.config.DPI - 20
 	y1 = c.config.Margin/72*c.config.DPI - 20
 	x2 = x1 + convert.MMToPT(c.config.Width) + 40
-	y2 = y1 + convert.MMToPT(c.config.Height) + 40
+	y2 = y1 + convert.MMToPT(c.config.Hight) + 40
 	croppRect := image.Rect(int(x1), int(y1), int(x2), int(y2))
 	croppImg := img.SubImage(croppRect)
 
@@ -63,6 +63,24 @@ func (c *Controller) SetBCWidth(data string) {
 		log.Fatalf("Failed convert ATOI in SetBCWidth: %v\n", err)
 	}
 	config.SetWidth(d)
+	c.RegeneratePreview()
+}
+
+func (c *Controller) SetBCHight(data string) {
+	d, err := strconv.Atoi(data)
+	if err != nil {
+		log.Fatalf("Failed convert ATOI in SetBCHight: %v\n", err)
+	}
+	config.SetHight(d)
+	c.RegeneratePreview()
+}
+
+func (c *Controller) SetFontSize(data string) {
+	d, err := strconv.Atoi(data)
+	if err != nil {
+		log.Fatalf("Failed convert ATOI in SetFontSize: %v\n", err)
+	}
+	config.SetFontSize(d)
 	c.RegeneratePreview()
 }
 
