@@ -4,29 +4,15 @@ go 1.25.3
 
 require (
 	github.com/boombuler/barcode v1.1.0
+	github.com/gen2brain/go-fitz v1.24.15
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
 	github.com/jung-kurt/gofpdf v1.16.2
 	golang.org/x/image v0.33.0
 )
 
 require (
-	github.com/HugoSmits86/nativewebp v1.2.0 // indirect
-	github.com/clipperhouse/stringish v0.1.1 // indirect
-	github.com/clipperhouse/uax29/v2 v2.3.0 // indirect
 	github.com/ebitengine/purego v0.8.4 // indirect
-	github.com/gen2brain/go-fitz v1.24.15 // indirect
-	github.com/hhrutter/lzw v1.0.0 // indirect
-	github.com/hhrutter/pkcs7 v0.2.0 // indirect
-	github.com/hhrutter/tiff v1.0.2 // indirect
 	github.com/jupiterrider/ffi v0.5.0 // indirect
-	github.com/mattn/go-runewidth v0.0.19 // indirect
-	github.com/pdfcpu/pdfcpu v0.11.1 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
-	github.com/rivo/uniseg v0.4.7 // indirect
-	github.com/sunshineplan/imgconv v1.1.14 // indirect
-	github.com/sunshineplan/pdf v1.0.8 // indirect
-	golang.org/x/crypto v0.44.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
 require (

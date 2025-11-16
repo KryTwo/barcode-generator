@@ -12,15 +12,16 @@ func Init() {
 		return
 	}
 
-	dpi := flag.Float64("dpi", 300, "screen resolution in Dots Per Inch")
+	dpi := flag.Int("dpi", 300, "screen resolution in Dots Per Inch")
 	fontfile := flag.String("fontfile", "./fonts/RobotoforLearning-Black_0.ttf", "filename of the ttf font")
 	hinting := flag.String("hinting", "none", "none | full")
 	fontSize := flag.Int("size", 22, "font size in points")
-	spacing := flag.Float64("spacing", 1.5, "line spacing (e.g. 2 means double spaced)")
+	ySpacing := flag.Float64("ySpacing", 30, "spacing btw bc (pt)")
+	xSpacing := flag.Float64("xSpacing", 50, "spacing btw bc (pt)")
 	wonb := flag.Bool("whiteonblack", false, "white text on a black background")
 	hight := flag.Int("height", 30, "set barcode height in mm")
 	width := flag.Int("width", 70, "set barcode width in mm")
-	margin := flag.Float64("margin", 50.0, "(pt) set margin from border list")
+	margin := flag.Int("margin", 50.0, "(pt) set margin from border list")
 
 	flag.Parse()
 
@@ -29,7 +30,8 @@ func Init() {
 		FontFile: *fontfile,
 		Hinting:  *hinting,
 		FontSize: *fontSize,
-		Spacing:  *spacing,
+		YSpacing: *ySpacing,
+		XSpacing: *xSpacing,
 		WONB:     *wonb,
 		Hight:    *hight,
 		Width:    *width,
@@ -59,6 +61,20 @@ func SetFontSize(size int) {
 	cfg.FontSize = size
 }
 
-// func SetMargin()
+func SetMargin(margin int) {
+	cfg := Get()
+	cfg.Margin = margin
+}
+
+func SetYSpacing(spacing float64) {
+	cfg := Get()
+	cfg.YSpacing = float64(spacing)
+}
+
+func SetXSpacing(spacing float64) {
+	cfg := Get()
+	cfg.XSpacing = float64(spacing)
+}
+
 // func SetSize()
 // func SetDPI()

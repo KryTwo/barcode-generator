@@ -51,7 +51,7 @@ func DrawText(s string, img image.Image, bcLenX int) *image.RGBA {
 		Src: fg,
 		Face: truetype.NewFace(f, &truetype.Options{
 			Size:    float64(cfg.FontSize),
-			DPI:     cfg.DPI,
+			DPI:     float64(cfg.DPI),
 			Hinting: h,
 		}),
 		Dot: fixed.Point26_6{

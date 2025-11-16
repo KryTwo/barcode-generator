@@ -29,7 +29,7 @@ func getTextMeasuresInPixels(f *truetype.Font, text string) (float64, int) {
 	//определение ширины текста в пикселях
 	face := truetype.NewFace(f, &truetype.Options{
 		Size: float64(cfg.FontSize),
-		DPI:  cfg.DPI,
+		DPI:  float64(cfg.DPI),
 	})
 
 	var (

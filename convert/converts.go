@@ -5,12 +5,12 @@ import "main/config"
 const mmInch float64 = 25.4
 
 // преобразование ММ в PT с учетом DPI в config.go
-func MMToPT(mm int) float64 {
-	return float64(mm) / mmInch * config.Get().DPI
+func MMToPT(mm int) int {
+	return int(float64(mm) / mmInch * float64(config.Get().DPI))
 }
 
-func MMToPX(mm int) float64 {
-	return float64(mm) * config.Get().DPI / mmInch
+func MMToPX(mm int) int {
+	return int(float64(mm) * float64(config.Get().DPI) / mmInch)
 }
 
 func InchToMM(mm int) float64 {

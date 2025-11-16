@@ -28,12 +28,12 @@ import (
 func MakePDF(img []image.Image, data [][]string) []byte {
 	cfg := config.Get()
 	//требуемые параметры баркода и ячейки
-	higth := cfg.Hight        //мм
-	width := cfg.Width        //мм
-	ySpacing := 30.0          //pt
-	xSpacing := 30.0          //pt
-	margin := cfg.Margin      //pt       //
-	cellSizeMultiplier := 1.1 //множитель размера белого фона
+	higth := cfg.Hight            //мм
+	width := cfg.Width            //мм
+	ySpacing := cfg.YSpacing      //pt
+	xSpacing := cfg.XSpacing      //pt
+	margin := float64(cfg.Margin) //pt       //
+	cellSizeMultiplier := 1.1     //множитель размера белого фона
 
 	//размеры баркода в мм
 	bcHight := convert.MMToPointPDF(higth)
