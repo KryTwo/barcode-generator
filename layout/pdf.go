@@ -78,13 +78,16 @@ func MakePDF(img []image.Image, data [][]string) []byte {
 			pdf.RegisterImageOptionsReader(fileName, opt, strings.NewReader(imgBuf.String()))
 			pdf.Image(fileName, xPos, yPos, bcWidth, bcHight, false, "", 0, "")
 
+			//сохраняем текущие координаты
 			xPosTemp, yPosTemp := pdf.GetXY()
+			//добавляем фон
 			pdf.SetFillColor(255, 255, 255)
 			textWidht := pdf.GetStringWidth(data[i][1])
 			textHight, _ := pdf.GetFontSize()
 			textHight = textHight * cellSizeMultiplier
 			textWidht = textWidht * cellSizeMultiplier
 
+			//размещаем текст
 			// pdf.SetX(margin + bcWidth/2 - textWidht/2)
 			pdf.SetX(xPos + bcWidth/2 - textWidht/2)
 			pdf.CellFormat(textWidht, textHight, tr(data[i][1]), "", 0, "C", true, 0, "")
