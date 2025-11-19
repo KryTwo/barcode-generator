@@ -8,13 +8,15 @@ import (
 )
 
 type pSettings struct {
-	labelMargin   *widget.Label
-	labelYSpacing *widget.Label
-	labelXSpacing *widget.Label
+	labelMargin       *widget.Label
+	labelYSpacing     *widget.Label
+	labelXSpacing     *widget.Label
+	labelMarginToCrop *widget.Label
 
-	setMargin   *widget.Entry
-	setYSpacing *widget.Entry
-	setXSpacing *widget.Entry
+	setMargin       *widget.Entry
+	setYSpacing     *widget.Entry
+	setXSpacing     *widget.Entry
+	setMarginToCrop *widget.Entry
 }
 
 func MakePrintSettings() pSettings {
@@ -37,13 +39,21 @@ func MakePrintSettings() pSettings {
 	setXSpacing := widget.NewEntryWithData(binding.FloatToStringWithFormat(xSpacing, "%.0f"))
 	setXSpacing.SetPlaceHolder("set spacing...")
 
-	return pSettings{
-		labelMargin:   labelMargin,
-		labelYSpacing: labelYSpacing,
-		labelXSpacing: labelXSpacing,
+	//настройки линий нарезки ШК (отступы по бокам)
+	labelMarginToCrop := widget.NewLabel("Отступы по бокам ШК")
+	marginToCrop := binding.BindInt(&config.Get().MarginToCrop)
+	setMarginToCrop := widget.NewEntryWithData(binding.IntToString(marginToCrop))
+	setMarginToCrop.SetPlaceHolder("set margin to crop")
 
-		setMargin:   setMargin,
-		setYSpacing: setYSpacing,
-		setXSpacing: setXSpacing,
+	return pSettings{
+		labelMargin:       labelMargin,
+		labelYSpacing:     labelYSpacing,
+		labelXSpacing:     labelXSpacing,
+		labelMarginToCrop: labelMarginToCrop,
+
+		setMargin:       setMargin,
+		setYSpacing:     setYSpacing,
+		setXSpacing:     setXSpacing,
+		setMarginToCrop: setMarginToCrop,
 	}
 }

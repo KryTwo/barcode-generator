@@ -22,20 +22,22 @@ func Init() {
 	hight := flag.Int("height", 30, "set barcode height in mm")
 	width := flag.Int("width", 70, "set barcode width in mm")
 	margin := flag.Int("margin", 50.0, "(pt) set margin from border list")
+	marginToCrop := flag.Int("marginToCrop", 10, "(mm) set margin from left and right borders to crop")
 
 	flag.Parse()
 
 	instance = &structs.Config{
-		DPI:      *dpi,
-		FontFile: *fontfile,
-		Hinting:  *hinting,
-		FontSize: *fontSize,
-		YSpacing: *ySpacing,
-		XSpacing: *xSpacing,
-		WONB:     *wonb,
-		Hight:    *hight,
-		Width:    *width,
-		Margin:   *margin,
+		DPI:          *dpi,
+		FontFile:     *fontfile,
+		Hinting:      *hinting,
+		FontSize:     *fontSize,
+		YSpacing:     *ySpacing,
+		XSpacing:     *xSpacing,
+		WONB:         *wonb,
+		Hight:        *hight,
+		Width:        *width,
+		Margin:       *margin,
+		MarginToCrop: *marginToCrop,
 	}
 }
 
@@ -64,6 +66,11 @@ func SetFontSize(size int) {
 func SetMargin(margin int) {
 	cfg := Get()
 	cfg.Margin = margin
+}
+
+func SetMarginToCrop(marginToCrop int) {
+	cfg := Get()
+	cfg.MarginToCrop = marginToCrop
 }
 
 func SetYSpacing(spacing float64) {

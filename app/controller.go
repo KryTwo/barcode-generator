@@ -92,6 +92,15 @@ func (c *Controller) SetMargin(data string) {
 	c.RegeneratePreview()
 }
 
+func (c *Controller) SetMarginToCrop(data string) {
+	d, err := strconv.Atoi(data)
+	if err != nil {
+		log.Fatalf("Failed convert ATOI in SetMarginToCrop: %v\n", err)
+	}
+	config.SetMarginToCrop(d)
+	c.RegeneratePreview()
+}
+
 func (c *Controller) SetYSpacing(data string) {
 	d, err := strconv.ParseFloat(data, 64)
 	if err != nil {

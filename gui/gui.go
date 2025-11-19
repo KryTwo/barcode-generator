@@ -32,18 +32,21 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 	)
 
 	//настройки печати
-	printSettingsContainer := container.NewGridWithRows(6,
+	printSettingsContainer := container.NewGridWithRows(8,
 		PrintSettings.labelMargin,
 		PrintSettings.setMargin,
 		PrintSettings.labelXSpacing,
 		PrintSettings.setXSpacing,
 		PrintSettings.labelYSpacing,
 		PrintSettings.setYSpacing,
+		PrintSettings.labelMargin,
+		PrintSettings.setMarginToCrop,
 	)
 
 	setupSubmittedHandler(PrintSettings.setXSpacing, controller.SetXSpacing, previewImage, &b)
 	setupSubmittedHandler(PrintSettings.setYSpacing, controller.SetYSpacing, previewImage, &b)
 	setupSubmittedHandler(PrintSettings.setMargin, controller.SetMargin, previewImage, &b)
+	setupSubmittedHandler(PrintSettings.setMarginToCrop, controller.SetMarginToCrop, previewImage, &b)
 	setupSubmittedHandler(BCSettings.SetWidth, controller.SetBCWidth, previewImage, &b)
 	setupSubmittedHandler(BCSettings.SetHight, controller.SetBCHight, previewImage, &b)
 	setupSubmittedHandler(BCSettings.SetFontSize, controller.SetFontSize, previewImage, &b)
