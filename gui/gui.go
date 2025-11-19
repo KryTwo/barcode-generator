@@ -30,6 +30,7 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 		BCSettings.LabelFontSize,
 		BCSettings.SetFontSize,
 	)
+
 	//настройки печати
 	printSettingsContainer := container.NewGridWithRows(6,
 		PrintSettings.labelMargin,
@@ -60,6 +61,12 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 		openFileStruct.openFileButton,
 	)
 
+	SaveFileContainer := makeSaveFile(w, controller)
+	fileSave := container.NewVBox(
+		SaveFileContainer.saveFileLabel,
+		SaveFileContainer.saveFileButton,
+	)
+
 	printPreview := container.NewVBox(
 		widget.NewLabel("print preview"),
 		previewContainer,
@@ -73,6 +80,7 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 		printSettingsContainer,
 		widget.NewSeparator(),
 		fileOpen,
+		fileSave,
 	)
 
 	rightPanel := container.NewVBox(

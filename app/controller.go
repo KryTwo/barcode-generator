@@ -121,11 +121,25 @@ func (c *Controller) RegeneratePreview() {
 		return
 	}
 
-	PDFBytes := layout.MakePDF(imgs, c.CurrentRecords)
+	PDFBytes := layout.MakePDF(imgs, c.CurrentRecords, false)
 
 	img := layout.BytesPdfToPNGConvert(PDFBytes)
 
 	if c.OnPreviewUpdated != nil {
 		c.OnPreviewUpdated(img)
 	}
+}
+
+func (c *Controller) SavingFile() {
+	if len(c.CurrentRecords) == 0 {
+		return
+	}
+
+	imgs, err := barcode.GenerateCode128(c.CurrentRecords)
+	if err != nil {
+		log.Fatalf("err: %v\n", err)
+		return
+	}
+
+	layout.MakePDF(imgs, c.CurrentRecords, true)
 }

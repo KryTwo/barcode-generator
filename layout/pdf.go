@@ -25,7 +25,8 @@ import (
 // при dpi:300 | (2450 / 3508)
 // при dpi:600 | (4960 / 7016)
 
-func MakePDF(img []image.Image, data [][]string) []byte {
+// when saveToFile == true, the function returns nil and saves the .pdf file.
+func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 	cfg := config.Get()
 	//требуемые параметры баркода и ячейки
 	higth := cfg.Hight            //мм
@@ -124,16 +125,20 @@ func MakePDF(img []image.Image, data [][]string) []byte {
 	}
 
 	improvedTable()
-	var buf bytes.Buffer
-	pdf.Output(&buf)
-	pdfBytes := buf.Bytes()
 
-	// err := pdf.OutputFileAndClose("hello.pdf")
-	// if err != nil {
-	// 	fmt.Printf("outpuFileAndClose error: %v\n", err)
-	// }
-
-	return pdfBytes
+	switch saveToFile {
+	case false:
+		var buf bytes.Buffer
+		pdf.Output(&buf)
+		pdfBytes := buf.Bytes()
+		return pdfBytes
+	default:
+		err := pdf.OutputFileAndClose("resultToPrint.pdf")
+		if err != nil {
+			fmt.Printf("outpuFileAndClose error: %v\n", err)
+		}
+		return nil
+	}
 
 }
 
