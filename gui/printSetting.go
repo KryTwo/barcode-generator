@@ -3,11 +3,13 @@ package gui
 import (
 	"main/config"
 
+	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/widget"
 )
 
 type pSettings struct {
+	label             *widget.Label
 	labelMargin       *widget.Label
 	labelYSpacing     *widget.Label
 	labelXSpacing     *widget.Label
@@ -20,6 +22,7 @@ type pSettings struct {
 }
 
 func MakePrintSettings() pSettings {
+	label := widget.NewLabelWithStyle("Настройки печати", 1, fyne.TextStyle{Bold: true})
 
 	//настройки отступов
 	labelMargin := widget.NewLabel("Размер отступов (мм)")
@@ -46,6 +49,7 @@ func MakePrintSettings() pSettings {
 	setMarginToCrop.SetPlaceHolder("set margin to crop")
 
 	return pSettings{
+		label:             label,
 		labelMargin:       labelMargin,
 		labelYSpacing:     labelYSpacing,
 		labelXSpacing:     labelXSpacing,

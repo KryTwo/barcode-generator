@@ -22,7 +22,8 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 	previewContainer := container.NewStack(previewImage)
 
 	//настройки штрихкода
-	BCSettingsContainer := container.NewGridWithRows(6,
+	BCSettingsContainer := container.NewGridWithRows(9,
+		BCSettings.Label,
 		BCSettings.LabelWidth,
 		BCSettings.SetWidth,
 		BCSettings.LabelHight,
@@ -32,14 +33,15 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 	)
 
 	//настройки печати
-	printSettingsContainer := container.NewGridWithRows(8,
+	printSettingsContainer := container.NewGridWithRows(9,
+		PrintSettings.label,
 		PrintSettings.labelMargin,
 		PrintSettings.setMargin,
 		PrintSettings.labelXSpacing,
 		PrintSettings.setXSpacing,
 		PrintSettings.labelYSpacing,
 		PrintSettings.setYSpacing,
-		PrintSettings.labelMargin,
+		PrintSettings.labelMarginToCrop,
 		PrintSettings.setMarginToCrop,
 	)
 
@@ -71,19 +73,25 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 	)
 
 	printPreview := container.NewVBox(
-		widget.NewLabel("print preview"),
+		widget.NewLabelWithStyle("Предпросмотр печати", 1, fyne.TextStyle{Bold: true}),
+		widget.NewSeparator(),
 		previewContainer,
 	)
 
 	leftPanel := container.NewVBox(
-		BCContainer,
+		container.NewCenter(BCContainer),
 		widget.NewSeparator(),
-		BCSettingsContainer,
+
+		container.NewHBox(
+			BCSettingsContainer,
+			widget.NewSeparator(),
+			printSettingsContainer,
+		),
 		widget.NewSeparator(),
-		printSettingsContainer,
-		widget.NewSeparator(),
-		fileOpen,
-		fileSave,
+		container.NewHBox(
+			fileOpen,
+			fileSave,
+		),
 	)
 
 	rightPanel := container.NewVBox(

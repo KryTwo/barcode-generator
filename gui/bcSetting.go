@@ -3,11 +3,13 @@ package gui
 import (
 	"main/config"
 
+	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/widget"
 )
 
 type BCSettingsWidgets struct {
+	Label         *widget.Label
 	LabelWidth    *widget.Label //label width
 	LabelHight    *widget.Label //label hight
 	LabelFontSize *widget.Label //label fontSize
@@ -18,6 +20,8 @@ type BCSettingsWidgets struct {
 }
 
 func MakeBCSettings() BCSettingsWidgets {
+	label := widget.NewLabelWithStyle("Настройки ШК", 1, fyne.TextStyle{Bold: true})
+
 	labelWidth := widget.NewLabel("Ширина штрихкода (мм)")
 	width := binding.BindInt(&config.Get().Width)
 	setWidth := widget.NewEntryWithData(binding.IntToString(width))
@@ -34,6 +38,7 @@ func MakeBCSettings() BCSettingsWidgets {
 	setFontSize.SetPlaceHolder("set font size...")
 
 	return BCSettingsWidgets{
+		Label:         label,
 		LabelWidth:    labelWidth,
 		LabelHight:    labelHight,
 		LabelFontSize: labelFontSize,

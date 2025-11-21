@@ -5,7 +5,6 @@ import (
 	"main/config"
 	"main/gui"
 
-	"fyne.io/fyne/v2"
 	fyneApp "fyne.io/fyne/v2/app"
 )
 
@@ -18,7 +17,7 @@ func main() {
 	controller := app.NewController(cfg)
 	gui.MakeUI(window, controller)
 
-	window.Resize(fyne.Size{Width: 800, Height: 800})
+	//window.Resize(fyne.Size{Width: 800, Height: 800})
 	window.CenterOnScreen()
 	window.ShowAndRun()
 

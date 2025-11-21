@@ -41,7 +41,7 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 
 	//размеры баркода в мм
 	bcHight := convert.MMToPointPDF(higth)
-	bcWidth := convert.MMToPointPDF(width)
+	bcWidth := convert.MMToPointPDF(width) - float64(marginToCrop)*2
 
 	//cfg := config.Get()
 	pdf := gofpdf.New("p", "pt", "A4", "")
