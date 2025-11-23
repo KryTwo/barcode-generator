@@ -1,0 +1,4504 @@
+Script started on 2025-11-23 12:21:07+03:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="160" LINES="10"]
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# cd ~[Kcd ~ls -a[K[Kscript
+[?2004lScript started, output log file is 'typescript'.
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# cd ~ls -a[1Pcd ~[Kсщты[Ksr[Kcro[Kiptp[K
+[?2004lScript started, output log file is 'typescript'.
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# bash -x script.sh 
+[?2004l+ echo 'Начало скрипта'
+Начало скрипта
++ set -x
++ GOFLAGS='-gcflags="all=-N" -gcflags="all=-l"'
++ fyne-cross windows -arch=amd64 --app-id bcgen.myapp
+script.sh: line 9: fyne-cross: command not found
++ set +x
+Конец скрипта
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# [7mwhich fyne-cross[27mwhich fyne-cross
+[?2004l[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# which fyne-crossbash -x script.sh 
+[?2004l+ echo 'Начало скрипта'
+Начало скрипта
++ set -x
++ GOFLAGS='-gcflags="all=-N" -gcflags="all=-l"'
++ /home/kry/go/bin/fyne-cross windows -arch=amd64 --app-id bcgen.myapp
+[i] Target: windows/amd64
+[i] Cleaning target directories...
+[✓] "bin" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64
+[✓] "dist" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64
+[✓] "temp" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/tmp/windows-amd64
+[i] Checking for go.mod: /home/kry/GolandProjects/barcode/go.mod
+[✓] go.mod found
+[i] Packaging app...
+2025/11/23 09:24:31 Fyne error:  Failed to inject metadata init file, omitting metadata
+2025/11/23 09:24:31   Cause: exit status 1
+2025/11/23 09:24:31   At: /go/pkg/mod/fyne.io/fyne/v2@v2.5.5/cmd/fyne/internal/commands/build.go:193
+go: parsing $GOFLAGS: non-flag "all=-N\\\""
+
+error building application: exit status 1
+[✗] could not package the Fyne app: exit status 1
++ set +x
+Конец скрипта
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# bash -x script.sh 
+[?2004l+ echo 'Начало скрипта'
+Начало скрипта
++ set -x
++ GOFLAGS='-gcflags=all=-N -gcflags=all=-l'
++ /home/kry/go/bin/fyne-cross windows -arch=amd64 --app-id bcgen.myapp
+[i] Target: windows/amd64
+[i] Cleaning target directories...
+[✓] "bin" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64
+[✓] "dist" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64
+[✓] "temp" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/tmp/windows-amd64
+[i] Checking for go.mod: /home/kry/GolandProjects/barcode/go.mod
+[✓] go.mod found
+[i] Packaging app...
+go: downloading fyne.io/fyne/v2 v2.7.0
+go: downloading github.com/boombuler/barcode v1.1.0
+go: downloading github.com/gen2brain/go-fitz v1.24.15
+go: downloading github.com/jung-kurt/gofpdf v1.16.2
+go: downloading github.com/nicksnyder/go-i18n/v2 v2.5.1
+go: downloading golang.org/x/text v0.31.0
+go: downloading github.com/fsnotify/fsnotify v1.9.0
+go: downloading github.com/jeandeaual/go-locale v0.0.0-20250612000132-0ef82f21eade
+go: downloading github.com/fredbi/uri v1.1.1
+go: downloading fyne.io/systray v1.11.1-0.20250603113521-ca66a66d8b58
+go: downloading github.com/fyne-io/image v0.1.1
+go: downloading github.com/go-gl/glfw/v3.3/glfw v0.0.0-20240506104042-037f3cc74f2a
+go: downloading golang.org/x/sys v0.38.0
+go: downloading github.com/go-text/render v0.2.0
+go: downloading github.com/go-text/typesetting v0.2.1
+go: downloading github.com/srwiley/rasterx v0.0.0-20220730225603-2ab79fcdd4ef
+go: downloading golang.org/x/image v0.33.0
+go: downloading github.com/go-gl/gl v0.0.0-20231021071112-07e5d0ea2e71
+go: downloading github.com/fyne-io/oksvg v0.2.0
+go: downloading github.com/BurntSushi/toml v1.5.0
+go: downloading github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
+go: downloading github.com/yuin/goldmark v1.7.8
+go: downloading github.com/jsummers/gobmp v0.0.0-20230614200233-a9de23ed2e25
+go: downloading github.com/godbus/dbus/v5 v5.1.0
+go: downloading golang.org/x/net v0.46.0
+go: downloading github.com/srwiley/oksvg v0.0.0-20221011165216-be6e8873101c
+# internal/unsafeheader
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigat
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# internal/byteorder
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# internal/profilerecord
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# internal/godebugs
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# internal/goarch
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+   sable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# internal/goos
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# internal/coverage/rtcov
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by tizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# math/bits
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profilpackage (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# math/bits
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# container/list
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# internal/asan
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadre references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# internal/asan
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configurationnfiguration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# internal/itoa
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# internal/syscall/windows/sysdll
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# unicode/utf16
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared librariesnt explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# internal/msan
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	re form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# crypto/internal/fips140/alias
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generat    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# log/internal
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	t configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# vendor/golang.org/x/crypto/cryptobyte/asn1
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# unicode
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# unicode/utf8
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# internal/nettrace
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    mports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# vendor/golang.org/x/crypto/internal/alias
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.  	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# encoding
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# golang.org/x/net/html/atom
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# main/structs
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# golang.org/x/text/internal/utf8internal
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# golang.org/x/text/encoding/internal/identifier
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# golang.org/x/image/math/f64
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded so show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# fyne.io/fyne/v2/driver
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# log/slog/internal
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# crypto/internal/boring/sig
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# internal/runtime/atomic
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+# internal/cpu
+flag provided but not defined: -gcflags
+usage: compile [options] file.go...
+  -%	debug non-static initializers
+  -+	compiling runtime
+  -B	disable bounds checking
+  -C	disable printing of columns in error messages
+  -D path
+    	set relative path for local imports
+  -E	debug symbol export
+  -I directory
+    	add directory to import search path
+  -K	debug missing line numbers
+  -L	also show actual source file names in error messages for positions affected by //line directives
+  -N	disable optimizations
+  -S	print assembly listing
+  -V	print version and exit
+  -W	debug parse tree after type checking
+  -asan
+    	build code compatible with C/C++ address sanitizer
+  -asmhdr file
+    	write assembly header to file
+  -bench file
+    	append benchmark times to file
+  -blockprofile file
+    	write block profile to file
+  -buildid id
+    	record id as the build id in the export metadata
+  -c int
+    	concurrency during compilation (1 means no concurrency) (default 20)
+  -clobberdead
+    	clobber dead stack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -tack slots (for debugging)
+  -clobberdeadreg
+    	clobber dead registers (for debugging)
+  -complete
+    	compiling complete package (no C or assembly)
+  -coveragecfg file
+    	read coverage configuration from file
+  -cpuprofile file
+    	write cpu profile to file
+  -d value
+    	enable debugging settings; try -d help
+  -dwarf
+    	generate DWARF symbols (default true)
+  -dwarfbasentries
+    	use base address selection entries in DWARF (default true)
+  -dwarflocationlists
+    	add location lists to DWARF in optimized mode (default true)
+  -dynlink
+    	support references to Go symbols defined in other shared libraries
+  -e	no limit on number of errors reported
+  -embedcfg file
+    	read go:embed configuration from file
+  -env definition
+    	add definition of the form key=value to environment
+  -errorurl
+    	print explanatory URL with error message if applicable
+  -gendwarfinl int
+    	generate DWARF inline info records (default 2)
+  -goversion string
+    	required version of the runtime
+  -h	halt on error
+  -importcfg file
+    	read import configuration from file
+  -installsuffix suffix
+    	set pkg directory suffix
+  -j	debug runtime-initialized variables
+  -json string
+    	version,file for JSON compiler/optimizer detail output
+  -l	disable inlining
+  -lang string
+    	Go language version source code expects
+  -linkobj file
+    	write linker-specific object to file
+  -linkshared
+    	generate code that will be linked against Go shared libraries
+  -live
+    	debug liveness analysis
+  -m	print optimization decisions
+  -memprofile file
+    	write memory profile to file
+  -memprofilerate rate
+    	set runtime.MemProfileRate to rate
+  -msan
+    	build code compatible with C/C++ memory sanitizer
+  -mutexprofile file
+    	write mutex profile to file
+  -nolocalimports
+    	reject local (relative) imports
+  -o file
+    	write output to file
+  -p path
+    	set expected package import path
+  -pack
+    	write to file.a instead of file.o
+  -pgoprofile file
+    	read profile or pre-process profile from file
+  -r	debug generated wrappers
+  -race
+    	enable race detector
+  -shared
+    	generate code that can be linked into a shared library
+  -smallframes
+    	reduce the size limit for stack allocated objects
+  -spectre list
+    	enable spectre mitigations in list (all, index, ret)
+  -std
+    	compiling standard library
+  -symabis file
+    	read symbol ABIs from file
+  -t	enable tracing for debugging the compiler
+  -traceprofile file
+    	write an execution trace to file
+  -trimpath prefix
+    	remove prefix from recorded source file paths
+  -v	increase debug verbosity
+  -w	debug type checking
+  -wb
+    	enable write barrier (default true)
+
+error building application: exit status 1
+[✗] could not package the Fyne app: exit status 1
++ set +x
+Конец скрипта
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# bash -x script.sh [Kbash -x script.sh 
+[?2004l+ echo 'Начало скрипта'
+Начало скрипта
++ set -x
++ GOFLAGS='-gcflags=all=-N -gcflags=all=-l'
++ /home/kry/go/bin/fyne-cross windows -arch=amd64 --app-id bcgen.myapp
+[i] Target: windows/amd64
+[i] Cleaning target directories...
+[✓] "bin" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64
+[✓] "dist" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64
+[✓] "temp" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/tmp/windows-amd64
+[i] Checking for go.mod: /home/kry/GolandProjects/barcode/go.mod
+[✓] go.mod found
+[i] Packaging app...
+  adding: barcode.exe (deflated 52%)
+[✓] Package: "/home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64/barcode.exe.zip"
++ set +x
+Конец скрипта
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# bash -x script.sh 
+[?2004l+ echo 'Начало скрипта'
+Начало скрипта
++ set -x
++ GOFLAGS='-gcflags=all=-N -gcflags=all=-l'
++ /home/kry/go/bin/fyne-cross windows -arch=amd64 --app-id bcgen.myapp
+[i] Target: windows/amd64
+[i] Cleaning target directories...
+[✓] "bin" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64
+[✓] "dist" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64
+[✓] "temp" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/tmp/windows-amd64
+[i] Checking for go.mod: /home/kry/GolandProjects/barcode/go.mod
+[✓] go.mod found
+[i] Packaging app...
+  adding: barcode.exe (deflated 52%)
+[✓] Package: "/home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64/barcode.exe.zip"
++ set +x
+Конец скрипта
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# ды[K[Kls
+[?2004l[0m[01;34mapp[0m      [01;34mconfig[0m   [01;34mcsvreader[0m  [01;34mfyne-cross[0m  go.sum  hello.pdf  [01;34mlabel[0m   [01;34mlogger[0m   [01;32mmakefont[0m  resultToPrint.pdf  [01;34msource[0m   TODO.txt    [01;34mutils[0m
+[01;34mbarcode[0m  [01;34mconvert[0m  [01;34mfonts[0m      go.mod      [01;34mgui[0m     [01;35mIcon.png[0m   [01;34mlayout[0m  main.go  [01;34mpreset[0m    script.sh          [01;34mstructs[0m  typescript  ТЗ.txt
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# cd f
+fonts/      fyne-cross/ 
+]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# cd fyne-cross/
+bin/  dist/ tmp/  
+]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# cd fyne-cross/bin/DDD[K[K[KD[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kpwd
+[?2004l/home/kry/GolandProjects/barcode
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# pwd[1Plsbash -x script.sh 
+[?2004l+ echo 'Начало скрипта'
+Начало скрипта
++ set -x
++ /home/kry/go/bin/fyne-cross windows -arch=amd64 --app-id bcgen.myapp
+[i] Target: windows/amd64
+[i] Cleaning target directories...
+[✓] "bin" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64
+[✓] "dist" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64
+[✓] "temp" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/tmp/windows-amd64
+[i] Checking for go.mod: /home/kry/GolandProjects/barcode/go.mod
+[✓] go.mod found
+[i] Packaging app...
+  adding: barcode.exe (deflated 52%)
+[✓] Package: "/home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64/barcode.exe.zip"
++ cp -f /home/kry/GolandProjects/barcode/fyne-cross/bin/barcode.exe /home/kry/sharing
+cp: cannot stat '/home/kry/GolandProjects/barcode/fyne-cross/bin/barcode.exe': No such file or directory
++ set +x
+Конец скрипта
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# bash -x script.sh 
+[?2004l+ echo 'Начало скрипта'
+Начало скрипта
++ set -x
++ /home/kry/go/bin/fyne-cross windows -arch=amd64 --app-id bcgen.myapp
+[i] Target: windows/amd64
+[i] Cleaning target directories...
+[✓] "bin" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64
+[✓] "dist" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64
+[✓] "temp" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/tmp/windows-amd64
+[i] Checking for go.mod: /home/kry/GolandProjects/barcode/go.mod
+[✓] go.mod found
+[i] Packaging app...
+  adding: barcode.exe (deflated 52%)
+[✓] Package: "/home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64/barcode.exe.zip"
++ cp -f /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64/barcode.exe /home/kry/sharing
++ set +x
+Конец скрипта
+[?2004h]0;root@kkage: "/home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64/barcode.exe.zip"
++ cp -f /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64/barcode.exe /home/kry/sharing
++ set +x
+Конец скрипта
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# bash -x script.sh 
+[?2004l+ echo 'Начало скрипта'
+Начало скрипта
++ set -x
++ /home/kry/go/bin/fyne-cross windows -arch=amd64 --app-id bcgen.myapp
+[i] Target: windows/amd64
+[i] Cleaning target directories...
+[✓] "dist" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64
+[✓] "temp" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/tmp/windows-amd64
+[✓] "bin" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64
+[i] Checking for go.mod: /home/kry/GolandProjects/barcode/go.mod
+[✓] go.mod found
+[i] Packaging app...
+  adding: barcode.exe (deflated 52%)
+[✓] Package: "/home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64/barcode.exe.zip"
++ cp -f /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64/barcode.exe /home/kry/sharing
++ set +x
+Конец скрипта
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# bash -x script.sh 
+[?2004l+ echo 'Начало скрипта'
+Начало скрипта
++ set -x
++ /home/kry/go/bin/fyne-cross windows -arch=amd64 --app-id bcgen.myapp
+[i] Target: windows/amd64
+[i] Cleaning target directories...
+[✓] "dist" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64
+[✓] "temp" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/tmp/windows-amd64
+[✓] "bin" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64
+[i] Checking for go.mod: /home/kry/GolandProjects/barcode/go.mod
+[✓] go.mod found
+[i] Packaging app...
+  adding: barcode.exe (deflated 52%)
+[✓] Package: "/home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64/barcode.exe.zip"
++ cp -f /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64/barcode.exe /home/kry/sharing
++ set +x
+Конец скрипта
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# go run main.gobash -x script.sh [4Pgo run main.gobash -x script.sh 
+[?2004l+ echo 'Начало скрипта'
+Начало скрипта
++ set -x
++ /home/kry/go/bin/fyne-cross windows -arch=amd64 --app-id bcgen.myapp
+[i] Target: windows/amd64
+[i] Cleaning target directories...
+[✓] "bin" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64
+[✓] "dist" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64
+[✓] "temp" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/tmp/windows-amd64
+[i] Checking for go.mod: /home/kry/GolandProjects/barcode/go.mod
+[✓] go.mod found
+[i] Packaging app...
+^[[3~^Z
+[1]+  Stopped                 bash -x script.sh
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# bash -x script.sh 
+[?2004l+ echo 'Начало скрипта'
+Начало скрипта
++ set -x
++ /home/kry/go/bin/fyne-cross windows -arch=amd64 --app-id bcgen.myapp
+[i] Target: windows/amd64
+[i] Cleaning target directories...
+[✓] "bin" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64
+[✓] "dist" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64
+[✓] "temp" dir cleaned: /home/kry/GolandProjects/barcode/fyne-cross/tmp/windows-amd64
+[i] Checking for go.mod: /home/kry/GolandProjects/barcode/go.mod
+[✓] go.mod found
+[i] Packaging app...
+  adding: barcode.exe (deflated 52%)
+[✓] Package: "/home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64/barcode.exe.zip"
++ cp -f /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64/barcode.exe /home/kry/sharing
++ set +x
+Конец скрипта

@@ -8,6 +8,7 @@ import (
 	"main/convert"
 	"main/csvreader"
 	"main/layout"
+	"main/logger"
 	"main/structs"
 	"strconv"
 )
@@ -30,8 +31,12 @@ func NewController(config *structs.Config) *Controller {
 }
 
 func (c *Controller) ProcessFile(data []byte) ProcessResult {
+	logger.Log.Info("try csvreader.Read")
 	records, _, err := csvreader.Read(data)
+	logger.Log.Info("success csvreader.Read")
+
 	if err != nil {
+		logger.LogError(err, "ошибка processFile")
 		return ProcessResult{Error: err}
 	}
 
@@ -120,23 +125,33 @@ func (c *Controller) SetXSpacing(data string) {
 }
 
 func (c *Controller) RegeneratePreview() {
+	logger.Log.Info("try RegeneratePreview")
 	if len(c.CurrentRecords) == 0 {
 		return
 	}
 
+	logger.Log.Info("try GenerateCode128")
 	imgs, err := barcode.GenerateCode128(c.CurrentRecords)
+	logger.Log.Info("done GenerateCode128")
+
 	if err != nil {
 		log.Fatalf("err: %v\n", err)
 		return
 	}
 
+	logger.Log.Info("try MakePDF")
 	PDFBytes := layout.MakePDF(imgs, c.CurrentRecords, false)
+	logger.Log.Info("done MakePDF")
 
+	logger.Log.Info("try BytesPdfToPNGConvert")
 	img := layout.BytesPdfToPNGConvert(PDFBytes)
+	logger.Log.Info("done BytesPdfToPNGConvert")
 
 	if c.OnPreviewUpdated != nil {
 		c.OnPreviewUpdated(img)
 	}
+	logger.Log.Info("done RegeneratePreview")
+
 }
 
 func (c *Controller) SavingFile() {

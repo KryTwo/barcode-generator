@@ -1,6 +1,6 @@
 module main
 
-go 1.25.3
+go 1.24.6
 
 require (
 	github.com/boombuler/barcode v1.1.0
