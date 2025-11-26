@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/csv"
-	"fmt"
+	"main/logger"
 	"slices"
 	"strings"
 )
@@ -33,7 +33,7 @@ func Read(data []byte) ([][]string, []string, error) {
 	scanner := bufio.NewReader(reader)
 	firstLine, err := scanner.ReadString('\n')
 	if err != nil {
-		panic(err)
+		logger.LogError(err, "error scanner.ReadString")
 	}
 	// fmt.Println(firstLine)
 	var commaSymbol string
@@ -60,7 +60,7 @@ func Read(data []byte) ([][]string, []string, error) {
 	//читаем заголовок
 	header, err := csvReader.Read()
 	if err != nil {
-		fmt.Println(err)
+		logger.LogError(err, "error csvReader.Read")
 	}
 
 	//выявляем соответствия по карте
@@ -87,11 +87,11 @@ func Read(data []byte) ([][]string, []string, error) {
 	for {
 		record, e := csvReader.Read()
 		if e != nil && strings.Contains(e.Error(), "wrong number of fields") {
-			fmt.Println(e)
+			logger.LogError(e, "error csvReader.Read")
 			continue
 		}
 		if e != nil {
-			// fmt.Println(e)
+			logger.LogError(err, "error csvReader.Read")
 			break
 		}
 		// fmt.Printf("record: %v\n", record)
