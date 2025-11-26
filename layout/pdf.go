@@ -29,6 +29,9 @@ import (
 func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 	var xPosTemp, yPosTemp float64
 
+	//если 0 - уменьшаем размер текста, если 1 - переносим текст на следующую строку
+	textWrapping := 0
+
 	cfg := config.Get()
 	//требуемые параметры баркода и ячейки
 	higth := cfg.Higth                        //мм
@@ -106,12 +109,19 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 			textWidth := pdf.GetStringWidth(data[i][1])
 			textWidth = textWidth * cellSizeMultiplier
 
-			//уменьшаем размер текста, если он выходит за границы ШК
-			for textWidth > bcWidth {
-				currentFontSize -= 1
-				pdf.SetFontSize(float64(currentFontSize))
-				textWidth = pdf.GetStringWidth(data[i][1])
+			switch textWrapping {
+			case 1:
+				if textWidth > bcWidth {
+
+				}
+			case 0:
+				for textWidth > bcWidth {
+					currentFontSize -= 1
+					pdf.SetFontSize(float64(currentFontSize))
+					textWidth = pdf.GetStringWidth(data[i][1])
+				}
 			}
+			//уменьшаем размер текста, если он выходит за границы ШК
 
 			textHigth, _ := pdf.GetFontSize()
 			textHigth = textHigth * cellSizeMultiplier
