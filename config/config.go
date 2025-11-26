@@ -34,7 +34,7 @@ func Init() {
 		YSpacing:     *ySpacing,
 		XSpacing:     *xSpacing,
 		WONB:         *wonb,
-		Hight:        *hight,
+		Higth:        *hight,
 		Width:        *width,
 		Margin:       *margin,
 		MarginToCrop: *marginToCrop,
@@ -55,7 +55,7 @@ func SetWidth(mm int) {
 
 func SetHight(mm int) {
 	cfg := Get()
-	cfg.Hight = mm
+	cfg.Higth = mm
 }
 
 func SetFontSize(size int) {

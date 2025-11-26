@@ -18,7 +18,7 @@ func (b *Barcode) MakeBarcodePreviewContainer() fyne.CanvasObject {
 	b.BCImage = canvas.NewImageFromImage(nil)
 	b.BCSize = fyne.Size{
 		Width:  float32(config.Get().Width) / 72 * float32(config.Get().DPI),
-		Height: float32(config.Get().Hight) / 72 * float32(config.Get().DPI),
+		Height: float32(config.Get().Higth) / 72 * float32(config.Get().DPI),
 	}
 	b.BCImage.SetMinSize(b.BCSize)
 	b.BCImage.FillMode = canvas.ImageFillContain

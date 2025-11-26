@@ -4429,10 +4429,6 @@ cp: cannot stat '/home/kry/GolandProjects/barcode/fyne-cross/bin/barcode.exe': N
 + cp -f /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64/barcode.exe /home/kry/sharing
 + set +x
 Конец скрипта
-[?2004h]0;root@kkage: "/home/kry/GolandProjects/barcode/fyne-cross/dist/windows-amd64/barcode.exe.zip"
-+ cp -f /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64/barcode.exe /home/kry/sharing
-+ set +x
-Конец скрипта
 [?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# bash -x script.sh 
 [?2004l+ echo 'Начало скрипта'
 Начало скрипта
@@ -4502,3 +4498,10 @@ cp: cannot stat '/home/kry/GolandProjects/barcode/fyne-cross/bin/barcode.exe': N
 + cp -f /home/kry/GolandProjects/barcode/fyne-cross/bin/windows-amd64/barcode.exe /home/kry/sharing
 + set +x
 Конец скрипта
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# [K]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# [?2004l
+exit
+There are stopped jobs.
+[?2004h]0;root@kry-L15C: /home/kry/GolandProjects/barcoderoot@kry-L15C:/home/kry/GolandProjects/barcode# [?2004l
+exit
+
+Script done on 2025-11-23 23:37:39+03:00 [COMMAND_EXIT_CODE="0"]

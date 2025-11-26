@@ -31,16 +31,17 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 
 	cfg := config.Get()
 	//требуемые параметры баркода и ячейки
-	higth := cfg.Hight               //мм
-	width := cfg.Width               //мм
-	ySpacing := cfg.YSpacing         //pt
-	xSpacing := cfg.XSpacing         //pt
-	margin := float64(cfg.Margin)    //pt
-	cellSizeMultiplier := 1.1        //множитель размера белого фона
-	marginToCrop := cfg.MarginToCrop //отступ в бок от краев штрихкода для прорисовки линии нарезки листа
+	higth := cfg.Higth                        //мм
+	width := cfg.Width                        //мм
+	ySpacing := cfg.YSpacing                  //pt
+	xSpacing := cfg.XSpacing                  //pt
+	margin := float64(cfg.Margin)             //pt
+	cellSizeMultiplier := 1.1                 //множитель размера белого фона
+	marginToCrop := float64(cfg.MarginToCrop) //отступ в бок от краев штрихкода для прорисовки линии нарезки листа
+	originalFontSize := cfg.FontSize
 
 	//размеры баркода в мм
-	bcHight := convert.MMToPointPDF(higth)
+	bcHigth := convert.MMToPointPDF(higth)
 	bcWidth := convert.MMToPointPDF(width) - float64(marginToCrop)*2
 
 	//cfg := config.Get()
@@ -65,19 +66,24 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 	//отступ от границ листа
 	pdf.SetMargins(margin, margin, margin)
 	pdf.SetAutoPageBreak(false, margin)
+
 	improvedTable := func() {
 		for i := 0; i < len(img); i++ {
+			currentFontSize := originalFontSize
+			pdf.SetFontSize(float64(currentFontSize))
+
 			//рисуем маркеры для резки
-			xPosToCrop := pdf.GetX() - float64(cfg.MarginToCrop)
-			yPosToCrop := pdf.GetY()
+			xPosToCrop := xPos - float64(cfg.MarginToCrop)
+			yPosToCrop := yPos
+			//толщина линий нарезкиы
 			pdf.SetLineWidth(0.2)
 			//левый верхний маркер
-			pdf.Line(xPosToCrop, yPosToCrop, xPosToCrop+float64(marginToCrop), yPosToCrop)
-			pdf.Line(xPosToCrop, yPosToCrop, xPosToCrop, yPosToCrop+float64(marginToCrop))
+			pdf.Line(xPosToCrop, yPosToCrop, xPosToCrop+marginToCrop, yPosToCrop)
+			pdf.Line(xPosToCrop, yPosToCrop, xPosToCrop, yPosToCrop+marginToCrop)
 			//правый нижний маркер
-			pdf.Line(xPosToCrop+bcWidth+float64(marginToCrop), yPosToCrop+bcHight, xPosToCrop+bcWidth+float64(marginToCrop)*2, yPosToCrop+bcHight)
-			pdf.Line(xPosToCrop+bcWidth+float64(marginToCrop)*2, yPosToCrop+bcHight, xPosToCrop+bcWidth+float64(marginToCrop)*2, yPosToCrop+bcHight-float64(marginToCrop))
-			// fmt.Printf("data: %v\n", data)
+			pdf.Line(xPosToCrop+bcWidth+marginToCrop, yPosToCrop+bcHigth, xPosToCrop+bcWidth+marginToCrop*2, yPosToCrop+bcHigth)
+			pdf.Line(xPosToCrop+bcWidth+marginToCrop*2, yPosToCrop+bcHigth, xPosToCrop+bcWidth+marginToCrop*2, yPosToCrop+bcHigth-marginToCrop)
+
 			fileName := "barcode" + strconv.Itoa(i)
 			imgBuf, err := imageToPNG(img[i])
 			if err != nil {
@@ -90,32 +96,40 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 			}
 
 			pdf.RegisterImageOptionsReader(fileName, opt, strings.NewReader(imgBuf.String()))
-			pdf.Image(fileName, xPos, yPos, bcWidth, bcHight, false, "", 0, "")
+			pdf.Image(fileName, xPos, yPos, bcWidth, bcHigth, false, "", 0, "")
 
 			//сохраняем текущие координаты
 			xPosTemp, yPosTemp = pdf.GetXY()
 
 			//добавляем фон
-			pdf.SetFillColor(255, 255, 255)
-			textWidht := pdf.GetStringWidth(data[i][1])
-			textHight, _ := pdf.GetFontSize()
-			textHight = textHight * cellSizeMultiplier
-			textWidht = textWidht * cellSizeMultiplier
+			pdf.SetFillColor(0, 255, 255)
+			textWidth := pdf.GetStringWidth(data[i][1])
+			textWidth = textWidth * cellSizeMultiplier
+
+			//уменьшаем размер текста, если он выходит за границы ШК
+			for textWidth > bcWidth {
+				currentFontSize -= 1
+				pdf.SetFontSize(float64(currentFontSize))
+				textWidth = pdf.GetStringWidth(data[i][1])
+			}
+
+			textHigth, _ := pdf.GetFontSize()
+			textHigth = textHigth * cellSizeMultiplier
 
 			//размещаем текст
 			// pdf.SetX(margin + bcWidth/2 - textWidht/2)
-			pdf.SetX(xPos + bcWidth/2 - textWidht/2)
-			pdf.CellFormat(textWidht, textHight, tr(data[i][1]), "", 0, "C", true, 0, "")
+			pdf.SetX(xPos + bcWidth/2 - textWidth/2)
+			pdf.CellFormat(textWidth, textHigth, tr(data[i][1]), "", 0, "C", true, 0, "")
 
 			//возвращаем координаты исходной точки
 			pdf.SetXY(xPosTemp, yPosTemp)
 
-			pdf.Ln(bcHight + ySpacing)
+			pdf.Ln(bcHigth + ySpacing)
 
 			yPos = pdf.GetY()
 
 			//смещение на второй столбец
-			if yPos >= yPageSize-ySpacing-bcHight {
+			if yPos >= yPageSize-ySpacing-bcHigth {
 				fmt.Printf("выход за пределы по высоте, итерация: %v\n\n", i)
 				pdf.SetY(margin)
 				yPos = pdf.GetY()
@@ -132,8 +146,6 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 				xPos = pdf.GetX()
 				yPos = pdf.GetY()
 			}
-			// fmt.Printf("xPos: %v ", math.Round(pdf.GetX()))
-			// fmt.Printf("yPos: %v\n", math.Round(yPos))
 		}
 	}
 

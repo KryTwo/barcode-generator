@@ -26,7 +26,7 @@ func DrawText(s string, img image.Image, bcLenX int) *image.RGBA {
 
 	//Создаем холст
 	fg, _ := image.Black, image.White
-	rgba := image.NewRGBA(image.Rect(0, 0, bcLenX, cfg.Hight))
+	rgba := image.NewRGBA(image.Rect(0, 0, bcLenX, cfg.Higth))
 	draw.Draw(rgba, rgba.Bounds(), img, image.Point{0, 0}, draw.Src)
 
 	//заливаем фон под текст

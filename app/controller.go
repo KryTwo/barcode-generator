@@ -54,7 +54,7 @@ func (c *Controller) CropBC(img *image.RGBA) *image.Image {
 	x1 = float64(c.config.Margin)/72*float64(c.config.DPI) - float64(c.config.MarginToCrop)/72*float64(c.config.DPI)
 	y1 = float64(c.config.Margin)/72*float64(c.config.DPI) - 20
 	x2 = x1 + float64(convert.MMToPT(c.config.Width))
-	y2 = y1 + float64(convert.MMToPT(c.config.Hight)) + 40
+	y2 = y1 + float64(convert.MMToPT(c.config.Higth)) + 40
 	croppRect := image.Rect(int(x1), int(y1), int(x2), int(y2))
 	croppImg := img.SubImage(croppRect)
 
