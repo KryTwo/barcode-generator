@@ -12,4 +12,5 @@ type Config struct {
 	Width        int
 	Margin       int
 	MarginToCrop int
+	TextWrapping bool
 }

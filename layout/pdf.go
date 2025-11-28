@@ -8,6 +8,7 @@ import (
 	"main/config"
 	"main/convert"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -29,9 +30,6 @@ import (
 func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 	var xPosTemp, yPosTemp float64
 
-	//если 0 - уменьшаем размер текста, если 1 - переносим текст на следующую строку
-	textWrapping := 0
-
 	cfg := config.Get()
 	//требуемые параметры баркода и ячейки
 	higth := cfg.Higth                        //мм
@@ -42,6 +40,7 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 	cellSizeMultiplier := 1.1                 //множитель размера белого фона
 	marginToCrop := float64(cfg.MarginToCrop) //отступ в бок от краев штрихкода для прорисовки линии нарезки листа
 	originalFontSize := cfg.FontSize
+	textWrapping := cfg.TextWrapping
 
 	//размеры баркода в мм
 	bcHigth := convert.MMToPointPDF(higth)
@@ -72,6 +71,8 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 
 	improvedTable := func() {
 		for i := 0; i < len(img); i++ {
+			var dataParts []string
+			dataParts = append(dataParts, data[i][1])
 			currentFontSize := originalFontSize
 			pdf.SetFontSize(float64(currentFontSize))
 
@@ -109,28 +110,45 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 			textWidth := pdf.GetStringWidth(data[i][1])
 			textWidth = textWidth * cellSizeMultiplier
 
-			switch textWrapping {
-			case 1:
-				if textWidth > bcWidth {
+			//var sepList = []string{" ", ",", ".", "-"}
+			//переносим или уменьшаем шрифт
 
+			switch textWrapping {
+			case true:
+				//Перенос текста
+				if textWidth > bcWidth {
+					dataParts = slices.Delete(dataParts, 0, 1)
+					dataParts = append(dataParts, data[i][1][:strings.LastIndex(data[i][1], "-")+1])
+					dataParts = append(dataParts, data[i][1][strings.LastIndex(data[i][1], "-")+1:])
+					fmt.Printf("dataParts: %v\n", dataParts)
+
+					pdf.SetFontSize(float64(currentFontSize))
+					textWidth = pdf.GetStringWidth(dataParts[0])
 				}
-			case 0:
+			case false:
+				//уменьшаем размер текста
 				for textWidth > bcWidth {
 					currentFontSize -= 1
 					pdf.SetFontSize(float64(currentFontSize))
-					textWidth = pdf.GetStringWidth(data[i][1])
+					textWidth = pdf.GetStringWidth(dataParts[0])
 				}
 			}
-			//уменьшаем размер текста, если он выходит за границы ШК
 
 			textHigth, _ := pdf.GetFontSize()
 			textHigth = textHigth * cellSizeMultiplier
 
 			//размещаем текст
-			// pdf.SetX(margin + bcWidth/2 - textWidht/2)
-			pdf.SetX(xPos + bcWidth/2 - textWidth/2)
-			pdf.CellFormat(textWidth, textHigth, tr(data[i][1]), "", 0, "C", true, 0, "")
+			if len(dataParts) > 1 {
+				pdf.SetX(xPos + bcWidth/2 - textWidth/2)
+				pdf.CellFormat(textWidth, textHigth, tr(dataParts[0]), "", 0, "C", true, 0, "")
+				pdf.SetY(pdf.GetY() + textHigth)
+				pdf.SetX(pdf.GetX() + bcWidth/2 - pdf.GetStringWidth(dataParts[1])/2)
 
+				pdf.CellFormat(pdf.GetStringWidth(dataParts[1])*cellSizeMultiplier, textHigth, tr(dataParts[1]), "", 0, "C", true, 0, "")
+			} else {
+				pdf.SetX(xPos + bcWidth/2 - textWidth/2)
+				pdf.CellFormat(textWidth, textHigth, tr(dataParts[0]), "", 0, "C", true, 0, "")
+			}
 			//возвращаем координаты исходной точки
 			pdf.SetXY(xPosTemp, yPosTemp)
 

@@ -88,6 +88,11 @@ func (c *Controller) SetFontSize(data string) {
 	c.RegeneratePreview()
 }
 
+func (c *Controller) SetTextWrapping(data bool) {
+	config.SetTextWrapping(data)
+	c.RegeneratePreview()
+}
+
 func (c *Controller) SetMargin(data string) {
 	d, err := strconv.Atoi(data)
 	if err != nil {

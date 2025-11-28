@@ -14,7 +14,7 @@ import (
 func MakeUI(w fyne.Window, controller *app.Controller) {
 	var b Barcode
 	BCContainer := b.MakeBarcodePreviewContainer()
-	BCSettings := MakeBCSettings()
+	BCSettings := MakeBCSettings(controller)
 	PrintSettings := MakePrintSettings()
 
 	//параметры контейнера с превью печати
@@ -30,6 +30,7 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 		BCSettings.SetHight,
 		BCSettings.LabelFontSize,
 		BCSettings.SetFontSize,
+		BCSettings.SetTextWrapping,
 	)
 
 	//настройки печати

@@ -1,7 +1,9 @@
 package gui
 
 import (
+	"main/app"
 	"main/config"
+	"main/logger"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/data/binding"
@@ -17,9 +19,11 @@ type BCSettingsWidgets struct {
 	SetWidth    *widget.Entry //entry width
 	SetHight    *widget.Entry //entry hight
 	SetFontSize *widget.Entry //entry fontSize
+
+	SetTextWrapping *widget.Check //check textWrapping
 }
 
-func MakeBCSettings() BCSettingsWidgets {
+func MakeBCSettings(c *app.Controller) BCSettingsWidgets {
 	label := widget.NewLabelWithStyle("Настройки ШК", 1, fyne.TextStyle{Bold: true})
 
 	labelWidth := widget.NewLabel("Ширина штрихкода (мм)")
@@ -37,13 +41,28 @@ func MakeBCSettings() BCSettingsWidgets {
 	setFontSize := widget.NewEntryWithData(binding.IntToString(fontSize))
 	setFontSize.SetPlaceHolder("set font size...")
 
+	boolData := binding.NewBool()
+	boolData.Set(true)
+	setTextWrapping := widget.NewCheckWithData("Перенос текста", boolData)
+	listener := binding.NewDataListener(
+		func() {
+			checked, err := boolData.Get()
+			if err != nil {
+				logger.LogError(err, "failed get boolData in bcSettings")
+			}
+			c.SetTextWrapping(checked)
+		},
+	)
+	boolData.AddListener(listener)
+
 	return BCSettingsWidgets{
-		Label:         label,
-		LabelWidth:    labelWidth,
-		LabelHight:    labelHight,
-		LabelFontSize: labelFontSize,
-		SetWidth:      setWidth,
-		SetHight:      setHight,
-		SetFontSize:   setFontSize,
+		Label:           label,
+		LabelWidth:      labelWidth,
+		LabelHight:      labelHight,
+		LabelFontSize:   labelFontSize,
+		SetWidth:        setWidth,
+		SetHight:        setHight,
+		SetFontSize:     setFontSize,
+		SetTextWrapping: setTextWrapping,
 	}
 }

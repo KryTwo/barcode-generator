@@ -16,6 +16,7 @@ func Init() {
 	fontfile := flag.String("fontfile", "./fonts/RobotoforLearning-Black_0.ttf", "filename of the ttf font")
 	hinting := flag.String("hinting", "none", "none | full")
 	fontSize := flag.Int("size", 20, "font size in points")
+	textWrapping := flag.Bool("textWrapping", true, "if true - wrap the text, if false - rescale text to low")
 	ySpacing := flag.Float64("ySpacing", 30, "spacing btw bc (pt)")
 	xSpacing := flag.Float64("xSpacing", 50, "spacing btw bc (pt)")
 	wonb := flag.Bool("whiteonblack", false, "white text on a black background")
@@ -38,6 +39,7 @@ func Init() {
 		Width:        *width,
 		Margin:       *margin,
 		MarginToCrop: *marginToCrop,
+		TextWrapping: *textWrapping,
 	}
 }
 
@@ -81,6 +83,11 @@ func SetYSpacing(spacing float64) {
 func SetXSpacing(spacing float64) {
 	cfg := Get()
 	cfg.XSpacing = float64(spacing)
+}
+
+func SetTextWrapping(wrap bool) {
+	cfg := Get()
+	cfg.TextWrapping = wrap
 }
 
 // func SetSize()
