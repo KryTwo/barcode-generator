@@ -8,7 +8,6 @@ import (
 	"main/config"
 	"main/convert"
 	"os"
-	"slices"
 	"strconv"
 	"strings"
 
@@ -37,10 +36,8 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 	ySpacing := cfg.YSpacing                  //pt
 	xSpacing := cfg.XSpacing                  //pt
 	margin := float64(cfg.Margin)             //pt
-	cellSizeMultiplier := 1.1                 //множитель размера белого фона
 	marginToCrop := float64(cfg.MarginToCrop) //отступ в бок от краев штрихкода для прорисовки линии нарезки листа
 	originalFontSize := cfg.FontSize
-	textWrapping := cfg.TextWrapping
 
 	//размеры баркода в мм
 	bcHigth := convert.MMToPointPDF(higth)
@@ -71,15 +68,14 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 
 	improvedTable := func() {
 		for i := 0; i < len(img); i++ {
-			var dataParts []string
-			dataParts = append(dataParts, data[i][1])
+			fmt.Printf("data[i][1]: %v\n", data[i][1])
 			currentFontSize := originalFontSize
 			pdf.SetFontSize(float64(currentFontSize))
 
 			//рисуем маркеры для резки
 			xPosToCrop := xPos - float64(cfg.MarginToCrop)
 			yPosToCrop := yPos
-			//толщина линий нарезкиы
+			//толщина линий нарезки
 			pdf.SetLineWidth(0.2)
 			//левый верхний маркер
 			pdf.Line(xPosToCrop, yPosToCrop, xPosToCrop+marginToCrop, yPosToCrop)
@@ -104,59 +100,23 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 
 			//сохраняем текущие координаты
 			xPosTemp, yPosTemp = pdf.GetXY()
-
-			//добавляем фон
-			pdf.SetFillColor(0, 255, 255)
-			textWidth := pdf.GetStringWidth(data[i][1])
-			textWidth = textWidth * cellSizeMultiplier
-
-			//var sepList = []string{" ", ",", ".", "-"}
-			//переносим или уменьшаем шрифт
-
-			switch textWrapping {
-			case true:
-				//Перенос текста
-				if textWidth > bcWidth {
-					dataParts = slices.Delete(dataParts, 0, 1)
-					dataParts = append(dataParts, data[i][1][:strings.LastIndex(data[i][1], "-")+1])
-					dataParts = append(dataParts, data[i][1][strings.LastIndex(data[i][1], "-")+1:])
-					fmt.Printf("dataParts: %v\n", dataParts)
-
-					pdf.SetFontSize(float64(currentFontSize))
-					textWidth = pdf.GetStringWidth(dataParts[0])
-				}
-			case false:
-				//уменьшаем размер текста
-				for textWidth > bcWidth {
-					currentFontSize -= 1
-					pdf.SetFontSize(float64(currentFontSize))
-					textWidth = pdf.GetStringWidth(dataParts[0])
-				}
-			}
-
-			textHigth, _ := pdf.GetFontSize()
-			textHigth = textHigth * cellSizeMultiplier
-
-			//размещаем текст
-			if len(dataParts) > 1 {
-				pdf.SetX(xPos + bcWidth/2 - textWidth/2)
-				pdf.CellFormat(textWidth, textHigth, tr(dataParts[0]), "", 0, "C", true, 0, "")
-				pdf.SetY(pdf.GetY() + textHigth)
-				pdf.SetX(pdf.GetX() + bcWidth/2 - pdf.GetStringWidth(dataParts[1])/2)
-
-				pdf.CellFormat(pdf.GetStringWidth(dataParts[1])*cellSizeMultiplier, textHigth, tr(dataParts[1]), "", 0, "C", true, 0, "")
-			} else {
-				pdf.SetX(xPos + bcWidth/2 - textWidth/2)
-				pdf.CellFormat(textWidth, textHigth, tr(dataParts[0]), "", 0, "C", true, 0, "")
+			fmt.Printf("ширина текста: %v\n", pdf.GetStringWidth(data[i][1]))
+			fmt.Printf("ширина баркода (после границ нарезки): %v\n", bcWidth)
+			fmt.Println()
+			//рисуем текст поверх шк
+			drawBarcodeTextNew(pdf, tr, data[i][1], xPos, yPos, bcWidth, bcHigth)
+			if 1 < 0 {
+				drawBarcodeText(pdf, tr, data[i][1], xPos, yPos, bcWidth, bcHigth)
 			}
 			//возвращаем координаты исходной точки
 			pdf.SetXY(xPosTemp, yPosTemp)
 
+			//смещение координат для начала отрисовки следующего штрихкода
 			pdf.Ln(bcHigth + ySpacing)
 
 			yPos = pdf.GetY()
 
-			//смещение на второй столбец
+			//смещение на второй столбец, если текущий заполнен
 			if yPos >= yPageSize-ySpacing-bcHigth {
 				fmt.Printf("выход за пределы по высоте, итерация: %v\n\n", i)
 				pdf.SetY(margin)
@@ -166,7 +126,7 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 				xPos = pdf.GetX()
 			}
 
-			//смещение в начало нового листа
+			//смещение в начало нового листа, если текущий заполнен
 			if xPos >= xPageSize-xSpacing-bcWidth {
 				fmt.Printf("выход за пределы по ширине, итерация: %v\n\n", i)
 				pdf.AddPage()
@@ -179,22 +139,178 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 
 	improvedTable()
 
-	switch saveToFile {
-	case false:
-		var buf bytes.Buffer
-		pdf.Output(&buf)
-		pdfBytes := buf.Bytes()
-		return pdfBytes
-	default:
+	if saveToFile {
 		err := pdf.OutputFileAndClose("resultToPrint.pdf")
 		if err != nil {
 			fmt.Printf("outpuFileAndClose error: %v\n", err)
 		}
 		return nil
+	} else {
+		var buf bytes.Buffer
+		pdf.Output(&buf)
+		pdfBytes := buf.Bytes()
+		return pdfBytes
 	}
 
 }
 
+func drawBarcodeTextNew(pdf *gofpdf.Fpdf, tr func(string) string, text string, x, y, bcWidth, bcHigth float64) {
+	cfg := config.Get()
+	currentFontSize := cfg.FontSize
+	//cellSizeMultiplier := 1.0
+	textWidth := pdf.GetStringWidth(text)
+	textHigth, _ := pdf.GetFontSize()
+	pdf.SetFillColor(0, 255, 0)
+
+	fmt.Printf("textWidth: %v\n", textWidth)
+	fmt.Printf("bcWidth: %v\n", bcWidth)
+	fmt.Printf("textHigth: %v\n", textHigth)
+	fmt.Printf("bcHigth: %v\n", bcHigth)
+
+	if cfg.TextWrapping {
+		//Размещение текста с переносом по сепаратору
+		if textWidth < bcWidth && textHigth < bcHigth {
+			pdf.CellFormat(textWidth, textHigth, tr(text), "", 0, "C", true, 0, "")
+		} else {
+			sep := currentSeparator(text)
+			dataParts := strings.Split(text, sep)
+			//dataPartsCount := len(dataParts)
+			var partsWidthSum float64
+			var res int
+			for i, s := range dataParts {
+				partsWidth := pdf.GetStringWidth(s)
+				partsWidthSum += partsWidth
+
+				if partsWidthSum > bcWidth {
+					res = i
+					break
+				}
+			}
+
+		}
+	} else {
+		//Размещение текста без переноса, с уменьшением размера текста
+		if textWidth > bcWidth || textHigth > bcHigth/2 {
+			for {
+				currentFontSize -= 1
+				pdf.SetFontSize(float64(currentFontSize))
+				fmt.Printf("currentFontSize: %v\n", currentFontSize)
+				textWidth = pdf.GetStringWidth(text)
+				textHigth, _ = pdf.GetFontSize()
+
+				if textWidth < bcWidth && textHigth < bcHigth/2 {
+					break
+				}
+			}
+			pdf.CellFormat(textWidth, textHigth, tr(text), "", 0, "C", true, 0, "")
+		} else {
+			pdf.CellFormat(textWidth, textHigth, tr(text), "", 0, "C", true, 0, "")
+		}
+	}
+
+}
+
+func currentSeparator(text string) string {
+	var sepList = []string{" ", ",", ".", "-"}
+	var sepSymbol string
+	for _, v := range sepList {
+		out := 0
+		count := strings.Count(text, v)
+		if count > out {
+			out = count
+			sepSymbol = v
+		}
+	}
+	return sepSymbol
+}
+
+func drawBarcodeText(pdf *gofpdf.Fpdf, tr func(string) string, text string, x, y, bcWidth, bcHigth float64) {
+	cfg := config.Get()
+	currentFontSize := cfg.FontSize
+	cellSizeMultiplier := 1.0
+
+	var dataParts []string
+	//цвет фона
+	pdf.SetFillColor(0, 255, 0)
+
+	textWidth := pdf.GetStringWidth(text)
+	textWidth = textWidth * cellSizeMultiplier
+
+	textHigth, _ := pdf.GetFontSize()
+	textHigth *= cellSizeMultiplier
+
+	//var sepList = []string{" ", ",", ".", "-"}
+
+	//переносим или уменьшаем шрифт
+	if cfg.TextWrapping {
+		//Перенос текста
+		delimiter := "-" //TODO: добавить автоопределение разделителя
+		if textWidth > float64(bcWidth) {
+			dataParts = strings.Split(text, delimiter)
+			pdf.SetFontSize(float64(currentFontSize))
+		}
+	} else {
+		//уменьшаем размер текста
+		for textWidth > float64(cfg.Width) || textHigth*2 > bcHigth {
+			currentFontSize -= 1
+			pdf.SetFontSize(float64(currentFontSize))
+			textWidth = pdf.GetStringWidth(text)
+			textHigth, _ = pdf.GetFontSize()
+		}
+	}
+
+	//размещаем текст
+	if len(dataParts) > 1 {
+		for _, v := range dataParts {
+			for len(dataParts)*int(textHigth) > int(bcHigth)/2 {
+				textHigth, _ = pdf.GetFontSize()
+				currentFontSize -= 1
+				pdf.SetFontSize(float64(currentFontSize))
+			}
+
+			textWidth = pdf.GetStringWidth(v)
+
+			pdf.SetX(float64(cfg.Margin) + bcWidth/2 - textWidth/2 - float64(cfg.MarginToCrop)/2)
+			pdf.CellFormat(textWidth, textHigth, tr(v), "", 0, "C", true, 0, "")
+			pdf.SetY(pdf.GetY() + textHigth)
+		}
+
+	} else {
+		pdf.SetX(x + bcWidth/2 - textWidth/2)
+		pdf.CellFormat(textWidth, textHigth, tr(text), "", 0, "C", true, 0, "")
+	}
+}
+
+/*func getRuneCount(data string) (int, int, int, int, int) {
+	var latinUpper, latinLower, cyrillicUpper, cyrillicLower int
+	var count int
+	for _, r := range data {
+		count++
+		if unicode.Is(unicode.Latin, r) {
+			if unicode.IsUpper(r) {
+				latinUpper++
+			} else {
+				latinLower++
+			}
+		} else if unicode.Is(unicode.Cyrillic, r) {
+			if unicode.IsUpper(r) {
+				cyrillicUpper++
+			} else {
+				cyrillicLower++
+			}
+		}
+	}
+	fmt.Printf("data: %v\n", data)
+	fmt.Printf("cyrillicLower: %v\n", cyrillicLower)
+	fmt.Printf("cyrillicUpper: %v\n", cyrillicUpper)
+	fmt.Printf("latinLower: %v\n", latinLower)
+	fmt.Printf("latinUpper: %v\n", latinUpper)
+	fmt.Printf("count: %v\n", count)
+	fmt.Println()
+
+	return latinUpper, latinLower, cyrillicUpper, cyrillicLower, count
+}
+*/
 // прогоняем image в буфер
 func imageToPNG(img image.Image) (*bytes.Buffer, error) {
 	var buf bytes.Buffer
