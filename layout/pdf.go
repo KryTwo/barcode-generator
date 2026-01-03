@@ -162,10 +162,10 @@ func drawBarcodeTextNew(pdf *gofpdf.Fpdf, tr func(string) string, text string, x
 	textHigth, _ := pdf.GetFontSize()
 	pdf.SetFillColor(0, 255, 0)
 
-	fmt.Printf("textWidth: %v\n", textWidth)
-	fmt.Printf("bcWidth: %v\n", bcWidth)
-	fmt.Printf("textHigth: %v\n", textHigth)
-	fmt.Printf("bcHigth: %v\n", bcHigth)
+	// fmt.Printf("textWidth: %v\n", textWidth)
+	// fmt.Printf("bcWidth: %v\n", bcWidth)
+	// fmt.Printf("textHigth: %v\n", textHigth)
+	// fmt.Printf("bcHigth: %v\n", bcHigth)
 
 	if cfg.TextWrapping {
 		//Размещение текста с переносом по сепаратору
@@ -175,16 +175,42 @@ func drawBarcodeTextNew(pdf *gofpdf.Fpdf, tr func(string) string, text string, x
 			sep := currentSeparator(text)
 			dataParts := strings.Split(text, sep)
 			//dataPartsCount := len(dataParts)
-			var partsWidthSum float64
-			var res int
-			for i, s := range dataParts {
-				partsWidth := pdf.GetStringWidth(s)
-				partsWidthSum += partsWidth
+			var partsWidthSum float64 //сумма длинн частей текста
+			var parts []string
+			fmt.Printf("ширина баркода: %v\n", bcWidth)
+			for _, v := range dataParts {
+				fmt.Printf("v: %v\n", v)
+				fmt.Printf("v string size: %v\n", pdf.GetStringWidth(v))
+			}
 
-				if partsWidthSum > bcWidth {
-					res = i
-					break
+			//123332221-5555-22
+			// v: 123332221
+			// v: 5555
+			// v: 22
+
+			//итерируемся по всему тексту разбивая на части
+			for i, s := range dataParts {
+				//если не вмещается первый элемент, то уменьшаем размер шрифта
+				//i:0 s:123332221
+				if i == 0 {
+					parts = append(parts, s)
+
+					for pdf.GetStringWidth(s+sep) > bcWidth {
+						currentFontSize += 1
+						pdf.SetFontSize(float64(currentFontSize))
+					}
+				} else {
+					//i:1 s:5555
+					parts = append(parts, s)
+					for _, v := range parts {
+						partsWidthSum += pdf.GetStringWidth(v)
+					}
+
+					if partsWidthSum > bcWidth {
+						parts = parts[0 : len(parts)-1]
+					}
 				}
+
 			}
 
 		}
@@ -194,7 +220,7 @@ func drawBarcodeTextNew(pdf *gofpdf.Fpdf, tr func(string) string, text string, x
 			for {
 				currentFontSize -= 1
 				pdf.SetFontSize(float64(currentFontSize))
-				fmt.Printf("currentFontSize: %v\n", currentFontSize)
+				// fmt.Printf("currentFontSize: %v\n", currentFontSize)
 				textWidth = pdf.GetStringWidth(text)
 				textHigth, _ = pdf.GetFontSize()
 
