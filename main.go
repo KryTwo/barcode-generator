@@ -14,7 +14,6 @@ func main() {
 
 	config.Init()
 	cfg := config.Get()
-
 	myApp := fyneApp.NewWithID("bcgen.myapp")
 	window := myApp.NewWindow("Barcode Generator")
 	controller := app.NewController(cfg)
