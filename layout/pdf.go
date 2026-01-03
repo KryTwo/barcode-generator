@@ -170,51 +170,80 @@ func drawBarcodeTextNew(pdf *gofpdf.Fpdf, tr func(string) string, text string, x
 	if cfg.TextWrapping {
 		//Размещение текста с переносом по сепаратору
 		if textWidth < bcWidth && textHigth < bcHigth {
+			pdf.SetX(x + (bcWidth-textWidth)/2)
 			pdf.CellFormat(textWidth, textHigth, tr(text), "", 0, "C", true, 0, "")
 		} else {
+			//находим разделитель
 			sep := currentSeparator(text)
+
+			//разбиваем текст на части по разделителю sep
 			dataParts := strings.Split(text, sep)
-			//dataPartsCount := len(dataParts)
-			var partsWidthSum float64 //сумма длинн частей текста
-			var parts []string
-			fmt.Printf("ширина баркода: %v\n", bcWidth)
-			for _, v := range dataParts {
-				fmt.Printf("v: %v\n", v)
-				fmt.Printf("v string size: %v\n", pdf.GetStringWidth(v))
+
+			//добавляем разделитель для каждой из частей текста
+			for i := range dataParts {
+				if i != len(dataParts)-1 {
+					dataParts[i] = dataParts[i] + sep
+				}
 			}
+			var buf string
+			var result []string
+			var i int
+			for {
+				result = []string{}
+				buf = ""
+				textHigth, _ = pdf.GetFontSize()
 
-			//123332221-5555-22
-			// v: 123332221
-			// v: 5555
-			// v: 22
+				i++
+				fmt.Println(i)
+				pdf.SetFontSize(float64(currentFontSize))
+				a, b := pdf.GetFontSize()
+				fmt.Printf("a: %v\n", a)
+				fmt.Printf("b: %v\n", b)
 
-			//итерируемся по всему тексту разбивая на части
-			for i, s := range dataParts {
-				//если не вмещается первый элемент, то уменьшаем размер шрифта
-				//i:0 s:123332221
-				if i == 0 {
-					parts = append(parts, s)
-
-					for pdf.GetStringWidth(s+sep) > bcWidth {
-						currentFontSize += 1
-						pdf.SetFontSize(float64(currentFontSize))
-					}
-				} else {
-					//i:1 s:5555
-					parts = append(parts, s)
-					for _, v := range parts {
-						partsWidthSum += pdf.GetStringWidth(v)
-					}
-
-					if partsWidthSum > bcWidth {
-						parts = parts[0 : len(parts)-1]
+				//text = 123332221-5555-22
+				for _, v := range dataParts {
+					if pdf.GetStringWidth(buf+v) <= bcWidth {
+						buf = buf + v
+					} else {
+						result = append(result, buf)
+						buf = v
 					}
 				}
+				result = append(result, buf)
 
+				for _, v := range result {
+					fmt.Printf("v: %v\n", v)
+				}
+
+				totalHeight := len(result) * int(textHigth)
+				fmt.Printf("totalHeight: %v\n", totalHeight)
+				fmt.Printf("bcHigth: %v\n", bcHigth)
+				if totalHeight <= int(bcHigth)/2 {
+					break
+				} else {
+					currentFontSize -= 1
+				}
+
+				fmt.Println()
 			}
 
+			//находим самую широкую строку
+			var maxWidthString string
+			for _, v := range result {
+				if len(v) > len(maxWidthString) {
+					maxWidthString = v
+				}
+			}
+
+			textWidth = pdf.GetStringWidth(maxWidthString)
+
+			for _, v := range result {
+				pdf.SetX(x + (bcWidth-textWidth)/2)
+				pdf.CellFormat(textWidth, textHigth, tr(v), "", 1, "C", true, 0, "")
+			}
 		}
 	} else {
+		//Готово
 		//Размещение текста без переноса, с уменьшением размера текста
 		if textWidth > bcWidth || textHigth > bcHigth/2 {
 			for {
@@ -228,8 +257,10 @@ func drawBarcodeTextNew(pdf *gofpdf.Fpdf, tr func(string) string, text string, x
 					break
 				}
 			}
+			pdf.SetX(x + (bcWidth-textWidth)/2)
 			pdf.CellFormat(textWidth, textHigth, tr(text), "", 0, "C", true, 0, "")
 		} else {
+			pdf.SetX(x + (bcWidth-textWidth)/2)
 			pdf.CellFormat(textWidth, textHigth, tr(text), "", 0, "C", true, 0, "")
 		}
 	}
