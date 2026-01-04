@@ -116,6 +116,15 @@ func setupSubmittedHandler(
 ) {
 	entry.OnSubmitted = func(text string) {
 		fmt.Println(text)
+		for _, r := range text {
+			if r < '0' || r > '9' {
+				// Если есть хоть один нецифровой символ — игнорируем ввод
+				return
+			}
+		}
+		if text == "" {
+			return
+		}
 		handlerFunc(text)
 		previewImage.Refresh()
 		b.BCImage.Refresh()
