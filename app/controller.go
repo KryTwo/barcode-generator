@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"image"
 	"log"
 	"main/barcode"
@@ -61,10 +62,40 @@ func (c *Controller) CropBC(img *image.RGBA) *image.Image {
 	return &croppImg
 }
 
+// i - проверяемое значение, param - имя изменяемого значения:
+// bcw - bcWidth, bch - bcHight, fs - fontSize, tw - textWrapping,
+// mg - margin, mgtc - marginToCrop, ysp - ySpacing, xsp - xSpacing
+func checkOutOfBounds(i int, param string) bool {
+	switch param {
+	case "bcw":
+		//Если есть отступы, то суммируем ширину
+		if config.Get().MarginToCrop != 0 {
+			i += config.Get().MarginToCrop * 2
+		}
+		//Если выходит за пределы, то возвращаем false
+		if i < 7 && i > 190 {
+			return false
+		}
+		return true
+	case "bch":
+	case "fs":
+	case "tw":
+	case "mg":
+	case "mgtc":
+	case "ysp":
+	case "xsp":
+	}
+	return true
+}
+
 func (c *Controller) SetBCWidth(data string) {
 	d, err := strconv.Atoi(data)
 	if err != nil {
 		log.Fatalf("Failed convert ATOI in SetBCWidth: %v\n", err)
+	}
+	fmt.Printf("d before oob: %v\n", d)
+	if !checkOutOfBounds(d, "bcw") {
+		return
 	}
 	config.SetWidth(d)
 	c.RegeneratePreview()

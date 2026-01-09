@@ -15,7 +15,7 @@ func Init() {
 	dpi := flag.Int("dpi", 300, "screen resolution in Dots Per Inch")
 	fontfile := flag.String("fontfile", "./fonts/RobotoforLearning-Black_0.ttf", "filename of the ttf font")
 	hinting := flag.String("hinting", "none", "none | full")
-	fontSize := flag.Int("size", 25, "font size in points")
+	fontSize := flag.Int("size", 20, "font size in points")
 	textWrapping := flag.Bool("textWrapping", true, "if true - wrap the text, if false - rescale text to low")
 	ySpacing := flag.Float64("ySpacing", 30, "spacing btw bc (pt)")
 	xSpacing := flag.Float64("xSpacing", 50, "spacing btw bc (pt)")
@@ -23,7 +23,7 @@ func Init() {
 	hight := flag.Int("height", 30, "set barcode height in mm")
 	width := flag.Int("width", 70, "set barcode width in mm")
 	margin := flag.Int("margin", 50.0, "(pt) set margin from border list")
-	marginToCrop := flag.Int("marginToCrop", 10, "(mm) set margin from left and right borders to crop")
+	marginToCrop := flag.Int("marginToCrop", 0, "(mm) set margin from left and right borders to crop")
 
 	flag.Parse()
 

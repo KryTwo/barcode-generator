@@ -10,7 +10,11 @@
             "request": "launch",
             "mode": "auto",
             "program": "${workspaceFolder}",
-            "env": {},
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "CGO_ENABLED": "1",
+                "CC": "gcc" 
+            },
             "args": []
         }
     ]
