@@ -7,6 +7,7 @@ import (
 	"main/logger"
 
 	fyneApp "fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/theme"
 )
 
 func main() {
@@ -16,6 +17,7 @@ func main() {
 	cfg := config.Get()
 
 	myApp := fyneApp.NewWithID("bcgen.myapp")
+	myApp.Settings().SetTheme(theme.DarkTheme())
 	window := myApp.NewWindow("Barcode Generator")
 	controller := app.NewController(cfg)
 	gui.MakeUI(window, controller)

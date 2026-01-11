@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image"
 	"main/app"
+	"main/layout"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -46,13 +47,13 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 		PrintSettings.setMarginToCrop,
 	)
 
-	setupSubmittedHandler(PrintSettings.setXSpacing, controller.SetXSpacing, previewImage, &b)
-	setupSubmittedHandler(PrintSettings.setYSpacing, controller.SetYSpacing, previewImage, &b)
-	setupSubmittedHandler(PrintSettings.setMargin, controller.SetMargin, previewImage, &b)
-	setupSubmittedHandler(PrintSettings.setMarginToCrop, controller.SetMarginToCrop, previewImage, &b)
-	setupSubmittedHandler(BCSettings.SetWidth, controller.SetBCWidth, previewImage, &b)
-	setupSubmittedHandler(BCSettings.SetHight, controller.SetBCHight, previewImage, &b)
-	setupSubmittedHandler(BCSettings.SetFontSize, controller.SetFontSize, previewImage, &b)
+	setupSubmittedHandler(PrintSettings.setXSpacing, controller.SetXSpacing, previewImage, &b, layout.ValidateXSpacing)
+	setupSubmittedHandler(PrintSettings.setYSpacing, controller.SetYSpacing, previewImage, &b, layout.ValidateYSpacing)
+	setupSubmittedHandler(PrintSettings.setMargin, controller.SetMargin, previewImage, &b, layout.ValidateMargin)
+	setupSubmittedHandler(PrintSettings.setMarginToCrop, controller.SetMarginToCrop, previewImage, &b, layout.ValidateMarginToCrop)
+	setupSubmittedHandler(BCSettings.SetWidth, controller.SetBCWidth, previewImage, &b, layout.ValidateBCWidth)
+	setupSubmittedHandler(BCSettings.SetHight, controller.SetBCHight, previewImage, &b, layout.ValidateBCHight)
+	setupSubmittedHandler(BCSettings.SetFontSize, controller.SetFontSize, previewImage, &b, layout.ValidateFontSize)
 
 	controller.OnPreviewUpdated = func(r *image.RGBA) {
 		previewImage.Image = r
@@ -113,18 +114,26 @@ func setupSubmittedHandler(
 	handlerFunc func(string),
 	previewImage *canvas.Image,
 	b *Barcode,
+	validateFunc func(string) bool,
 ) {
 	entry.OnSubmitted = func(text string) {
 		fmt.Println(text)
+
+		//ограничение вводимых символов цифрами
 		for _, r := range text {
 			if r < '0' || r > '9' {
-				// Если есть хоть один нецифровой символ — игнорируем ввод
 				return
 			}
 		}
+		//если поле ввода пустое
 		if text == "" {
 			return
 		}
+		//если не проходим валидность по лимитам
+		if !validateFunc(text) {
+			return
+		}
+
 		handlerFunc(text)
 		previewImage.Refresh()
 		b.BCImage.Refresh()
