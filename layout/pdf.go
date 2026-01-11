@@ -6,7 +6,6 @@ import (
 	"image"
 	"image/png"
 	"main/config"
-	"main/convert"
 	"os"
 	"strconv"
 	"strings"
@@ -40,11 +39,11 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 	originalFontSize := cfg.FontSize
 
 	//размеры баркода в мм
-	bcHigth := convert.MMToPointPDF(higth)
-	bcWidth := convert.MMToPointPDF(width) - float64(marginToCrop)*2
+	bcHigth := float64(higth)
+	bcWidth := float64(width) - float64(marginToCrop)*2
 
 	//cfg := config.Get()
-	pdf := gofpdf.New("p", "pt", "A4", "")
+	pdf := gofpdf.New("p", "mm", "A4", "")
 
 	pdf.AddPage()
 
@@ -72,10 +71,8 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 			currentFontSize := originalFontSize
 			pdf.SetFontSize(float64(currentFontSize))
 
-			fmt.Printf("pdf.PointConvert(28.436): %v\n", pdf.PointConvert(28.436))
-
 			//визуальная линейка для упрощения (разделение по 1 см)
-			xPosMarking := xPageSize / 21 //21 см ширина а4 листа
+			xPosMarking := 10.0
 			nums := []string{}
 
 			for i := 1; i < 30; i++ {
@@ -85,12 +82,12 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 			f := 0
 
 			for xPosMarking <= xPageSize && f < len(nums) {
-				pdf.Line(float64(xPosMarking), 1, float64(xPosMarking), 28.346)
+				pdf.Line(float64(xPosMarking), 1, float64(xPosMarking), 10)
 				pdf.SetFontSize(14)
 				pdf.SetTextColor(0, 0, 255)
 
-				pdf.Text(xPosMarking-20, 20, nums[f])
-				xPosMarking += 28.346
+				pdf.Text(xPosMarking-5, 5, nums[f])
+				xPosMarking += 10
 
 				f++
 			}
