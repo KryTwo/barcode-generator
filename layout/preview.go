@@ -1,8 +1,8 @@
 package layout
 
 import (
+	"barcode-app/logger"
 	"image"
-	"main/logger"
 
 	"github.com/gen2brain/go-fitz"
 )

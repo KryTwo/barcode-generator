@@ -1,11 +1,11 @@
 package gui
 
 import (
+	"barcode-app/app"
+	"barcode-app/logger"
 	"fmt"
 	"io"
 	"log"
-	"main/app"
-	"main/logger"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/dialog"

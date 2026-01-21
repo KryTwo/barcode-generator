@@ -1,10 +1,10 @@
 package gui
 
 import (
+	"barcode-app/app"
+	"barcode-app/layout"
 	"fmt"
 	"image"
-	"main/app"
-	"main/layout"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -12,12 +12,13 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func MakeUI(w fyne.Window, controller *app.Controller) {
+func MakeUI(w fyne.Window, controller *app.Controller, a fyne.App) {
 	var b Barcode
 	BCContainer := b.MakeBarcodePreviewContainer()
 	BCSettings := MakeBCSettings(controller)
 	PrintSettings := MakePrintSettings()
-
+	//Меню бар
+	w.SetMainMenu(makeMenu(a))
 	//параметры контейнера с превью печати
 	previewImage := MakePrintPreview()
 	previewContainer := container.NewStack(previewImage)
@@ -62,24 +63,27 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 		b.BCImage.Refresh()
 	}
 
+	//Кнопка Выбор файла
 	openFileStruct := makeOpenFile(w, controller)
 	fileOpen := container.NewVBox(
 		openFileStruct.openFileLabel,
 		openFileStruct.openFileButton,
 	)
 
+	//Кнопка сохранить
 	SaveFileContainer := makeSaveFile(w, controller)
 	fileSave := container.NewVBox(
 		SaveFileContainer.saveFileLabel,
 		SaveFileContainer.saveFileButton,
 	)
 
+	//Превью печати
 	printPreview := container.NewVBox(
 		widget.NewLabelWithStyle("Предпросмотр печати", 1, fyne.TextStyle{Bold: true}),
 		widget.NewSeparator(),
 		previewContainer,
 	)
-
+	//Левая панель
 	leftPanel := container.NewVBox(
 		container.NewCenter(BCContainer),
 		widget.NewSeparator(),
@@ -95,11 +99,12 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 			fileSave,
 		),
 	)
-
+	//Правая панель
 	rightPanel := container.NewVBox(
 		printPreview,
 	)
 
+	//Главное окно
 	mainHBox := container.NewHSplit(
 		leftPanel,
 		rightPanel,

@@ -1,10 +1,10 @@
 package csvreader
 
 import (
+	"barcode-app/logger"
 	"bufio"
 	"bytes"
 	"encoding/csv"
-	"main/logger"
 	"slices"
 	"strings"
 )

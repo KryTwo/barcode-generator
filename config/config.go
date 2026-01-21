@@ -1,8 +1,8 @@
 package config
 
 import (
+	"barcode-app/structs"
 	"flag"
-	"main/structs"
 )
 
 var instance *structs.Config

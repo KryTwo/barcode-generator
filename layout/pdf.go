@@ -1,11 +1,11 @@
 package layout
 
 import (
+	"barcode-app/config"
 	"bytes"
 	"fmt"
 	"image"
 	"image/png"
-	"main/config"
 	"os"
 	"strconv"
 	"strings"
@@ -72,26 +72,26 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 			pdf.SetFontSize(float64(currentFontSize))
 
 			//визуальная линейка для упрощения (разделение по 1 см)
-			xPosMarking := 10.0
-			nums := []string{}
+			// xPosMarking := 10.0
+			// nums := []string{}
 
-			for i := 1; i < 30; i++ {
-				nums = append(nums, strconv.Itoa(i))
-			}
+			// for i := 1; i < 30; i++ {
+			// 	nums = append(nums, strconv.Itoa(i))
+			// }
 
-			f := 0
+			// f := 0
 
-			for xPosMarking <= xPageSize && f < len(nums) {
-				pdf.Line(float64(xPosMarking), 1, float64(xPosMarking), 10)
-				pdf.SetFontSize(14)
-				pdf.SetTextColor(0, 0, 255)
+			// for xPosMarking <= xPageSize && f < len(nums) {
+			// 	pdf.Line(float64(xPosMarking), 1, float64(xPosMarking), 10)
+			// 	pdf.SetFontSize(14)
+			// 	pdf.SetTextColor(0, 0, 255)
 
-				pdf.Text(xPosMarking-5, 5, nums[f])
-				xPosMarking += 10
+			// 	pdf.Text(xPosMarking-5, 5, nums[f])
+			// 	xPosMarking += 10
 
-				f++
-			}
-			pdf.SetTextColor(0, 0, 0)
+			// 	f++
+			// }
+			// pdf.SetTextColor(0, 0, 0)
 			///////////////////////////////////////////////
 
 			//рисуем маркеры для резки
@@ -192,7 +192,7 @@ func drawBarcodeText(pdf *gofpdf.Fpdf, tr func(string) string, text string, x, y
 
 	if cfg.TextWrapping {
 		//Размещение текста с переносом по сепаратору
-		if textWidth < bcWidth && textHigth < bcHigth {
+		if textWidth < bcWidth && textHigth < bcHigth/2 {
 			pdf.SetX(x + (bcWidth-textWidth)/2)
 			pdf.CellFormat(textWidth, textHigth, tr(text), "", 0, "C", true, 0, "")
 		} else {

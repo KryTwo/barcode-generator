@@ -1,15 +1,15 @@
 package app
 
 import (
+	"barcode-app/barcode"
+	"barcode-app/config"
+	"barcode-app/convert"
+	"barcode-app/csvreader"
+	"barcode-app/layout"
+	"barcode-app/logger"
+	"barcode-app/structs"
 	"image"
 	"log"
-	"main/barcode"
-	"main/config"
-	"main/convert"
-	"main/csvreader"
-	"main/layout"
-	"main/logger"
-	"main/structs"
 	"strconv"
 )
 

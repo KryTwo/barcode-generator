@@ -1,8 +1,8 @@
 package label
 
 import (
+	"barcode-app/config"
 	"fmt"
-	"main/config"
 	"os"
 
 	"github.com/golang/freetype/truetype"

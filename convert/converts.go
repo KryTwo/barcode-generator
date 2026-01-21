@@ -1,6 +1,6 @@
 package convert
 
-import "main/config"
+import "barcode-app/config"
 
 const mmInch float64 = 25.4
 

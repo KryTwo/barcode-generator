@@ -1,9 +1,9 @@
 package gui
 
 import (
-	"main/app"
-	"main/config"
-	"main/logger"
+	"barcode-app/app"
+	"barcode-app/config"
+	"barcode-app/logger"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/data/binding"

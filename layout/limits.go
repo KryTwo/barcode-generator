@@ -1,9 +1,9 @@
 package layout
 
 import (
+	"barcode-app/config"
+	"barcode-app/logger"
 	"fmt"
-	"main/config"
-	"main/logger"
 	"strconv"
 )
 
