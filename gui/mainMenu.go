@@ -9,23 +9,32 @@ import (
 )
 
 func makeMenu(a fyne.App) *fyne.MainMenu {
-	fileItem := fyne.NewMenuItem("TODO something", func() {
+	fileOpenFile := fyne.NewMenuItem("Open File", func() {
 		fmt.Println("some")
 	})
+	fileOpenRecentFile := fyne.NewMenuItem("Open Recent", nil)
+	fileOpenRecentFile.ChildMenu = fyne.NewMenu("", fyne.NewMenuItem("last opened", nil), fyne.NewMenuItem("first opened", nil))
+
 	settingsItem := fyne.NewMenuItem("TODO settings", func() {
 		fmt.Println("settings print")
 	})
+
 	showAbout := func() {
 		w := a.NewWindow("About")
+		w.CenterOnScreen()
 		w.SetContent(widget.NewLabelWithStyle(aboutContent, fyne.TextAlignCenter, fyne.TextStyle{}))
 		w.Show()
 	}
+
 	//проверка новой версии. Одной кнопкой? Вывести текущую версию.
 	checkUpdates := func() {
-		w := a.NewWindow("Updates")
+		w := a.NewWindow("Version")
+		w.CenterOnScreen()
 		w.Resize(fyne.Size{Width: 200, Height: 100})
 		content := container.NewVBox(
-			widget.NewButton("Check", func() { fmt.Println("Last version has installed") }),
+			widget.NewLabel("Current vesion: 0.0.1"),
+			widget.NewLabel("Available version: 0.0.1"),
+			widget.NewButton("Update", func() { fmt.Println("Updating...") }),
 		)
 
 		w.SetContent(container.NewCenter(content))
@@ -35,7 +44,7 @@ func makeMenu(a fyne.App) *fyne.MainMenu {
 	helpCheckUpdates := fyne.NewMenuItem("Check updates", checkUpdates)
 	//help_help := fyne.NewMenuItem("About", showAbout)
 
-	File := fyne.NewMenu("File", fileItem)
+	File := fyne.NewMenu("File", fileOpenFile, fileOpenRecentFile)
 	Settings := fyne.NewMenu("Settings", settingsItem)
 	help := fyne.NewMenu("Help", helpAbout, helpCheckUpdates)
 
@@ -44,4 +53,7 @@ func makeMenu(a fyne.App) *fyne.MainMenu {
 
 }
 
-var aboutContent string = "This program is designed to simplify the barcode printing process\nand reduce paper consumption.\n\nSpecially for Vi.ru\n\nDistributed free of charge."
+var aboutContent string = "This program is designed to simplify the barcode printing process\n" +
+	"and reduce paper consumption.\n\n" +
+	"Specially for Vi.ru\n\n" +
+	"Distributed free of charge."
