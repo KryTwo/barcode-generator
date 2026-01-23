@@ -8,6 +8,7 @@ import (
 	"barcode-app/layout"
 	"barcode-app/logger"
 	"barcode-app/structs"
+	"errors"
 	"image"
 	"log"
 	"strconv"
@@ -152,10 +153,15 @@ func (c *Controller) RegeneratePreview() {
 
 	logger.Log.Info("try MakePDF")
 	PDFBytes := layout.MakePDF(imgs, c.CurrentRecords, false)
+	if len(PDFBytes) == 0 {
+		logger.LogError(errors.New("empty pdfbytes"), "cannot get PDFBytes")
+		return
+	}
 	logger.Log.Info("done MakePDF")
 
 	logger.Log.Info("try BytesPdfToPNGConvert")
 	img := layout.BytesPdfToPNGConvert(PDFBytes)
+
 	logger.Log.Info("done BytesPdfToPNGConvert")
 
 	if c.OnPreviewUpdated != nil {

@@ -2,11 +2,17 @@ package layout
 
 import (
 	"barcode-app/config"
+	"barcode-app/logger"
+	"log"
+	"os"
+	"path/filepath"
+
+	_ "embed"
+
 	"bytes"
 	"fmt"
 	"image"
 	"image/png"
-	"os"
 	"strconv"
 	"strings"
 
@@ -23,6 +29,15 @@ import (
 // при dpi:96  | (794 / 1123)
 // при dpi:300 | (2450 / 3508)
 // при dpi:600 | (4960 / 7016)
+
+//go:embed fonts/DejaVuSans.json
+var dejavuSansJson []byte
+
+//go:embed fonts/DejaVuSans.z
+var dejavuSansZ []byte
+
+//go:embed fonts/cp1251.map
+var cp1251Map []byte
 
 // when saveToFile == true, the function returns nil and saves the .pdf file.
 func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
@@ -42,18 +57,23 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 	bcHigth := float64(higth)
 	bcWidth := float64(width) - float64(marginToCrop)*2
 
+	tempDir := os.TempDir()
+	mapPath := filepath.Join(tempDir, "cp1251.map")
+	if err := os.WriteFile(mapPath, cp1251Map, 0644); err != nil {
+		log.Fatalf("Не удалось создать временный файл: %v", err)
+	}
 	//cfg := config.Get()
-	pdf := gofpdf.New("p", "mm", "A4", "")
-
-	pdf.AddPage()
+	pdf := gofpdf.New("p", "mm", "A4", tempDir)
 
 	//загружаем шрифт из .json и .z
 	loadFont(pdf)
 	pdf.SetFont("DejaVuSans", "", float64(cfg.FontSize))
+	tr := pdf.UnicodeTranslatorFromDescriptor("cp1251")
+
+	pdf.AddPage()
 
 	//стартовая точка
 	pdf.SetXY(margin, margin)
-	tr := pdf.UnicodeTranslatorFromDescriptor("./fonts/cp1251")
 
 	// 	pagesize w & h
 	// 595.28 841.89 pt
@@ -67,7 +87,7 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 
 	improvedTable := func() {
 		for i := 0; i < len(img); i++ {
-			fmt.Printf("data[i][1]: %v\n", data[i][1])
+			// fmt.Printf("data[i][1]: %v\n", data[i][1])
 			currentFontSize := originalFontSize
 			pdf.SetFontSize(float64(currentFontSize))
 
@@ -123,9 +143,9 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 
 			//сохраняем текущие координаты
 			xPosTemp, yPosTemp = pdf.GetXY()
-			fmt.Printf("ширина текста: %v\n", pdf.GetStringWidth(data[i][1]))
-			fmt.Printf("ширина баркода (после границ нарезки): %v\n", bcWidth)
-			fmt.Println()
+			// fmt.Printf("ширина текста: %v\n", pdf.GetStringWidth(data[i][1]))
+			// fmt.Printf("ширина баркода (после границ нарезки): %v\n", bcWidth)
+			// fmt.Println()
 
 			//рисуем текст поверх шк
 			drawBarcodeText(pdf, tr, data[i][1], xPos, yPos, bcWidth, bcHigth)
@@ -140,7 +160,7 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 
 			//смещение на второй столбец, если текущий заполнен
 			if yPos >= yPageSize-ySpacing-bcHigth {
-				fmt.Printf("выход за пределы по высоте, итерация: %v\n\n", i)
+				// fmt.Printf("выход за пределы по высоте, итерация: %v\n\n", i)
 				pdf.SetY(margin)
 				yPos = pdf.GetY()
 
@@ -150,7 +170,7 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 
 			//смещение в начало нового листа, если текущий заполнен
 			if xPos >= xPageSize-xSpacing-bcWidth {
-				fmt.Printf("выход за пределы по ширине, итерация: %v\n\n", i)
+				// fmt.Printf("выход за пределы по ширине, итерация: %v\n\n", i)
 				pdf.AddPage()
 				pdf.SetXY(margin, margin)
 				xPos = pdf.GetX()
@@ -163,15 +183,21 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 
 	//если saveToFile == true, то сохраняем в файл, иначе копируем в буфер
 	if saveToFile {
+		logger.Log.Info("try to save to file in pdf.go")
 		err := pdf.OutputFileAndClose("resultToPrint.pdf")
 		if err != nil {
 			fmt.Printf("outpuFileAndClose error: %v\n", err)
 		}
 		return nil
 	} else {
+		logger.Log.Info("not try to save to file in pdf.go")
+
 		var buf bytes.Buffer
 		pdf.Output(&buf)
 		pdfBytes := buf.Bytes()
+		logger.Log.Info("pdf get len pdfbytes")
+		logger.Log.Info(strconv.Itoa(len(pdfBytes)))
+
 		return pdfBytes
 	}
 
@@ -217,13 +243,13 @@ func drawBarcodeText(pdf *gofpdf.Fpdf, tr func(string) string, text string, x, y
 				textHigth, _ = pdf.GetFontSize()
 
 				i++
-				fmt.Println(i)
+				//fmt.Println(i)
 
 				pdf.SetFontSize(float64(currentFontSize))
-				a, b := pdf.GetFontSize()
+				//a, b := pdf.GetFontSize()
 
-				fmt.Printf("a: %v\n", a)
-				fmt.Printf("b: %v\n", b)
+				// fmt.Printf("a: %v\n", a)
+				// fmt.Printf("b: %v\n", b)
 
 				//text = 123332221-5555-22
 				for _, v := range dataParts {
@@ -236,20 +262,20 @@ func drawBarcodeText(pdf *gofpdf.Fpdf, tr func(string) string, text string, x, y
 				}
 				result = append(result, buf)
 
-				for _, v := range result {
-					fmt.Printf("v: %v\n", v)
-				}
+				// for _, v := range result {
+				// 	fmt.Printf("v: %v\n", v)
+				// }
 
 				totalHeight := len(result) * int(textHigth)
-				fmt.Printf("totalHeight: %v\n", totalHeight)
-				fmt.Printf("bcHigth: %v\n", bcHigth)
+				// fmt.Printf("totalHeight: %v\n", totalHeight)
+				// fmt.Printf("bcHigth: %v\n", bcHigth)
 				if totalHeight <= int(bcHigth)/2 {
 					break
 				} else {
 					currentFontSize -= 1
 				}
 
-				fmt.Println()
+				// fmt.Println()
 			}
 
 			//находим самую широкую строку
@@ -306,93 +332,6 @@ func currentSeparator(text string) string {
 	return sepSymbol
 }
 
-// func drawBarcodeText(pdf *gofpdf.Fpdf, tr func(string) string, text string, x, y, bcWidth, bcHigth float64) {
-// 	cfg := config.Get()
-// 	currentFontSize := cfg.FontSize
-// 	cellSizeMultiplier := 1.0
-
-// 	var dataParts []string
-// 	//цвет фона
-// 	pdf.SetFillColor(0, 255, 0)
-
-// 	textWidth := pdf.GetStringWidth(text)
-// 	textWidth = textWidth * cellSizeMultiplier
-
-// 	textHigth, _ := pdf.GetFontSize()
-// 	textHigth *= cellSizeMultiplier
-
-// 	//var sepList = []string{" ", ",", ".", "-"}
-
-// 	//переносим или уменьшаем шрифт
-// 	if cfg.TextWrapping {
-// 		//Перенос текста
-// 		delimiter := "-" //TODO: добавить автоопределение разделителя
-// 		if textWidth > float64(bcWidth) {
-// 			dataParts = strings.Split(text, delimiter)
-// 			pdf.SetFontSize(float64(currentFontSize))
-// 		}
-// 	} else {
-// 		//уменьшаем размер текста
-// 		for textWidth > float64(cfg.Width) || textHigth*2 > bcHigth {
-// 			currentFontSize -= 1
-// 			pdf.SetFontSize(float64(currentFontSize))
-// 			textWidth = pdf.GetStringWidth(text)
-// 			textHigth, _ = pdf.GetFontSize()
-// 		}
-// 	}
-
-// 	//размещаем текст
-// 	if len(dataParts) > 1 {
-// 		for _, v := range dataParts {
-// 			for len(dataParts)*int(textHigth) > int(bcHigth)/2 {
-// 				textHigth, _ = pdf.GetFontSize()
-// 				currentFontSize -= 1
-// 				pdf.SetFontSize(float64(currentFontSize))
-// 			}
-
-// 			textWidth = pdf.GetStringWidth(v)
-
-// 			pdf.SetX(float64(cfg.Margin) + bcWidth/2 - textWidth/2 - float64(cfg.MarginToCrop)/2)
-// 			pdf.CellFormat(textWidth, textHigth, tr(v), "", 0, "C", true, 0, "")
-// 			pdf.SetY(pdf.GetY() + textHigth)
-// 		}
-
-// 	} else {
-// 		pdf.SetX(x + bcWidth/2 - textWidth/2)
-// 		pdf.CellFormat(textWidth, textHigth, tr(text), "", 0, "C", true, 0, "")
-// 	}
-// }
-
-/*func getRuneCount(data string) (int, int, int, int, int) {
-	var latinUpper, latinLower, cyrillicUpper, cyrillicLower int
-	var count int
-	for _, r := range data {
-		count++
-		if unicode.Is(unicode.Latin, r) {
-			if unicode.IsUpper(r) {
-				latinUpper++
-			} else {
-				latinLower++
-			}
-		} else if unicode.Is(unicode.Cyrillic, r) {
-			if unicode.IsUpper(r) {
-				cyrillicUpper++
-			} else {
-				cyrillicLower++
-			}
-		}
-	}
-	fmt.Printf("data: %v\n", data)
-	fmt.Printf("cyrillicLower: %v\n", cyrillicLower)
-	fmt.Printf("cyrillicUpper: %v\n", cyrillicUpper)
-	fmt.Printf("latinLower: %v\n", latinLower)
-	fmt.Printf("latinUpper: %v\n", latinUpper)
-	fmt.Printf("count: %v\n", count)
-	fmt.Println()
-
-	return latinUpper, latinLower, cyrillicUpper, cyrillicLower, count
-}
-*/
 // прогоняем image в буфер
 func imageToPNG(img image.Image) (*bytes.Buffer, error) {
 	var buf bytes.Buffer
@@ -404,14 +343,5 @@ func imageToPNG(img image.Image) (*bytes.Buffer, error) {
 }
 
 func loadFont(pdf *gofpdf.Fpdf) {
-	jsonBytes, err := os.ReadFile("./fonts/DejaVuSans.json")
-	if err != nil {
-		fmt.Printf("jsonBytes err: %v\n", err)
-	}
-	zBytes, err := os.ReadFile("./fonts/DejaVuSans.z")
-	if err != nil {
-		fmt.Printf("zBytes err: %v\n", err)
-	}
-
-	pdf.AddFontFromBytes("DejaVuSans", "", jsonBytes, zBytes)
+	pdf.AddFontFromBytes("DejaVuSans", "", dejavuSansJson, dejavuSansZ)
 }
