@@ -3,7 +3,6 @@ package layout
 import (
 	"barcode-app/config"
 	"barcode-app/logger"
-	"log"
 	"os"
 	"path/filepath"
 
@@ -60,7 +59,7 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 	tempDir := os.TempDir()
 	mapPath := filepath.Join(tempDir, "cp1251.map")
 	if err := os.WriteFile(mapPath, cp1251Map, 0644); err != nil {
-		log.Fatalf("Не удалось создать временный файл: %v", err)
+		logger.Log.Error("Не удалось создать временный файл")
 	}
 	//cfg := config.Get()
 	pdf := gofpdf.New("p", "mm", "A4", tempDir)
