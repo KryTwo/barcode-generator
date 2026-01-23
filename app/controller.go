@@ -1,15 +1,16 @@
 package app
 
 import (
+	"barcode-app/barcode"
+	"barcode-app/config"
+	"barcode-app/convert"
+	"barcode-app/csvreader"
+	"barcode-app/layout"
+	"barcode-app/logger"
+	"barcode-app/structs"
+	"errors"
 	"image"
 	"log"
-	"main/barcode"
-	"main/config"
-	"main/convert"
-	"main/csvreader"
-	"main/layout"
-	"main/logger"
-	"main/structs"
 	"strconv"
 )
 
@@ -50,11 +51,17 @@ func (c *Controller) ProcessFile(data []byte) ProcessResult {
 func (c *Controller) CropBC(img *image.RGBA) *image.Image {
 	// fmt.Printf("img.Bounds(): %v\n", img.Bounds())
 	// fmt.Printf("c.config.Margin: %v\n", c.config.Margin)
+	// x1 = float64(c.config.Margin)/72*float64(c.config.DPI) - float64(c.config.MarginToCrop)/72*float64(c.config.DPI)
+	// y1 = float64(c.config.Margin)/72*float64(c.config.DPI) - 20
+	// x2 = x1 + float64(convert.MMToPT(c.config.Width))
+	// y2 = y1 + float64(convert.MMToPT(c.config.Higth)) + 40
 	var x1, x2, y1, y2 float64
-	x1 = float64(c.config.Margin)/72*float64(c.config.DPI) - float64(c.config.MarginToCrop)/72*float64(c.config.DPI)
-	y1 = float64(c.config.Margin)/72*float64(c.config.DPI) - 20
-	x2 = x1 + float64(convert.MMToPT(c.config.Width))
-	y2 = y1 + float64(convert.MMToPT(c.config.Higth)) + 40
+
+	x1 = convert.MMToPT(c.config.Margin - c.config.MarginToCrop)
+	y1 = convert.MMToPT(c.config.Margin - 3)
+
+	x2 = x1 + convert.MMToPT(c.config.Width)
+	y2 = y1 + convert.MMToPT(c.config.Higth+6)
 	croppRect := image.Rect(int(x1), int(y1), int(x2), int(y2))
 	croppImg := img.SubImage(croppRect)
 
@@ -146,10 +153,15 @@ func (c *Controller) RegeneratePreview() {
 
 	logger.Log.Info("try MakePDF")
 	PDFBytes := layout.MakePDF(imgs, c.CurrentRecords, false)
+	if len(PDFBytes) == 0 {
+		logger.LogError(errors.New("empty pdfbytes"), "cannot get PDFBytes")
+		return
+	}
 	logger.Log.Info("done MakePDF")
 
 	logger.Log.Info("try BytesPdfToPNGConvert")
 	img := layout.BytesPdfToPNGConvert(PDFBytes)
+
 	logger.Log.Info("done BytesPdfToPNGConvert")
 
 	if c.OnPreviewUpdated != nil {

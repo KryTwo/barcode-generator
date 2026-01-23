@@ -1,11 +1,11 @@
 package label
 
 import (
+	"barcode-app/config"
 	"fmt"
 	"image"
 	"image/color"
 	"image/draw"
-	"main/config"
 	"math"
 
 	"github.com/golang/freetype/truetype"

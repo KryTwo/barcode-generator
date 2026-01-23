@@ -1,8 +1,8 @@
 package layout
 
 import (
+	"barcode-app/logger"
 	"image"
-	"main/logger"
 
 	"github.com/gen2brain/go-fitz"
 )
@@ -10,14 +10,15 @@ import (
 func PdfToPNGConvert() *image.RGBA {
 	doc, err := fitz.New("hello.pdf")
 	if err != nil {
-		panic(err)
+		logger.LogError(err, "error in pdfToPNGConvert (fitz.New)")
+
 	}
 
 	defer doc.Close()
 
 	img, err := doc.Image(0)
 	if err != nil {
-		panic(err)
+		logger.LogError(err, "error in pdfToPNGConvert (dpc.Image)")
 	}
 
 	return img

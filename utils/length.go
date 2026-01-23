@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"main/config"
+	"barcode-app/config"
 )
 
 type Millimeter int

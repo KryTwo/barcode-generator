@@ -1,9 +1,10 @@
 package gui
 
 import (
+	"barcode-app/app"
+	"barcode-app/layout"
 	"fmt"
 	"image"
-	"main/app"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -11,12 +12,13 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func MakeUI(w fyne.Window, controller *app.Controller) {
+func MakeUI(w fyne.Window, controller *app.Controller, a fyne.App) {
 	var b Barcode
 	BCContainer := b.MakeBarcodePreviewContainer()
 	BCSettings := MakeBCSettings(controller)
 	PrintSettings := MakePrintSettings()
-
+	//Меню бар
+	w.SetMainMenu(makeMenu(a))
 	//параметры контейнера с превью печати
 	previewImage := MakePrintPreview()
 	previewContainer := container.NewStack(previewImage)
@@ -46,13 +48,13 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 		PrintSettings.setMarginToCrop,
 	)
 
-	setupSubmittedHandler(PrintSettings.setXSpacing, controller.SetXSpacing, previewImage, &b)
-	setupSubmittedHandler(PrintSettings.setYSpacing, controller.SetYSpacing, previewImage, &b)
-	setupSubmittedHandler(PrintSettings.setMargin, controller.SetMargin, previewImage, &b)
-	setupSubmittedHandler(PrintSettings.setMarginToCrop, controller.SetMarginToCrop, previewImage, &b)
-	setupSubmittedHandler(BCSettings.SetWidth, controller.SetBCWidth, previewImage, &b)
-	setupSubmittedHandler(BCSettings.SetHight, controller.SetBCHight, previewImage, &b)
-	setupSubmittedHandler(BCSettings.SetFontSize, controller.SetFontSize, previewImage, &b)
+	setupSubmittedHandler(PrintSettings.setXSpacing, controller.SetXSpacing, previewImage, &b, layout.ValidateXSpacing)
+	setupSubmittedHandler(PrintSettings.setYSpacing, controller.SetYSpacing, previewImage, &b, layout.ValidateYSpacing)
+	setupSubmittedHandler(PrintSettings.setMargin, controller.SetMargin, previewImage, &b, layout.ValidateMargin)
+	setupSubmittedHandler(PrintSettings.setMarginToCrop, controller.SetMarginToCrop, previewImage, &b, layout.ValidateMarginToCrop)
+	setupSubmittedHandler(BCSettings.SetWidth, controller.SetBCWidth, previewImage, &b, layout.ValidateBCWidth)
+	setupSubmittedHandler(BCSettings.SetHight, controller.SetBCHight, previewImage, &b, layout.ValidateBCHight)
+	setupSubmittedHandler(BCSettings.SetFontSize, controller.SetFontSize, previewImage, &b, layout.ValidateFontSize)
 
 	controller.OnPreviewUpdated = func(r *image.RGBA) {
 		previewImage.Image = r
@@ -61,24 +63,27 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 		b.BCImage.Refresh()
 	}
 
+	//Кнопка Выбор файла
 	openFileStruct := makeOpenFile(w, controller)
 	fileOpen := container.NewVBox(
 		openFileStruct.openFileLabel,
 		openFileStruct.openFileButton,
 	)
 
+	//Кнопка сохранить
 	SaveFileContainer := makeSaveFile(w, controller)
 	fileSave := container.NewVBox(
 		SaveFileContainer.saveFileLabel,
 		SaveFileContainer.saveFileButton,
 	)
 
+	//Превью печати
 	printPreview := container.NewVBox(
 		widget.NewLabelWithStyle("Предпросмотр печати", 1, fyne.TextStyle{Bold: true}),
 		widget.NewSeparator(),
 		previewContainer,
 	)
-
+	//Левая панель
 	leftPanel := container.NewVBox(
 		container.NewCenter(BCContainer),
 		widget.NewSeparator(),
@@ -94,11 +99,12 @@ func MakeUI(w fyne.Window, controller *app.Controller) {
 			fileSave,
 		),
 	)
-
+	//Правая панель
 	rightPanel := container.NewVBox(
 		printPreview,
 	)
 
+	//Главное окно
 	mainHBox := container.NewHSplit(
 		leftPanel,
 		rightPanel,
@@ -113,9 +119,26 @@ func setupSubmittedHandler(
 	handlerFunc func(string),
 	previewImage *canvas.Image,
 	b *Barcode,
+	validateFunc func(string) bool,
 ) {
 	entry.OnSubmitted = func(text string) {
 		fmt.Println(text)
+
+		//ограничение вводимых символов цифрами
+		for _, r := range text {
+			if r < '0' || r > '9' {
+				return
+			}
+		}
+		//если поле ввода пустое
+		if text == "" {
+			return
+		}
+		//если не проходим валидность по лимитам
+		if !validateFunc(text) {
+			return
+		}
+
 		handlerFunc(text)
 		previewImage.Refresh()
 		b.BCImage.Refresh()

@@ -1,7 +1,7 @@
 package gui
 
 import (
-	"main/config"
+	"barcode-app/config"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
