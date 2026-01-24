@@ -1,7 +1,9 @@
 package gui
 
 import (
+	"barcode-app/updater"
 	"fmt"
+	"net/url"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -31,10 +33,21 @@ func makeMenu(a fyne.App) *fyne.MainMenu {
 		w := a.NewWindow("Version")
 		w.CenterOnScreen()
 		w.Resize(fyne.Size{Width: 200, Height: 100})
+
+		currentVersion := a.Metadata().Version
+		releaseInfo, _ := updater.GetReleaseInfo()
+
 		content := container.NewVBox(
-			widget.NewLabel("Current vesion: 0.0.1"),
-			widget.NewLabel("Available version: 0.0.1"),
-			widget.NewButton("Update", func() { fmt.Println("Updating...") }),
+			widget.NewLabel("Current vesion: "+currentVersion),
+			widget.NewLabel("Available version: "+releaseInfo.TagName),
+			widget.NewButton("Скачать", func() {
+				u, err := url.Parse(releaseInfo.HTMLURL)
+				if err != nil {
+					return
+				}
+
+				fyne.CurrentApp().OpenURL(u)
+			}),
 		)
 
 		w.SetContent(container.NewCenter(content))

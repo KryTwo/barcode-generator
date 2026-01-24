@@ -1,0 +1,9 @@
+[Details]
+Icon = "Icon.png"
+Name = "VI Barcode Helper"
+ID = "com.krytwo.vi-helper.bcvigen"
+Version = "v0.0.1-alpha"
+Build = 1
+
+[Development]
+Repository = "https://github.com/KryTwo"
