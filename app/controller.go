@@ -10,8 +10,11 @@ import (
 	"barcode-app/structs"
 	"errors"
 	"image"
+	"io"
 	"log"
 	"strconv"
+
+	"fyne.io/fyne/v2"
 )
 
 type Controller struct {
@@ -29,6 +32,26 @@ type ProcessResult struct {
 
 func NewController(config *structs.Config) *Controller {
 	return &Controller{config: config}
+}
+
+func (c *Controller) HandleFileSelection(reader fyne.URIReadCloser) error {
+	if reader == nil {
+		return nil
+	}
+
+	defer reader.Close()
+
+	data, err := io.ReadAll(reader)
+	if err != nil {
+		logger.Log.Error("Не удалось прочитать файл")
+		return err
+	}
+
+	result := c.ProcessFile(data)
+	if result.Success {
+		c.RegeneratePreview()
+	}
+	return nil
 }
 
 func (c *Controller) ProcessFile(data []byte) ProcessResult {
