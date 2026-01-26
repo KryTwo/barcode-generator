@@ -1,6 +1,7 @@
 package gui
 
 import (
+	"barcode-app/app"
 	"barcode-app/updater"
 	"fmt"
 	"net/url"
@@ -11,10 +12,9 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func makeMenu(a fyne.App) *fyne.MainMenu {
-	fileOpenFile := fyne.NewMenuItem("Open File", func() {
-		fmt.Println("some")
-	})
+func makeMenu(a fyne.App, w fyne.Window, c *app.Controller) *fyne.MainMenu {
+	fileOpenFile := fyne.NewMenuItem("Open File", makeOpenFile(w, c))
+
 	fileOpenRecentFile := fyne.NewMenuItem("Open Recent", nil)
 	fileOpenRecentFile.ChildMenu = fyne.NewMenu("", fyne.NewMenuItem("last opened", nil), fyne.NewMenuItem("first opened", nil))
 

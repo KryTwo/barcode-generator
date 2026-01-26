@@ -18,7 +18,7 @@ func MakeUI(w fyne.Window, controller *app.Controller, a fyne.App) {
 	BCSettings := MakeBCSettings(controller)
 	PrintSettings := MakePrintSettings()
 	//Меню бар
-	w.SetMainMenu(makeMenu(a))
+	w.SetMainMenu(makeMenu(a, w, controller))
 	//параметры контейнера с превью печати
 	previewImage := MakePrintPreview()
 	previewContainer := container.NewStack(previewImage)
@@ -64,10 +64,11 @@ func MakeUI(w fyne.Window, controller *app.Controller, a fyne.App) {
 	}
 
 	//Кнопка Выбор файла
-	openFileStruct := makeOpenFile(w, controller)
+	openFileLabel := widget.NewLabel("Выберите файл (.csv)")
+	openFileButton := widget.NewButton("Файл", makeOpenFile(w, controller))
 	fileOpen := container.NewVBox(
-		openFileStruct.openFileLabel,
-		openFileStruct.openFileButton,
+		openFileLabel,
+		openFileButton,
 	)
 
 	//Кнопка сохранить
