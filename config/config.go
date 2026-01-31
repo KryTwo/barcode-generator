@@ -41,6 +41,8 @@ func Init() {
 		MarginToCrop: *marginToCrop,
 		TextWrapping: *textWrapping,
 	}
+
+	configInitJson(instance)
 }
 
 func Get() *structs.Config {

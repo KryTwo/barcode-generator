@@ -1,3 +1,7 @@
 package config
 
-//здесь будет логика сохранения настроек приложения
+import "barcode-app/structs"
+
+func configInitJson(cfg *structs.Config) {
+
+}
