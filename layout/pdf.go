@@ -208,7 +208,7 @@ func drawBarcodeText(pdf *gofpdf.Fpdf, tr func(string) string, text string, x, y
 	//cellSizeMultiplier := 1.0
 	textWidth := pdf.GetStringWidth(text)
 	textHigth, _ := pdf.GetFontSize()
-	pdf.SetFillColor(0, 255, 0)
+	pdf.SetFillColor(255, 255, 255)
 
 	// fmt.Printf("textWidth: %v\n", textWidth)
 	// fmt.Printf("bcWidth: %v\n", bcWidth)
