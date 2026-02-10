@@ -32,7 +32,7 @@ func MakeBCSettings(c *app.Controller) BCSettingsWidgets {
 	setWidth.SetPlaceHolder("set width...")
 
 	labelHight := widget.NewLabel("Высота штрихкода (мм)")
-	hight := binding.BindInt(&config.Get().Higth)
+	hight := binding.BindInt(&config.Get().Height)
 	setHight := widget.NewEntryWithData(binding.IntToString(hight))
 	setHight.SetPlaceHolder("set hight...")
 

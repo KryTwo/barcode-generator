@@ -20,7 +20,7 @@ func Init() {
 	ySpacing := flag.Float64("ySpacing", 10, "spacing btw bc (mm)")
 	xSpacing := flag.Float64("xSpacing", 20, "spacing btw bc (mm)")
 	wonb := flag.Bool("whiteonblack", false, "white text on a black background")
-	hight := flag.Int("height", 30, "set barcode height in mm")
+	height := flag.Int("height", 30, "set barcode height in mm")
 	width := flag.Int("width", 70, "set barcode width in mm")
 	margin := flag.Int("margin", 15, "(mm) set margin from border list")
 	marginToCrop := flag.Int("marginToCrop", 3, "(mm) set margin from left and right borders to crop")
@@ -35,7 +35,7 @@ func Init() {
 		YSpacing:     *ySpacing,
 		XSpacing:     *xSpacing,
 		WONB:         *wonb,
-		Higth:        *hight,
+		Height:       *height,
 		Width:        *width,
 		Margin:       *margin,
 		MarginToCrop: *marginToCrop,
@@ -57,9 +57,9 @@ func SetWidth(mm int) {
 	cfg.Width = mm
 }
 
-func SetHight(mm int) {
+func SetHeight(mm int) {
 	cfg := Get()
-	cfg.Higth = mm
+	cfg.Height = mm
 }
 
 func SetFontSize(size int) {
@@ -92,5 +92,15 @@ func SetTextWrapping(wrap bool) {
 	cfg.TextWrapping = wrap
 }
 
-// func SetSize()
-// func SetDPI()
+func SetPreset(presetName string) {
+	tempSettings := readJSON()
+
+	SetWidth(tempSettings.DefaultSettings.Width)
+	SetHeight(tempSettings.DefaultSettings.Height)
+	SetFontSize(tempSettings.DefaultSettings.FontSize)
+	SetMargin(tempSettings.DefaultSettings.Margin)
+	SetMarginToCrop(tempSettings.DefaultSettings.MarginToCrop)
+	SetYSpacing(tempSettings.DefaultSettings.YSpacing)
+	SetXSpacing(tempSettings.DefaultSettings.XSpacing)
+	SetTextWrapping(tempSettings.DefaultSettings.TextWrapping)
+}

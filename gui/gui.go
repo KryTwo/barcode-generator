@@ -78,6 +78,8 @@ func MakeUI(w fyne.Window, controller *app.Controller, a fyne.App) {
 		SaveFileContainer.saveFileButton,
 	)
 
+	presetSelect := makePresetSelect(w, controller)
+
 	//Превью печати
 	printPreview := container.NewVBox(
 		widget.NewLabelWithStyle("Предпросмотр печати", 1, fyne.TextStyle{Bold: true}),
@@ -98,6 +100,10 @@ func MakeUI(w fyne.Window, controller *app.Controller, a fyne.App) {
 		container.NewHBox(
 			fileOpen,
 			fileSave,
+		),
+		widget.NewSeparator(),
+		container.NewVBox(
+			presetSelect,
 		),
 	)
 	//Правая панель

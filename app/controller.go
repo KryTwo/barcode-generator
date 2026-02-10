@@ -9,6 +9,7 @@ import (
 	"barcode-app/logger"
 	"barcode-app/structs"
 	"errors"
+	"fmt"
 	"image"
 	"io"
 	"log"
@@ -84,7 +85,7 @@ func (c *Controller) CropBC(img *image.RGBA) *image.Image {
 	y1 = convert.MMToPT(c.config.Margin - 3)
 
 	x2 = x1 + convert.MMToPT(c.config.Width)
-	y2 = y1 + convert.MMToPT(c.config.Higth+6)
+	y2 = y1 + convert.MMToPT(c.config.Height+6)
 	croppRect := image.Rect(int(x1), int(y1), int(x2), int(y2))
 	croppImg := img.SubImage(croppRect)
 
@@ -105,7 +106,7 @@ func (c *Controller) SetBCHight(data string) {
 	if err != nil {
 		log.Fatalf("Failed convert ATOI in SetBCHight: %v\n", err)
 	}
-	config.SetHight(d)
+	config.SetHeight(d)
 	c.RegeneratePreview()
 }
 
@@ -160,14 +161,19 @@ func (c *Controller) SetXSpacing(data string) {
 }
 
 func (c *Controller) RegeneratePreview() {
+	fmt.Println("try regen")
 	logger.Log.Info("try RegeneratePreview")
+
 	if len(c.CurrentRecords) == 0 {
 		return
 	}
 
 	logger.Log.Info("try GenerateCode128")
+
 	imgs, err := barcode.GenerateCode128(c.CurrentRecords)
+
 	logger.Log.Info("done GenerateCode128")
+	fmt.Println("done regen")
 
 	if err != nil {
 		log.Fatalf("err: %v\n", err)
