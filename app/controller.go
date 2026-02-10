@@ -9,7 +9,6 @@ import (
 	"barcode-app/logger"
 	"barcode-app/structs"
 	"errors"
-	"fmt"
 	"image"
 	"io"
 	"log"
@@ -101,7 +100,7 @@ func (c *Controller) SetBCWidth(data string) {
 	c.RegeneratePreview()
 }
 
-func (c *Controller) SetBCHight(data string) {
+func (c *Controller) SetBCHeight(data string) {
 	d, err := strconv.Atoi(data)
 	if err != nil {
 		log.Fatalf("Failed convert ATOI in SetBCHight: %v\n", err)
@@ -161,7 +160,6 @@ func (c *Controller) SetXSpacing(data string) {
 }
 
 func (c *Controller) RegeneratePreview() {
-	fmt.Println("try regen")
 	logger.Log.Info("try RegeneratePreview")
 
 	if len(c.CurrentRecords) == 0 {
@@ -173,7 +171,6 @@ func (c *Controller) RegeneratePreview() {
 	imgs, err := barcode.GenerateCode128(c.CurrentRecords)
 
 	logger.Log.Info("done GenerateCode128")
-	fmt.Println("done regen")
 
 	if err != nil {
 		log.Fatalf("err: %v\n", err)
@@ -212,4 +209,31 @@ func (c *Controller) SavingFile() {
 	}
 
 	layout.MakePDF(imgs, c.CurrentRecords, true)
+}
+
+func findIndex(s string) int {
+	for i := range config.ConfigJSON.Presets {
+		if config.ConfigJSON.Presets[i].Name == s {
+			return i
+		}
+	}
+	return -1
+}
+
+func (c *Controller) SetPreset(s string) {
+	idx := findIndex(s)
+	if idx == -1 {
+		logger.LogError(errors.New("index not find in ConfigJSON"), "cant find index")
+		return
+	}
+	p := config.ConfigJSON.Presets[idx].Setting
+
+	c.SetBCWidth(strconv.Itoa(p.Width))
+	c.SetBCHeight(strconv.Itoa(p.Height))
+	c.SetFontSize(strconv.Itoa(p.FontSize))
+	c.SetMargin(strconv.Itoa(p.Margin))
+	c.SetMarginToCrop(strconv.Itoa(p.MarginToCrop))
+	c.SetYSpacing(strconv.FormatFloat(p.YSpacing, 'f', -1, 64))
+	c.SetXSpacing(strconv.FormatFloat(p.XSpacing, 'f', -1, 64))
+	c.SetTextWrapping(p.TextWrapping)
 }

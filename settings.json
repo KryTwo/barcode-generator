@@ -43,7 +43,7 @@
         "WONB": false,
         "Height": 20,
         "Width": 150,
-        "Margin": 15,
+        "Margin": 25,
         "MarginToCrop": 3,
         "TextWrapping": true
       }

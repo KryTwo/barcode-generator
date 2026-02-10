@@ -21,6 +21,10 @@ type BCSettingsWidgets struct {
 	SetFontSize *widget.Entry //entry fontSize
 
 	SetTextWrapping *widget.Check //check textWrapping
+
+	WidthBinding    binding.Int
+	HeightBinding   binding.Int
+	FontSizeBinding binding.Int
 }
 
 func MakeBCSettings(c *app.Controller) BCSettingsWidgets {
@@ -32,8 +36,8 @@ func MakeBCSettings(c *app.Controller) BCSettingsWidgets {
 	setWidth.SetPlaceHolder("set width...")
 
 	labelHight := widget.NewLabel("Высота штрихкода (мм)")
-	hight := binding.BindInt(&config.Get().Height)
-	setHight := widget.NewEntryWithData(binding.IntToString(hight))
+	height := binding.BindInt(&config.Get().Height)
+	setHight := widget.NewEntryWithData(binding.IntToString(height))
 	setHight.SetPlaceHolder("set hight...")
 
 	labelFontSize := widget.NewLabel("Размер текста")
@@ -64,5 +68,16 @@ func MakeBCSettings(c *app.Controller) BCSettingsWidgets {
 		SetHight:        setHight,
 		SetFontSize:     setFontSize,
 		SetTextWrapping: setTextWrapping,
+
+		WidthBinding:    width,
+		HeightBinding:   height,
+		FontSizeBinding: fontSize,
 	}
+}
+func (s *BCSettingsWidgets) UpdateFields() {
+	conf := config.Get()
+
+	s.WidthBinding.Set(conf.Width)
+	s.HeightBinding.Set(conf.Height)
+	s.FontSizeBinding.Set(conf.FontSize)
 }

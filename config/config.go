@@ -91,16 +91,3 @@ func SetTextWrapping(wrap bool) {
 	cfg := Get()
 	cfg.TextWrapping = wrap
 }
-
-func SetPreset(presetName string) {
-	tempSettings := readJSON()
-
-	SetWidth(tempSettings.DefaultSettings.Width)
-	SetHeight(tempSettings.DefaultSettings.Height)
-	SetFontSize(tempSettings.DefaultSettings.FontSize)
-	SetMargin(tempSettings.DefaultSettings.Margin)
-	SetMarginToCrop(tempSettings.DefaultSettings.MarginToCrop)
-	SetYSpacing(tempSettings.DefaultSettings.YSpacing)
-	SetXSpacing(tempSettings.DefaultSettings.XSpacing)
-	SetTextWrapping(tempSettings.DefaultSettings.TextWrapping)
-}

@@ -18,20 +18,22 @@ type Preset struct {
 	Setting structs.Config
 }
 
+var ConfigJSON JSONSettings
+
 func configPresetSave(name string) {
 	data, err := os.ReadFile("settings.json")
 	if err != nil {
 		logger.LogError(err, "failed to read settings.json")
 		return
 	}
-	var config JSONSettings
-	json.Unmarshal(data, &config)
+
+	json.Unmarshal(data, &ConfigJSON)
 
 	var prs Preset
 	prs.Name = name
 	prs.Setting = *instance
 
-	config.Presets = append(config.Presets, prs)
+	ConfigJSON.Presets = append(ConfigJSON.Presets, prs)
 
 }
 

@@ -5,32 +5,32 @@ import (
 	"barcode-app/config"
 	"barcode-app/logger"
 	"encoding/json"
-	"fmt"
 	"os"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/widget"
 )
 
-func makePresetSelect(w fyne.Window, c *app.Controller) fyne.Widget {
+func makePresetSelect(c *app.Controller, bcs BCSettingsWidgets, prs PrintSettingsWidgetStruct) fyne.Widget {
 	data, err := os.ReadFile("settings.json")
 	if err != nil {
 		logger.LogError(err, "falied to onen settings.json")
 		return nil
 	}
-	var settingsJSON config.JSONSettings
-	json.Unmarshal(data, &settingsJSON)
+
+	json.Unmarshal(data, &config.ConfigJSON)
 
 	var str []string
 
-	for _, v := range settingsJSON.Presets {
+	for _, v := range config.ConfigJSON.Presets {
 		str = append(str, v.Name)
 	}
 
 	button := widget.NewSelect(str, func(s string) {
-		fmt.Printf("name select options: %v\n", s)
+		c.SetPreset(s)
 		c.RegeneratePreview()
-		config.SetPreset(s)
+		bcs.UpdateFields()
+		prs.UpdateFields()
 
 	})
 	button.PlaceHolder = "Выберите пресет"
