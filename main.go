@@ -10,8 +10,6 @@ import (
 	"fyne.io/fyne/v2/theme"
 )
 
-var SettingsJSON config.JSONSettings
-
 func main() {
 
 	logger.Log.Info("start main")

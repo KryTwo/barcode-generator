@@ -8,11 +8,15 @@ import (
 	"barcode-app/layout"
 	"barcode-app/logger"
 	"barcode-app/structs"
+	"encoding/json"
 	"errors"
+	"fmt"
 	"image"
 	"io"
 	"log"
+	"os"
 	"strconv"
+	"strings"
 
 	"fyne.io/fyne/v2"
 )
@@ -21,6 +25,7 @@ type Controller struct {
 	config           *structs.Config
 	CurrentRecords   [][]string
 	OnPreviewUpdated func(*image.RGBA)
+	OnPresetChanged  func()
 }
 
 type ProcessResult struct {
@@ -236,4 +241,68 @@ func (c *Controller) SetPreset(s string) {
 	c.SetYSpacing(strconv.FormatFloat(p.YSpacing, 'f', -1, 64))
 	c.SetXSpacing(strconv.FormatFloat(p.XSpacing, 'f', -1, 64))
 	c.SetTextWrapping(p.TextWrapping)
+}
+
+func (c *Controller) CreatePreset(s string, onSuccess func()) {
+	if strings.ContainsAny(s, `/\:*?"><|`) {
+		fmt.Println("некорректные символыы")
+		return
+	}
+
+	//получение json
+	data, err := os.ReadFile("settings.json")
+	if err != nil {
+		logger.LogError(err, "falied to onen settings.json")
+
+		//окно с ошибкой?
+		return
+	}
+	var jsonConf config.JSONSettings
+	json.Unmarshal(data, &jsonConf)
+
+	//Проверка на неизменяемый пресет
+	if s == "Стандарт" {
+		fmt.Println("Нельзя изменять стандартный пресет")
+		//ошибка? или мягкое изменение?
+		onSuccess() //заменить на ?onFail?
+		return
+	}
+
+	var presetNames []string
+
+	for _, v := range jsonConf.Presets {
+		presetNames = append(presetNames, v.Name)
+	}
+
+	var newPreset config.Preset
+	newPreset.Name = s
+	newPreset.Setting = *c.config
+	//Конфликт имен
+	for _, prsn := range presetNames {
+		if s == prsn {
+			fmt.Println("Такой пресет уже существует, удалите его перед сохранением")
+			onSuccess() //заменить на ?onFail?
+			return
+			//ошибка? или перезапись?
+		}
+	}
+
+	jsonConf.Presets = append(jsonConf.Presets, newPreset)
+
+	file, err := os.Create("settings.json")
+
+	if err != nil {
+		logger.LogError(err, "settings.json creating failed")
+		return
+	}
+	defer file.Close()
+
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	if err := encoder.Encode(jsonConf); err != nil {
+		logger.LogError(err, "fail to encode JSONSettings to settings.json")
+	}
+
+	//запись в json
+	onSuccess()
 }

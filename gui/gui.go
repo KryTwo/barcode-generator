@@ -102,8 +102,11 @@ func MakeUI(w fyne.Window, controller *app.Controller, a fyne.App) {
 			fileSave,
 		),
 		widget.NewSeparator(),
-		container.NewVBox(
+		container.NewHBox(
 			presetSelect,
+			AddPresetButton(w, controller, a),
+			SavePresetButton(controller, a),
+			DeletePresetButton(controller, a),
 		),
 	)
 	//Правая панель
