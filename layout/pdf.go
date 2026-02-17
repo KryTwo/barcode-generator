@@ -44,7 +44,7 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 
 	cfg := config.Get()
 	//требуемые параметры баркода и ячейки
-	higth := cfg.Higth                        //мм
+	height := cfg.Height                      //мм
 	width := cfg.Width                        //мм
 	ySpacing := cfg.YSpacing                  //pt
 	xSpacing := cfg.XSpacing                  //pt
@@ -53,7 +53,7 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 	originalFontSize := cfg.FontSize
 
 	//размеры баркода в мм
-	bcHigth := float64(higth)
+	bcHeight := float64(height)
 	bcWidth := float64(width) - float64(marginToCrop)*2
 
 	tempDir := os.TempDir()
@@ -122,8 +122,8 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 			pdf.Line(xPosToCrop, yPosToCrop, xPosToCrop+marginToCrop, yPosToCrop)
 			pdf.Line(xPosToCrop, yPosToCrop, xPosToCrop, yPosToCrop+marginToCrop)
 			//правый нижний маркер
-			pdf.Line(xPosToCrop+bcWidth+marginToCrop, yPosToCrop+bcHigth, xPosToCrop+bcWidth+marginToCrop*2, yPosToCrop+bcHigth)
-			pdf.Line(xPosToCrop+bcWidth+marginToCrop*2, yPosToCrop+bcHigth, xPosToCrop+bcWidth+marginToCrop*2, yPosToCrop+bcHigth-marginToCrop)
+			pdf.Line(xPosToCrop+bcWidth+marginToCrop, yPosToCrop+bcHeight, xPosToCrop+bcWidth+marginToCrop*2, yPosToCrop+bcHeight)
+			pdf.Line(xPosToCrop+bcWidth+marginToCrop*2, yPosToCrop+bcHeight, xPosToCrop+bcWidth+marginToCrop*2, yPosToCrop+bcHeight-marginToCrop)
 			//  ___ добавить недостающие маркеры (левый нижний и правый верхний)
 
 			fileName := "barcode" + strconv.Itoa(i)
@@ -138,7 +138,7 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 			}
 
 			pdf.RegisterImageOptionsReader(fileName, opt, strings.NewReader(imgBuf.String()))
-			pdf.Image(fileName, xPos, yPos, bcWidth, bcHigth, false, "", 0, "")
+			pdf.Image(fileName, xPos, yPos, bcWidth, bcHeight, false, "", 0, "")
 
 			//сохраняем текущие координаты
 			xPosTemp, yPosTemp = pdf.GetXY()
@@ -147,18 +147,18 @@ func MakePDF(img []image.Image, data [][]string, saveToFile bool) []byte {
 			// fmt.Println()
 
 			//рисуем текст поверх шк
-			drawBarcodeText(pdf, tr, data[i][1], xPos, yPos, bcWidth, bcHigth)
+			drawBarcodeText(pdf, tr, data[i][1], xPos, yPos, bcWidth, bcHeight)
 
 			//возвращаем координаты исходной точки
 			pdf.SetXY(xPosTemp, yPosTemp)
 
 			//смещение координат для начала отрисовки следующего штрихкода
-			pdf.Ln(bcHigth + ySpacing)
+			pdf.Ln(bcHeight + ySpacing)
 
 			yPos = pdf.GetY()
 
 			//смещение на второй столбец, если текущий заполнен
-			if yPos >= yPageSize-ySpacing-bcHigth {
+			if yPos >= yPageSize-ySpacing-bcHeight {
 				// fmt.Printf("выход за пределы по высоте, итерация: %v\n\n", i)
 				pdf.SetY(margin)
 				yPos = pdf.GetY()

@@ -8,11 +8,15 @@ import (
 	"barcode-app/layout"
 	"barcode-app/logger"
 	"barcode-app/structs"
+	"encoding/json"
 	"errors"
+	"fmt"
 	"image"
 	"io"
 	"log"
+	"os"
 	"strconv"
+	"strings"
 
 	"fyne.io/fyne/v2"
 )
@@ -21,6 +25,7 @@ type Controller struct {
 	config           *structs.Config
 	CurrentRecords   [][]string
 	OnPreviewUpdated func(*image.RGBA)
+	OnPresetChanged  func()
 }
 
 type ProcessResult struct {
@@ -84,7 +89,7 @@ func (c *Controller) CropBC(img *image.RGBA) *image.Image {
 	y1 = convert.MMToPT(c.config.Margin - 3)
 
 	x2 = x1 + convert.MMToPT(c.config.Width)
-	y2 = y1 + convert.MMToPT(c.config.Higth+6)
+	y2 = y1 + convert.MMToPT(c.config.Height+6)
 	croppRect := image.Rect(int(x1), int(y1), int(x2), int(y2))
 	croppImg := img.SubImage(croppRect)
 
@@ -100,12 +105,12 @@ func (c *Controller) SetBCWidth(data string) {
 	c.RegeneratePreview()
 }
 
-func (c *Controller) SetBCHight(data string) {
+func (c *Controller) SetBCHeight(data string) {
 	d, err := strconv.Atoi(data)
 	if err != nil {
 		log.Fatalf("Failed convert ATOI in SetBCHight: %v\n", err)
 	}
-	config.SetHight(d)
+	config.SetHeight(d)
 	c.RegeneratePreview()
 }
 
@@ -161,12 +166,15 @@ func (c *Controller) SetXSpacing(data string) {
 
 func (c *Controller) RegeneratePreview() {
 	logger.Log.Info("try RegeneratePreview")
+
 	if len(c.CurrentRecords) == 0 {
 		return
 	}
 
 	logger.Log.Info("try GenerateCode128")
+
 	imgs, err := barcode.GenerateCode128(c.CurrentRecords)
+
 	logger.Log.Info("done GenerateCode128")
 
 	if err != nil {
@@ -206,4 +214,95 @@ func (c *Controller) SavingFile() {
 	}
 
 	layout.MakePDF(imgs, c.CurrentRecords, true)
+}
+
+func findIndex(s string) int {
+	for i := range config.ConfigJSON.Presets {
+		if config.ConfigJSON.Presets[i].Name == s {
+			return i
+		}
+	}
+	return -1
+}
+
+func (c *Controller) SetPreset(s string) {
+	idx := findIndex(s)
+	if idx == -1 {
+		logger.LogError(errors.New("index not find in ConfigJSON"), "cant find index")
+		return
+	}
+	p := config.ConfigJSON.Presets[idx].Setting
+
+	c.SetBCWidth(strconv.Itoa(p.Width))
+	c.SetBCHeight(strconv.Itoa(p.Height))
+	c.SetFontSize(strconv.Itoa(p.FontSize))
+	c.SetMargin(strconv.Itoa(p.Margin))
+	c.SetMarginToCrop(strconv.Itoa(p.MarginToCrop))
+	c.SetYSpacing(strconv.FormatFloat(p.YSpacing, 'f', -1, 64))
+	c.SetXSpacing(strconv.FormatFloat(p.XSpacing, 'f', -1, 64))
+	c.SetTextWrapping(p.TextWrapping)
+}
+
+func (c *Controller) CreatePreset(s string, onSuccess func()) {
+	if strings.ContainsAny(s, `/\:*?"><|`) {
+		fmt.Println("некорректные символыы")
+		return
+	}
+
+	//получение json
+	data, err := os.ReadFile("settings.json")
+	if err != nil {
+		logger.LogError(err, "falied to onen settings.json")
+
+		//окно с ошибкой?
+		return
+	}
+	var jsonConf config.JSONSettings
+	json.Unmarshal(data, &jsonConf)
+
+	//Проверка на неизменяемый пресет
+	if s == "Стандарт" {
+		fmt.Println("Нельзя изменять стандартный пресет")
+		//ошибка? или мягкое изменение?
+		onSuccess() //заменить на ?onFail?
+		return
+	}
+
+	var presetNames []string
+
+	for _, v := range jsonConf.Presets {
+		presetNames = append(presetNames, v.Name)
+	}
+
+	var newPreset config.Preset
+	newPreset.Name = s
+	newPreset.Setting = *c.config
+	//Конфликт имен
+	for _, prsn := range presetNames {
+		if s == prsn {
+			fmt.Println("Такой пресет уже существует, удалите его перед сохранением")
+			onSuccess() //заменить на ?onFail?
+			return
+			//ошибка? или перезапись?
+		}
+	}
+
+	jsonConf.Presets = append(jsonConf.Presets, newPreset)
+
+	file, err := os.Create("settings.json")
+
+	if err != nil {
+		logger.LogError(err, "settings.json creating failed")
+		return
+	}
+	defer file.Close()
+
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	if err := encoder.Encode(jsonConf); err != nil {
+		logger.LogError(err, "fail to encode JSONSettings to settings.json")
+	}
+
+	//запись в json
+	onSuccess()
 }

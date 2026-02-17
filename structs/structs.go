@@ -8,7 +8,7 @@ type Config struct {
 	YSpacing     float64
 	XSpacing     float64
 	WONB         bool
-	Higth        int
+	Height       int
 	Width        int
 	Margin       int
 	MarginToCrop int

@@ -8,7 +8,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-type pSettings struct {
+type PrintSettingsWidgetStruct struct {
 	label             *widget.Label
 	labelMargin       *widget.Label
 	labelYSpacing     *widget.Label
@@ -19,9 +19,14 @@ type pSettings struct {
 	setYSpacing     *widget.Entry
 	setXSpacing     *widget.Entry
 	setMarginToCrop *widget.Entry
+
+	MarginBinding       binding.Int
+	YSpacingBinding     binding.Float
+	XSpacingBinding     binding.Float
+	MarginToCropBinding binding.Int
 }
 
-func MakePrintSettings() pSettings {
+func MakePrintSettings() PrintSettingsWidgetStruct {
 	label := widget.NewLabelWithStyle("Настройки печати", 1, fyne.TextStyle{Bold: true})
 
 	//настройки отступов
@@ -48,7 +53,7 @@ func MakePrintSettings() pSettings {
 	setMarginToCrop := widget.NewEntryWithData(binding.IntToString(marginToCrop))
 	setMarginToCrop.SetPlaceHolder("set margin to crop")
 
-	return pSettings{
+	return PrintSettingsWidgetStruct{
 		label:             label,
 		labelMargin:       labelMargin,
 		labelYSpacing:     labelYSpacing,
@@ -59,5 +64,19 @@ func MakePrintSettings() pSettings {
 		setYSpacing:     setYSpacing,
 		setXSpacing:     setXSpacing,
 		setMarginToCrop: setMarginToCrop,
+
+		MarginBinding:       margin,
+		YSpacingBinding:     ySpacing,
+		XSpacingBinding:     xSpacing,
+		MarginToCropBinding: marginToCrop,
 	}
+}
+
+func (p *PrintSettingsWidgetStruct) UpdateFields() {
+	conf := config.Get()
+
+	p.MarginBinding.Set(conf.Margin)
+	p.YSpacingBinding.Set(conf.YSpacing)
+	p.XSpacingBinding.Set(conf.XSpacing)
+	p.MarginToCropBinding.Set(conf.MarginToCrop)
 }

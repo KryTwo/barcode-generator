@@ -53,7 +53,7 @@ func MakeUI(w fyne.Window, controller *app.Controller, a fyne.App) {
 	setupSubmittedHandler(PrintSettings.setMargin, controller.SetMargin, previewImage, &b, layout.ValidateMargin)
 	setupSubmittedHandler(PrintSettings.setMarginToCrop, controller.SetMarginToCrop, previewImage, &b, layout.ValidateMarginToCrop)
 	setupSubmittedHandler(BCSettings.SetWidth, controller.SetBCWidth, previewImage, &b, layout.ValidateBCWidth)
-	setupSubmittedHandler(BCSettings.SetHight, controller.SetBCHight, previewImage, &b, layout.ValidateBCHight)
+	setupSubmittedHandler(BCSettings.SetHight, controller.SetBCHeight, previewImage, &b, layout.ValidateBCHight)
 	setupSubmittedHandler(BCSettings.SetFontSize, controller.SetFontSize, previewImage, &b, layout.ValidateFontSize)
 
 	controller.OnPreviewUpdated = func(r *image.RGBA) {
@@ -78,6 +78,8 @@ func MakeUI(w fyne.Window, controller *app.Controller, a fyne.App) {
 		SaveFileContainer.saveFileButton,
 	)
 
+	presetSelect := makePresetSelect(controller, BCSettings, PrintSettings)
+
 	//Превью печати
 	printPreview := container.NewVBox(
 		widget.NewLabelWithStyle("Предпросмотр печати", 1, fyne.TextStyle{Bold: true}),
@@ -98,6 +100,13 @@ func MakeUI(w fyne.Window, controller *app.Controller, a fyne.App) {
 		container.NewHBox(
 			fileOpen,
 			fileSave,
+		),
+		widget.NewSeparator(),
+		container.NewHBox(
+			presetSelect,
+			AddPresetButton(w, controller, a),
+			SavePresetButton(controller, a),
+			DeletePresetButton(controller, a),
 		),
 	)
 	//Правая панель

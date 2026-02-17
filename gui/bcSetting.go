@@ -10,7 +10,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-type BCSettingsWidgets struct {
+type BCSettingsWidgetsStruct struct {
 	Label         *widget.Label
 	LabelWidth    *widget.Label //label width
 	LabelHight    *widget.Label //label hight
@@ -21,9 +21,13 @@ type BCSettingsWidgets struct {
 	SetFontSize *widget.Entry //entry fontSize
 
 	SetTextWrapping *widget.Check //check textWrapping
+
+	WidthBinding    binding.Int
+	HeightBinding   binding.Int
+	FontSizeBinding binding.Int
 }
 
-func MakeBCSettings(c *app.Controller) BCSettingsWidgets {
+func MakeBCSettings(c *app.Controller) BCSettingsWidgetsStruct {
 	label := widget.NewLabelWithStyle("Настройки ШК", 1, fyne.TextStyle{Bold: true})
 
 	labelWidth := widget.NewLabel("Ширина штрихкода (мм)")
@@ -32,8 +36,8 @@ func MakeBCSettings(c *app.Controller) BCSettingsWidgets {
 	setWidth.SetPlaceHolder("set width...")
 
 	labelHight := widget.NewLabel("Высота штрихкода (мм)")
-	hight := binding.BindInt(&config.Get().Higth)
-	setHight := widget.NewEntryWithData(binding.IntToString(hight))
+	height := binding.BindInt(&config.Get().Height)
+	setHight := widget.NewEntryWithData(binding.IntToString(height))
 	setHight.SetPlaceHolder("set hight...")
 
 	labelFontSize := widget.NewLabel("Размер текста")
@@ -55,7 +59,7 @@ func MakeBCSettings(c *app.Controller) BCSettingsWidgets {
 	)
 	boolData.AddListener(listener)
 
-	return BCSettingsWidgets{
+	return BCSettingsWidgetsStruct{
 		Label:           label,
 		LabelWidth:      labelWidth,
 		LabelHight:      labelHight,
@@ -64,5 +68,16 @@ func MakeBCSettings(c *app.Controller) BCSettingsWidgets {
 		SetHight:        setHight,
 		SetFontSize:     setFontSize,
 		SetTextWrapping: setTextWrapping,
+
+		WidthBinding:    width,
+		HeightBinding:   height,
+		FontSizeBinding: fontSize,
 	}
+}
+func (s *BCSettingsWidgetsStruct) UpdateFields() {
+	conf := config.Get()
+
+	s.WidthBinding.Set(conf.Width)
+	s.HeightBinding.Set(conf.Height)
+	s.FontSizeBinding.Set(conf.FontSize)
 }

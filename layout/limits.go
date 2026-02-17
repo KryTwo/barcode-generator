@@ -135,7 +135,7 @@ func ValidateYSpacing(s string) bool {
 	if p < ySpacingMin {
 		return false
 	}
-	if p > float64(config.Get().Higth)*2 {
+	if p > float64(config.Get().Height)*2 {
 		return false
 	}
 	return true

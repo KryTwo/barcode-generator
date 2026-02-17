@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+
 	logger.Log.Info("start main")
 
 	config.Init()
