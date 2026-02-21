@@ -22,11 +22,12 @@ import (
 )
 
 type Controller struct {
-	config            *structs.Config
-	CurrentPresetName string
-	CurrentRecords    [][]string
-	OnPreviewUpdated  func(*image.RGBA)
-	OnPresetChanged   func()
+	config             *structs.Config
+	CurrentPresetName  string
+	CurrentRecords     [][]string
+	OnPreviewUpdated   func(*image.RGBA)
+	OnPresetChanged    func() //Обновление GUI актуальным списком пресетов
+	OnValidationUpdate func()
 }
 
 type ProcessResult struct {
