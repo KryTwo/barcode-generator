@@ -27,7 +27,8 @@ type Controller struct {
 	CurrentRecords     [][]string
 	OnPreviewUpdated   func(*image.RGBA)
 	OnPresetChanged    func() //Обновление GUI актуальным списком пресетов
-	OnValidationUpdate func()
+	OnSaveValidation   func()
+	OnDeleteValidation func()
 }
 
 type ProcessResult struct {
@@ -311,45 +312,24 @@ func (c *Controller) CreatePreset(s string, onSuccess func()) {
 
 func (c *Controller) SavePreset(s string) {
 	//получение json
-	data, err := os.ReadFile("settings.json")
-	if err != nil {
-		logger.LogError(err, "falied to onen settings.json")
-		//окно с ошибкой?
-		return
-	}
-	var jsonConf config.JSONSettings
-	json.Unmarshal(data, &jsonConf)
+	c.ReadJSON()
 
 	//Проверка на неизменяемый пресет
-	if s == "Стандарт" {
+	if s == "Стандарт" || s == "standart" {
 		fmt.Println("Нельзя изменять стандартный пресет")
 		//ошибка? или мягкое изменение?
 		return
 	}
 
-	for i, pn := range jsonConf.Presets {
-		if pn.Name == s {
-			jsonConf.Presets[i].Name = s
-			jsonConf.Presets[i].Setting = *c.config
-
+	for i, prs := range config.ConfigJSON.Presets {
+		if prs.Name == s {
+			config.ConfigJSON.Presets[i].Name = s
+			config.ConfigJSON.Presets[i].Setting = *c.config
 		}
 	}
 
-	file, err := os.Create("settings.json")
-
-	if err != nil {
-		logger.LogError(err, "settings.json creating failed")
-		return
-	}
-	defer file.Close()
-
-	encoder := json.NewEncoder(file)
-	encoder.SetIndent("", "  ")
-	if err := encoder.Encode(jsonConf); err != nil {
-		logger.LogError(err, "fail to encode JSONSettings to settings.json")
-	}
-
 	//запись в json
+	c.WriteJSON()
 }
 
 func (c *Controller) ReadJSON() error {
@@ -361,4 +341,36 @@ func (c *Controller) ReadJSON() error {
 	}
 
 	return json.Unmarshal(data, &config.ConfigJSON)
+}
+
+func (c *Controller) WriteJSON() error {
+	file, err := os.Create("settings.json")
+
+	if err != nil {
+		logger.LogError(err, "settings.json creating failed")
+		return err
+	}
+	defer file.Close()
+
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	if err := encoder.Encode(config.ConfigJSON); err != nil {
+		logger.LogError(err, "fail to encode JSONSettings to settings.json")
+	}
+	return nil
+}
+
+func (c *Controller) DeletePreset(s string) {
+	c.ReadJSON()
+	for i, prs := range config.ConfigJSON.Presets {
+		if prs.Name == s {
+			config.ConfigJSON.Presets = append(config.ConfigJSON.Presets[:i], config.ConfigJSON.Presets[i+1:]...)
+			break
+		}
+	}
+	c.WriteJSON()
+	//сбрасываем на стандартный пресет
+	c.CurrentPresetName = "standart"
+	c.SetPreset(c.CurrentPresetName)
+	c.ReadJSON()
 }
