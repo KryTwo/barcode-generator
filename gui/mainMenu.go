@@ -16,7 +16,8 @@ func makeMenu(a fyne.App, w fyne.Window, c *app.Controller) *fyne.MainMenu {
 	fileOpenFile := fyne.NewMenuItem("Open File", makeOpenFile(w, c))
 
 	fileOpenRecentFile := fyne.NewMenuItem("Open Recent", nil)
-	fileOpenRecentFile.ChildMenu = fyne.NewMenu("", fyne.NewMenuItem("last opened", nil), fyne.NewMenuItem("first opened", nil))
+	//fyne.NewMenuItem("last opened", nil), fyne.NewMenuItem("first opened", nil)
+	fileOpenRecentFile.ChildMenu = fyne.NewMenu("", c.GetRecentFiles()...)
 
 	settingsItem := fyne.NewMenuItem("TODO settings", func() {
 		fmt.Println("settings print")

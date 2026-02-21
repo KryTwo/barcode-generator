@@ -374,3 +374,8 @@ func (c *Controller) DeletePreset(s string) {
 	c.SetPreset(c.CurrentPresetName)
 	c.ReadJSON()
 }
+
+func (c *Controller) GetRecentFiles() []*fyne.MenuItem {
+	c.ReadJSON()
+	return nil
+}
