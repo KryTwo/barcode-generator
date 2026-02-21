@@ -3,7 +3,6 @@ package gui
 import (
 	"barcode-app/app"
 	"barcode-app/config"
-	"fmt"
 	"time"
 
 	"fyne.io/fyne/v2"
@@ -26,8 +25,11 @@ func makePresetSelect(c *app.Controller, bcs BCSettingsWidgetsStruct, prs PrintS
 		c.RegeneratePreview()
 		bcs.UpdateFields()
 		prs.UpdateFields()
-		if c.OnValidationUpdate != nil {
-			c.OnValidationUpdate()
+		if c.OnSaveValidation != nil {
+			c.OnSaveValidation()
+		}
+		if c.OnDeleteValidation != nil {
+			c.OnDeleteValidation()
 		}
 	})
 
@@ -47,16 +49,22 @@ func makePresetSelect(c *app.Controller, bcs BCSettingsWidgetsStruct, prs PrintS
 		presetSelect.SetSelected(c.CurrentPresetName)
 		presetSelect.Refresh()
 
-		if c.OnValidationUpdate != nil {
-			c.OnValidationUpdate()
+		if c.OnSaveValidation != nil {
+			c.OnSaveValidation()
+		}
+		if c.OnDeleteValidation != nil {
+			c.OnDeleteValidation()
 		}
 	}
 
 	presetSelect.PlaceHolder = "Выберите пресет"
 
 	//Проверяем на нужное состояние кнопки
-	if c.OnValidationUpdate != nil {
-		c.OnValidationUpdate()
+	if c.OnSaveValidation != nil {
+		c.OnSaveValidation()
+	}
+	if c.OnDeleteValidation != nil {
+		c.OnDeleteValidation()
 	}
 
 	return presetSelect
@@ -100,8 +108,8 @@ func SavePresetButton(c *app.Controller, a fyne.App) fyne.Widget {
 			time.Sleep(time.Second * 2)
 			button.SetIcon(oldIcon)
 
-			if c.OnValidationUpdate != nil {
-				c.OnValidationUpdate()
+			if c.OnSaveValidation != nil {
+				c.OnSaveValidation()
 			}
 			button.Refresh()
 		}()
@@ -109,28 +117,104 @@ func SavePresetButton(c *app.Controller, a fyne.App) fyne.Widget {
 
 	refresh := func() {
 		if c.CurrentPresetName == "standart" || c.CurrentPresetName == "" {
-			fmt.Printf("c.CurrentPresetName: %v\n", c.CurrentPresetName)
-			fmt.Println("must disale")
 			button.Disable()
 		} else {
-			fmt.Printf("c.CurrentPresetName: %v\n", c.CurrentPresetName)
-			fmt.Println("must enable")
 			button.Enable()
 		}
 	}
 
 	// Устанавливаем начальное состояние
 	refresh()
-	c.OnValidationUpdate = refresh
+	c.OnSaveValidation = refresh
 
 	return button
 }
+
 func DeletePresetButton(c *app.Controller, a fyne.App) fyne.Widget {
-	button := widget.NewButtonWithIcon("", theme.DeleteIcon(), func() {})
-	//Неактивная кнопка при активном стандартном пресете
-	//Автопереключение на стандартный пресет при удалении текущего пресета
-	//Двойное подтверждение удаления (цвет кнопки)
-	//Обновление списка оставшихся пресетов
-	//ОС после удаления
+	var button *widget.Button
+
+	// Состояния: 0 - обычное, 1 - ожидание подтверждения
+	state := 0
+
+	button = widget.NewButtonWithIcon("", theme.DeleteIcon(), func() {
+		if state == 0 {
+			state = 1
+			button.SetIcon(theme.WarningIcon())
+			button.Disable()
+
+			time.AfterFunc(time.Second*1, func() {
+				button.Importance = widget.DangerImportance
+				button.SetIcon(theme.DeleteIcon())
+				button.Enable()
+				button.Refresh()
+
+				time.AfterFunc(time.Second*3, func() {
+					if state == 1 {
+						state = 0
+						button.Importance = widget.MediumImportance
+						if c.OnDeleteValidation != nil {
+							c.OnDeleteValidation()
+						}
+						button.Refresh()
+					}
+				})
+			})
+			return
+		}
+
+		if state == 1 {
+			state = 0
+			c.DeletePreset(c.CurrentPresetName)
+
+			button.Importance = widget.MediumImportance
+			button.SetIcon(theme.ConfirmIcon())
+			button.Disable()
+			button.Refresh()
+
+			if c.OnPresetChanged != nil {
+				c.OnPresetChanged()
+			}
+
+			time.AfterFunc(time.Second*1, func() {
+				button.SetIcon(theme.DeleteIcon())
+				if c.OnDeleteValidation != nil {
+					c.OnDeleteValidation()
+				}
+				button.Refresh()
+			})
+		}
+	})
+
+	refreshState := func() {
+		if state == 0 {
+			if c.CurrentPresetName == "standart" || c.CurrentPresetName == "" {
+				button.Disable()
+			} else {
+				button.Enable()
+			}
+		}
+	}
+
+	c.OnDeleteValidation = refreshState
+	refreshState()
+
 	return button
+}
+func setupValidation(c *app.Controller, saveBtn, deleteBtn *widget.Button) {
+	c.OnDeleteValidation = func() {
+		isStandart := c.CurrentPresetName == "standart" || c.CurrentPresetName == ""
+
+		if isStandart {
+			saveBtn.Disable()
+			deleteBtn.Disable()
+		} else {
+			saveBtn.Enable()
+			deleteBtn.Enable()
+		}
+
+		saveBtn.Refresh()
+		deleteBtn.Refresh()
+	}
+
+	c.OnDeleteValidation()
 }
