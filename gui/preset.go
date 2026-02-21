@@ -3,9 +3,8 @@ package gui
 import (
 	"barcode-app/app"
 	"barcode-app/config"
-	"barcode-app/logger"
-	"encoding/json"
-	"os"
+	"fmt"
+	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/theme"
@@ -13,51 +12,57 @@ import (
 )
 
 func makePresetSelect(c *app.Controller, bcs BCSettingsWidgetsStruct, prs PrintSettingsWidgetStruct) fyne.Widget {
-	data, err := os.ReadFile("settings.json")
-	if err != nil {
-		logger.LogError(err, "falied to onen settings.json")
-		return nil
-	}
-
-	json.Unmarshal(data, &config.ConfigJSON)
+	c.ReadJSON()
 
 	var presetNames []string
-
 	for _, v := range config.ConfigJSON.Presets {
 		presetNames = append(presetNames, v.Name)
 	}
 
 	presetSelect := widget.NewSelect(presetNames, func(s string) {
 		c.SetPreset(s)
+		c.ReadJSON()
+		c.CurrentPresetName = s
 		c.RegeneratePreview()
 		bcs.UpdateFields()
 		prs.UpdateFields()
-
+		if c.OnValidationUpdate != nil {
+			c.OnValidationUpdate()
+		}
 	})
 
+	//обновление состояния виджета
 	c.OnPresetChanged = func() {
-		data, err := os.ReadFile("settings.json")
-		if err != nil {
-			logger.LogError(err, "falied to onen settings.json")
-			return
-		}
-
-		json.Unmarshal(data, &config.ConfigJSON)
+		c.ReadJSON()
 
 		var newNames []string
 		for _, v := range config.ConfigJSON.Presets {
 			newNames = append(newNames, v.Name)
 		}
+
+		//актуализация списка пресетов
 		presetSelect.Options = newNames
+
+		//установка актуального пресета активным
+		presetSelect.SetSelected(c.CurrentPresetName)
 		presetSelect.Refresh()
+
+		if c.OnValidationUpdate != nil {
+			c.OnValidationUpdate()
+		}
 	}
 
 	presetSelect.PlaceHolder = "Выберите пресет"
+
+	//Проверяем на нужное состояние кнопки
+	if c.OnValidationUpdate != nil {
+		c.OnValidationUpdate()
+	}
+
 	return presetSelect
 }
 
 // Кнопка добавления нового пресета
-// Добавить автоматическое переключение на новый пресет
 func AddPresetButton(w fyne.Window, c *app.Controller, a fyne.App) fyne.Widget {
 	button := widget.NewButtonWithIcon("", theme.ContentAddIcon(), func() {
 		nw := a.NewWindow("Имя пресета")
@@ -65,9 +70,11 @@ func AddPresetButton(w fyne.Window, c *app.Controller, a fyne.App) fyne.Widget {
 		Entry := widget.NewEntry()
 		Entry.SetPlaceHolder("Введите название пресета")
 
+		//При изменении создаем пресет, обновляем состояние виджета
 		Entry.OnSubmitted = func(s string) {
 			c.CreatePreset(s, nw.Close)
 			if c.OnPresetChanged != nil {
+				c.CurrentPresetName = s
 				c.OnPresetChanged()
 			}
 		}
@@ -80,11 +87,42 @@ func AddPresetButton(w fyne.Window, c *app.Controller, a fyne.App) fyne.Widget {
 	return button
 }
 func SavePresetButton(c *app.Controller, a fyne.App) fyne.Widget {
-	button := widget.NewButtonWithIcon("", theme.DocumentSaveIcon(), func() {})
-	//Если выбран стандартный пресет, кнопка должна быть неактивна (втч визуально)
-	//Проверка на доступность записи файла
-	//Бэкап настроек до успешного сохранения
-	//рефреш превью
+	var button *widget.Button
+	button = widget.NewButtonWithIcon("", theme.DocumentSaveIcon(), func() {
+		c.SavePreset(c.CurrentPresetName)
+
+		oldIcon := button.Icon
+		button.SetIcon(theme.ConfirmIcon())
+		button.Disable()
+		button.Refresh()
+
+		go func() {
+			time.Sleep(time.Second * 2)
+			button.SetIcon(oldIcon)
+
+			if c.OnValidationUpdate != nil {
+				c.OnValidationUpdate()
+			}
+			button.Refresh()
+		}()
+	})
+
+	refresh := func() {
+		if c.CurrentPresetName == "standart" || c.CurrentPresetName == "" {
+			fmt.Printf("c.CurrentPresetName: %v\n", c.CurrentPresetName)
+			fmt.Println("must disale")
+			button.Disable()
+		} else {
+			fmt.Printf("c.CurrentPresetName: %v\n", c.CurrentPresetName)
+			fmt.Println("must enable")
+			button.Enable()
+		}
+	}
+
+	// Устанавливаем начальное состояние
+	refresh()
+	c.OnValidationUpdate = refresh
+
 	return button
 }
 func DeletePresetButton(c *app.Controller, a fyne.App) fyne.Widget {
