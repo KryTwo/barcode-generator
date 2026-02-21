@@ -22,10 +22,11 @@ import (
 )
 
 type Controller struct {
-	config           *structs.Config
-	CurrentRecords   [][]string
-	OnPreviewUpdated func(*image.RGBA)
-	OnPresetChanged  func()
+	config            *structs.Config
+	CurrentPresetName string
+	CurrentRecords    [][]string
+	OnPreviewUpdated  func(*image.RGBA)
+	OnPresetChanged   func()
 }
 
 type ProcessResult struct {
@@ -305,4 +306,58 @@ func (c *Controller) CreatePreset(s string, onSuccess func()) {
 
 	//запись в json
 	onSuccess()
+}
+
+func (c *Controller) SavePreset(s string) {
+	//получение json
+	data, err := os.ReadFile("settings.json")
+	if err != nil {
+		logger.LogError(err, "falied to onen settings.json")
+		//окно с ошибкой?
+		return
+	}
+	var jsonConf config.JSONSettings
+	json.Unmarshal(data, &jsonConf)
+
+	//Проверка на неизменяемый пресет
+	if s == "Стандарт" {
+		fmt.Println("Нельзя изменять стандартный пресет")
+		//ошибка? или мягкое изменение?
+		return
+	}
+
+	for i, pn := range jsonConf.Presets {
+		if pn.Name == s {
+			jsonConf.Presets[i].Name = s
+			jsonConf.Presets[i].Setting = *c.config
+
+		}
+	}
+
+	file, err := os.Create("settings.json")
+
+	if err != nil {
+		logger.LogError(err, "settings.json creating failed")
+		return
+	}
+	defer file.Close()
+
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	if err := encoder.Encode(jsonConf); err != nil {
+		logger.LogError(err, "fail to encode JSONSettings to settings.json")
+	}
+
+	//запись в json
+}
+
+func (c *Controller) ReadJSON() error {
+	data, err := os.ReadFile("settings.json")
+	if err != nil {
+		logger.LogError(err, "ошибка чтения json")
+		fmt.Printf("ReadJSON err: %v\n", err)
+		return nil
+	}
+
+	return json.Unmarshal(data, &config.ConfigJSON)
 }

@@ -3,9 +3,6 @@ package gui
 import (
 	"barcode-app/app"
 	"barcode-app/config"
-	"barcode-app/logger"
-	"encoding/json"
-	"os"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/theme"
@@ -13,13 +10,7 @@ import (
 )
 
 func makePresetSelect(c *app.Controller, bcs BCSettingsWidgetsStruct, prs PrintSettingsWidgetStruct) fyne.Widget {
-	data, err := os.ReadFile("settings.json")
-	if err != nil {
-		logger.LogError(err, "falied to onen settings.json")
-		return nil
-	}
-
-	json.Unmarshal(data, &config.ConfigJSON)
+	c.ReadJSON()
 
 	var presetNames []string
 
@@ -29,6 +20,9 @@ func makePresetSelect(c *app.Controller, bcs BCSettingsWidgetsStruct, prs PrintS
 
 	presetSelect := widget.NewSelect(presetNames, func(s string) {
 		c.SetPreset(s)
+		c.ReadJSON()
+
+		c.CurrentPresetName = s
 		c.RegeneratePreview()
 		bcs.UpdateFields()
 		prs.UpdateFields()
@@ -36,19 +30,14 @@ func makePresetSelect(c *app.Controller, bcs BCSettingsWidgetsStruct, prs PrintS
 	})
 
 	c.OnPresetChanged = func() {
-		data, err := os.ReadFile("settings.json")
-		if err != nil {
-			logger.LogError(err, "falied to onen settings.json")
-			return
-		}
-
-		json.Unmarshal(data, &config.ConfigJSON)
+		c.ReadJSON()
 
 		var newNames []string
 		for _, v := range config.ConfigJSON.Presets {
 			newNames = append(newNames, v.Name)
 		}
 		presetSelect.Options = newNames
+		presetSelect.SetSelected(c.CurrentPresetName)
 		presetSelect.Refresh()
 	}
 
@@ -68,6 +57,7 @@ func AddPresetButton(w fyne.Window, c *app.Controller, a fyne.App) fyne.Widget {
 		Entry.OnSubmitted = func(s string) {
 			c.CreatePreset(s, nw.Close)
 			if c.OnPresetChanged != nil {
+				c.CurrentPresetName = s
 				c.OnPresetChanged()
 			}
 		}
@@ -80,7 +70,17 @@ func AddPresetButton(w fyne.Window, c *app.Controller, a fyne.App) fyne.Widget {
 	return button
 }
 func SavePresetButton(c *app.Controller, a fyne.App) fyne.Widget {
-	button := widget.NewButtonWithIcon("", theme.DocumentSaveIcon(), func() {})
+	button := widget.NewButtonWithIcon("", theme.DocumentSaveIcon(), func() {
+		if c.CurrentPresetName == "Standart" {
+			return
+		}
+		if c.OnPresetChanged != nil {
+			c.OnPresetChanged()
+		}
+
+		c.SavePreset(c.CurrentPresetName)
+	})
+
 	//Если выбран стандартный пресет, кнопка должна быть неактивна (втч визуально)
 	//Проверка на доступность записи файла
 	//Бэкап настроек до успешного сохранения
