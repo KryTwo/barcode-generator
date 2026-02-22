@@ -5,14 +5,15 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/csv"
+	"fmt"
 	"slices"
 	"strings"
 )
 
 // карта соответствий названий колонок
 var headerSynonyms = map[string][]string{
-	"id":   {"id", "barcode", "шк", "штрихкод", "баркод"},
-	"name": {"name", "имя", "название", "наименование"},
+	"id":   {"id", "barcode", "шк", "штрихкод", "баркод", "Id", "ID"},
+	"name": {"name", "имя", "название", "наименование", "Наименование"},
 }
 
 // возможные разделители
@@ -32,20 +33,27 @@ func Read(data []byte) ([][]string, []string, error) {
 	//находим первую строку и ищем наиболее часто встречаемый разделитель
 	scanner := bufio.NewReader(reader)
 	firstLine, err := scanner.ReadString('\n')
+	fmt.Printf("firstLine: %v\n", firstLine)
 	if err != nil {
 		logger.LogError(err, "error scanner.ReadString")
 	}
 	// fmt.Println(firstLine)
+	var out int
 	var commaSymbol string
 	for _, v := range commaList {
-		out := 0
 		including := strings.Count(firstLine, v)
+		fmt.Printf("v: %v\n", v)
+		fmt.Printf("including: %v\n", including)
 
 		if including > out {
+			fmt.Printf("out: %v\n", out)
+			fmt.Printf("including: %v\n", including)
+
 			out = including
 			commaSymbol = v
+			fmt.Printf("out: %v\n", out)
+			fmt.Printf("commaSymbol: %v\n", commaSymbol)
 		}
-
 	}
 
 	// //возвращаемся в начало
@@ -56,6 +64,7 @@ func Read(data []byte) ([][]string, []string, error) {
 	allData := bytes.NewReader(data)
 	csvReader := csv.NewReader(allData)
 	csvReader.Comma = rune(commaSymbol[0])
+	fmt.Printf("csvReader.Comma: %v\n", csvReader.Comma)
 
 	//читаем заголовок
 	header, err := csvReader.Read()
