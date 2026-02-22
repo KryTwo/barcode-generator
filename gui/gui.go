@@ -18,7 +18,7 @@ func MakeUI(w fyne.Window, controller *app.Controller, a fyne.App) {
 	BCSettings := MakeBCSettings(controller)
 	PrintSettings := MakePrintSettings()
 	//Меню бар
-	w.SetMainMenu(makeMenu(a, w, controller))
+	setupMenu(a, w, controller)
 	//параметры контейнера с превью печати
 	previewImage := MakePrintPreview()
 	previewContainer := container.NewStack(previewImage)

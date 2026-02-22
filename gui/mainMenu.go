@@ -3,7 +3,6 @@ package gui
 import (
 	"barcode-app/app"
 	"barcode-app/updater"
-	"fmt"
 	"net/url"
 
 	"fyne.io/fyne/v2"
@@ -12,16 +11,43 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+func makeRecentFilesChildMenu(c *app.Controller) []*fyne.MenuItem {
+	var res []*fyne.MenuItem
+
+	c.GetRecentFiles()
+	for _, v := range c.GetRecentFiles() {
+		new := fyne.NewMenuItem(v, func() {
+			c.OpenFileByPath(v)
+		})
+		res = append(res, new)
+	}
+	return res
+}
+
+func setupMenu(a fyne.App, w fyne.Window, c *app.Controller) {
+	renderMenu := func() {
+		mainMenu := makeMenu(a, w, c)
+		w.SetMainMenu(mainMenu)
+		w.MainMenu().Refresh()
+	}
+
+	c.OnRecentFilesChanged = func() {
+		renderMenu()
+	}
+	renderMenu()
+}
+
 func makeMenu(a fyne.App, w fyne.Window, c *app.Controller) *fyne.MainMenu {
+	c.CheckFileExist()
 	fileOpenFile := fyne.NewMenuItem("Open File", makeOpenFile(w, c))
 
 	fileOpenRecentFile := fyne.NewMenuItem("Open Recent", nil)
 	//fyne.NewMenuItem("last opened", nil), fyne.NewMenuItem("first opened", nil)
-	fileOpenRecentFile.ChildMenu = fyne.NewMenu("", c.GetRecentFiles()...)
+	fileOpenRecentFile.ChildMenu = fyne.NewMenu("", makeRecentFilesChildMenu(c)...)
 
-	settingsItem := fyne.NewMenuItem("TODO settings", func() {
-		fmt.Println("settings print")
-	})
+	// settingsItem := fyne.NewMenuItem("TODO settings", func() {
+	// 	fmt.Println("settings print")
+	// })
 
 	showAbout := func() {
 		w := a.NewWindow("About")
@@ -105,10 +131,10 @@ func makeMenu(a fyne.App, w fyne.Window, c *app.Controller) *fyne.MainMenu {
 	//help_help := fyne.NewMenuItem("About", showAbout)
 
 	File := fyne.NewMenu("File", fileOpenFile, fileOpenRecentFile)
-	Settings := fyne.NewMenu("Settings", settingsItem)
+	//Settings := fyne.NewMenu("Settings", settingsItem)
 	help := fyne.NewMenu("Help", helpAbout, helpCheckUpdates, feedback)
 
-	main_menu := fyne.NewMainMenu(File, Settings, help)
+	main_menu := fyne.NewMainMenu(File, help)
 	return main_menu
 
 }

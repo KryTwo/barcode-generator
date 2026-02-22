@@ -15,20 +15,23 @@ import (
 	"io"
 	"log"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/storage"
 )
 
 type Controller struct {
-	config             *structs.Config
-	CurrentPresetName  string
-	CurrentRecords     [][]string
-	OnPreviewUpdated   func(*image.RGBA)
-	OnPresetChanged    func() //Обновление GUI актуальным списком пресетов
-	OnSaveValidation   func()
-	OnDeleteValidation func()
+	config               *structs.Config
+	CurrentPresetName    string
+	CurrentRecords       [][]string
+	OnPreviewUpdated     func(*image.RGBA)
+	OnPresetChanged      func() //Обновление GUI актуальным списком пресетов
+	OnSaveValidation     func()
+	OnDeleteValidation   func()
+	OnRecentFilesChanged func()
 }
 
 type ProcessResult struct {
@@ -55,11 +58,38 @@ func (c *Controller) HandleFileSelection(reader fyne.URIReadCloser) error {
 		return err
 	}
 
+	c.ReadJSON()
+	currentPath := reader.URI().Path()
+
+	//проверка на уже записанный путь
+	if !slices.Contains(config.ConfigJSON.LastOpenedFiles, currentPath) {
+		config.ConfigJSON.LastOpenedFiles = append(config.ConfigJSON.LastOpenedFiles, currentPath)
+	}
+	c.WriteJSON()
+
+	if c.OnRecentFilesChanged != nil {
+		c.OnRecentFilesChanged()
+	}
+
 	result := c.ProcessFile(data)
 	if result.Success {
 		c.RegeneratePreview()
 	}
 	return nil
+}
+
+// проверка на сущестсование файла (для отображения в recentFiles) и корректировка списка
+func (c *Controller) CheckFileExist() {
+	c.ReadJSON()
+	var existingFiles []string
+	for _, v := range config.ConfigJSON.LastOpenedFiles {
+		_, err := os.Stat(v)
+		if err == nil {
+			existingFiles = append(existingFiles, v)
+		}
+	}
+	config.ConfigJSON.LastOpenedFiles = existingFiles
+	c.WriteJSON()
 }
 
 func (c *Controller) ProcessFile(data []byte) ProcessResult {
@@ -375,7 +405,18 @@ func (c *Controller) DeletePreset(s string) {
 	c.ReadJSON()
 }
 
-func (c *Controller) GetRecentFiles() []*fyne.MenuItem {
+func (c *Controller) GetRecentFiles() []string {
 	c.ReadJSON()
-	return nil
+	return config.ConfigJSON.LastOpenedFiles
+}
+
+func (c *Controller) OpenFileByPath(v string) error {
+	u := storage.NewFileURI(v)
+
+	reader, err := storage.Reader(u)
+	if err != nil {
+		return err
+	}
+
+	return c.HandleFileSelection(reader)
 }
